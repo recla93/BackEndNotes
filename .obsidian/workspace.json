@@ -1,0 +1,230 @@
+{
+  "main": {
+    "id": "6890afa34df7f0f7",
+    "type": "split",
+    "children": [
+      {
+        "id": "11955f578b8b7491",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3adaf69ae95a7699",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "BE-NOTES/Java/Spring/AOP/PointCut.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "PointCut"
+            }
+          },
+          {
+            "id": "b3d83242f27fa51b",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "04b163ea412d8570",
+    "type": "split",
+    "children": [
+      {
+        "id": "df96084f9c34f2e6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0678ca7559d2f66a",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "9ba174092b37d1bd",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "4fba026c82ae9b88",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "9e8155d3900b3329",
+    "type": "split",
+    "children": [
+      {
+        "id": "22b1886ad0dbd2ef",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "aadecc4eb4508370",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "4f2ac4c99fbb55cf",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "875017d4c62bd98f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "a0b1cb4f774c34d1",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          },
+          {
+            "id": "bbdeae85d947544f",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "b3d83242f27fa51b",
+  "lastOpenFiles": [
+    "BE-NOTES/Java/Spring/AOP/Join Point e Pointcut.md",
+    "BE-NOTES/Java/Spring/AOP/PointCut.md",
+    "BE-NOTES/Java/Spring/AOP/AOP.md",
+    "BE-NOTES/Java/Spring/AOP",
+    "BE-NOTES/Java/To View.md",
+    "BE-NOTES/Java/AOP",
+    "BE-NOTES/Java/Base/Method Class.md",
+    "BE-NOTES/To Check.md",
+    "BE-NOTES/Java/Spring/Interfaces nei Services.md",
+    "BE-NOTES/Java/Spring/Controller e REST.md",
+    "BE-NOTES/Java/Spring/Service Layer.md",
+    "BE-NOTES/Java/Spring/Web.md",
+    "BE-NOTES/Java/OOP/Transient Keyword.md",
+    "BE-NOTES/Java/OOP/Reflection API.md",
+    "BE-NOTES/Java/OOP/Classi Astratte.md",
+    "BE-NOTES/Java/GLOSSARIO JAVA - SPRING.md",
+    "BE-NOTES/Java/OOP/Stream, Arrow Func, Lambda, classi Anonime.md",
+    "BE-NOTES/Java/OOP/Generics.md",
+    "BE-NOTES/Java/OOP/Ereditarietà.md",
+    "BE-NOTES/Java/OOP/Enum.md",
+    "BE-NOTES/Java/OOP/Classi ed Oggetti.md",
+    "BE-NOTES/Hibernate-and-ORM/ORM.md",
+    "BE-NOTES/Java/Spring/Servlet.md",
+    "BE-NOTES/Java/Spring/Libreria vs Framework.md",
+    "BE-NOTES/Java/Base/Generics.md",
+    "BE-NOTES/Java/OOP/Override, interfaces, Overload.md",
+    "BE-NOTES/Java/OOP/Metodi.md",
+    "BE-NOTES/Java/OOP/Stato, visibilità, SOC e STATIC.md",
+    "Untitled 1.canvas",
+    "Untitled.canvas",
+    "BE-NOTES",
+    "BE-NOTES/Java/Spring/Spring Data JPA",
+    "BE-NOTES/Database/NoSQL",
+    "BE-NOTES/Database/SQL",
+    "BE-NOTES/Java/Base",
+    "BE-NOTES/Java/OOP"
+  ]
+}
