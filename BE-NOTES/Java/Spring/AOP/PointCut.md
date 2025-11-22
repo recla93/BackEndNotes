@@ -391,14 +391,3 @@ Pointcut: execution(* com.example.controller.*.*(..))
   
 **In sintesi**: I Pointcut sono le "query" o "filtri" che selezionano dove il tuo Aspect deve agire. Sono il collegamento tra "cosa fare" (Advice) e "dove farlo" (Join Point).[1][2][5]  
   
-Vuoi che ti mostri come creare pointcut complessi per un caso d'uso specifico del tuo progetto?  
-  
-[1](https://www.treccani.it/enciclopedia/aop_(Enciclopedia-della-Scienza-e-della-Tecnica)/)  
-[2](http://losviluppatore.it/implementare-l-aspect-oriented-programming-con-spring/)  
-[3](https://www.html.it/articoli/spring-aop-ed-aspectj-una-introduzione-alla-programmazione-ad-aspetti-in-java/)  
-[4](https://it.wikipedia.org/wiki/AspectJ)  
-[5](https://www.html.it/pag/18729/introduzione-allaop-aspect-oriented-programming/)  
-[6](https://www.emmecilab.net/blog/introduzione-aop-aspect-oriented-programming-in-spring/)  
-[7](https://www.youtube.com/watch?v=8OKC3c6ryKg)  
-[8](https://mokabyte.it/2006/12/01/spring-3/)  
-[9](https://codegym.cc/it/groups/posts/it.543.cose-laop-principi-di-programmazione-orientata-agli-aspetti)
