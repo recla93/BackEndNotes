@@ -14,7 +14,8 @@ boolean y = false;
 | `>` | Maggiore di | `5 > 3` → true |
 | `<=` | Minore o uguale | `5 <= 5` → true |
 | `>=` | Maggiore o uguale | `5 >= 3` → true |
-
+== uguaglianza di stato = valore  
+=== Uguaglianza di stato e TIPO
 ### Operatori Logici
 
 ```java

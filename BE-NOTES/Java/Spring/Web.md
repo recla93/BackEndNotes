@@ -151,3 +151,35 @@ Controller: non serializza automaticamente gli oggetti
 REST Controller: serializza automaticamente gli oggetti in JSON (usando Jackson)
 
 In sintesi, i Controller sono utilizzati per applicazioni web tradizionali, mentre i REST Controller sono specifici per la creazione di API RESTful.
+
+
+---
+
+# SESSION
+
+Per far comunicare client e web, stiamo usando http (protocollo di comunicazione, prevedere verbi, modi, ecc) per adesso ma http è “smemorato”.  
+Ogni volta che arriva una request, per il server è come se fosse la prima: il serve non sa con chi sta parlando e cosa sia successo in precedenza: Il server riceve la request, la apre, vede cosa ci sta, la esegue. Non è in grado di mantenere una comunicazione a lungo periodo. Non è in grado di farlo, non lo prevede.
+
+Per poter aggiungere quindi, una  
+Session = dati “permanenti” (esempio credenziali oppure tutto cio’ che rimane salvato in una sessione precedente).  
+Nella struttura tradizionale, cio’ che si occupa di tenere le cose in memoria è il server.  
+In Java =  
+La prima volta che un client si collega al server, il server ci fa “”””Amicizia””””” la prima volta che viene mandata una request, lo vede, capisce chi manda e crea una zona di memoria chiamata “session” che genera un ID di quella sessione ed il serve, poi, risponde con una response ed in allegato invia l’id della sessione (Jsession) la prende e la salva in cache. Da li’ in poi, ogni volta che il browser invia una request, ci sarà sempre allegato l’id della sessione.  
+Quindi, ogni volta, oltre alla request, ci saranno sempre i progressi ed il server saprà cosa riprendere in base a chi richiede le info
+
+COOKIE: Dati salvati che vengono inviati assieme alle request.  
+  
+Hash = Valore + Funzione Hashing = hash code  
+Tutti hanno la stessa lunghezza  
+lo stesso valore dovrà produrre sempre (S E M P R E) lo stesso hash  
+Se brucio lo stesso pezzo di legno, dovrei avere sempre la stessa quantità di cenere.  
+  
+POTENTE in ambito matematico: ci permette di effettuare LKP  
+L = List  
+K = Knowledge  
+P = Proof  
+  
+Per poter dire che qualcosa sia effettivamente tale, devo conoscerla QUINDI:  
+in ottica informatica, devo memorizzare i dati in chiaro.  
+Quale modo posso fare? Salvare la password in chiaro e username.  
+VOGLIAMO TROVARE UN MODO PER DIRE CHE HO TROVATO LA PASSWORD DI QUELLO USER SENZA SAPERE LA PASSWORD.
