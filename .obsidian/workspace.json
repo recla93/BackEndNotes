@@ -4,35 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "11955f578b8b7491",
+        "id": "9a8f5bc491836ad3",
         "type": "tabs",
         "children": [
           {
-            "id": "3adaf69ae95a7699",
+            "id": "094a2e910672c8af",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "split-diff-view",
               "state": {
-                "file": "BE-NOTES/Java/Spring/AOP/PointCut.md",
-                "mode": "source",
-                "source": false
+                "aFile": "Angularz/Untitled.md",
+                "bFile": "Angularz/Untitled.md",
+                "aRef": ""
               },
-              "icon": "lucide-file",
-              "title": "PointCut"
-            }
-          },
-          {
-            "id": "b3d83242f27fa51b",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "icon": "diff",
+              "title": "Diff: Untitled"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -188,36 +177,37 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "b3d83242f27fa51b",
+  "active": "094a2e910672c8af",
   "lastOpenFiles": [
-    "BE-NOTES/Java/Spring/AOP/Join Point e Pointcut.md",
+    "Angularz/Untitled.md",
+    "BE-NOTES/Java/Base/Costrutti di Iterazione.md",
+    "BE-NOTES/Java/Base/Generics.md",
+    "Angularz",
+    "BE-NOTES/Java/OOP/Generics.md",
+    "BE-NOTES/Java/GLOSSARIO JAVA - SPRING.md",
+    "BE-NOTES/Java/Base/Boolean e Condizioni.md",
+    "BE-NOTES/Java/Base/Method Class.md",
+    "BE-NOTES/Java/Base/Operazioni ed Espressioni.md",
+    "BE-NOTES/Java/Base/Variabili e Tipi di Dati.md",
     "BE-NOTES/Java/Spring/AOP/PointCut.md",
+    "BE-NOTES/Java/OOP/Classi ed Oggetti.md",
+    "BE-NOTES/Java/OOP/Classi Astratte.md",
+    "BE-NOTES/Java/OOP/Stream, Arrow Func, Lambda, classi Anonime.md",
+    "BE-NOTES/Java/OOP/Stato, visibilità, SOC e STATIC.md",
+    "BE-NOTES/Java/OOP/Metodi.md",
+    "BE-NOTES/Java/OOP/Override, interfaces, Overload.md",
+    "BE-NOTES/Java/OOP/Transient Keyword.md",
+    "BE-NOTES/Java/OOP/Reflection API.md",
+    "BE-NOTES/Database/SQL/Approcci alla progettazione.md",
+    "BE-NOTES/Database/SQL/Chiavi e Relazioni.md",
+    "BE-NOTES/Database/SQL/Fondamenti SQL.md",
+    "BE-NOTES/Java/OOP/Polimorfismo.md",
+    "BE-NOTES/Java/Spring/AOP/Join Point e Pointcut.md",
     "BE-NOTES/Java/Spring/AOP/AOP.md",
     "BE-NOTES/Java/Spring/AOP",
     "BE-NOTES/Java/To View.md",
     "BE-NOTES/Java/AOP",
-    "BE-NOTES/Java/Base/Method Class.md",
     "BE-NOTES/To Check.md",
-    "BE-NOTES/Java/Spring/Interfaces nei Services.md",
-    "BE-NOTES/Java/Spring/Controller e REST.md",
-    "BE-NOTES/Java/Spring/Service Layer.md",
-    "BE-NOTES/Java/Spring/Web.md",
-    "BE-NOTES/Java/OOP/Transient Keyword.md",
-    "BE-NOTES/Java/OOP/Reflection API.md",
-    "BE-NOTES/Java/OOP/Classi Astratte.md",
-    "BE-NOTES/Java/GLOSSARIO JAVA - SPRING.md",
-    "BE-NOTES/Java/OOP/Stream, Arrow Func, Lambda, classi Anonime.md",
-    "BE-NOTES/Java/OOP/Generics.md",
-    "BE-NOTES/Java/OOP/Ereditarietà.md",
-    "BE-NOTES/Java/OOP/Enum.md",
-    "BE-NOTES/Java/OOP/Classi ed Oggetti.md",
-    "BE-NOTES/Hibernate-and-ORM/ORM.md",
-    "BE-NOTES/Java/Spring/Servlet.md",
-    "BE-NOTES/Java/Spring/Libreria vs Framework.md",
-    "BE-NOTES/Java/Base/Generics.md",
-    "BE-NOTES/Java/OOP/Override, interfaces, Overload.md",
-    "BE-NOTES/Java/OOP/Metodi.md",
-    "BE-NOTES/Java/OOP/Stato, visibilità, SOC e STATIC.md",
     "Untitled 1.canvas",
     "Untitled.canvas",
     "BE-NOTES",
