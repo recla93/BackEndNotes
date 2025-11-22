@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "9a8f5bc491836ad3",
+        "id": "8d3cb667abe5e9f4",
         "type": "tabs",
         "children": [
           {
-            "id": "094a2e910672c8af",
+            "id": "8dd58567c6e5c69c",
             "type": "leaf",
             "state": {
               "type": "split-diff-view",
               "state": {
-                "aFile": "Angularz/Untitled.md",
-                "bFile": "Angularz/Untitled.md",
+                "aFile": "Untitled.base",
+                "bFile": "Untitled.base",
                 "aRef": ""
               },
               "icon": "diff",
-              "title": "Diff: Untitled"
+              "title": "Diff: Untitled.base"
             }
           }
         ]
@@ -177,8 +177,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "094a2e910672c8af",
+  "active": "bbdeae85d947544f",
   "lastOpenFiles": [
+    "Untitled 1.base",
+    "Untitled.base",
     "Angularz/Untitled.md",
     "BE-NOTES/Java/Base/Costrutti di Iterazione.md",
     "BE-NOTES/Java/Base/Generics.md",
@@ -207,7 +209,6 @@
     "BE-NOTES/Java/Spring/AOP",
     "BE-NOTES/Java/To View.md",
     "BE-NOTES/Java/AOP",
-    "BE-NOTES/To Check.md",
     "Untitled 1.canvas",
     "Untitled.canvas",
     "BE-NOTES",
