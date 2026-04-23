@@ -11,17 +11,32 @@
             "id": "8dd58567c6e5c69c",
             "type": "leaf",
             "state": {
+              "type": "markdown",
+              "state": {
+                "file": "BE-NOTES/Java/OOP/Classi ed Oggetti.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Classi ed Oggetti"
+            }
+          },
+          {
+            "id": "a8d86d74b6a4229d",
+            "type": "leaf",
+            "state": {
               "type": "split-diff-view",
               "state": {
-                "aFile": "Untitled.base",
-                "bFile": "Untitled.base",
+                "aFile": "BE-NOTES/Java/Spring/Spring Data JPA/Hibernate-and-ORM/Hibernate e Session Factory.md",
+                "bFile": "BE-NOTES/Java/Spring/Spring Data JPA/Hibernate-and-ORM/Hibernate e Session Factory.md",
                 "aRef": ""
               },
               "icon": "diff",
-              "title": "Diff: Untitled.base"
+              "title": "Diff: Hibernate e Session Factory"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -140,12 +155,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "BE-NOTES/Java/Base/Method Class.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of Method Class"
             }
           },
           {
@@ -156,6 +172,16 @@
               "state": {},
               "icon": "git-pull-request",
               "title": "Source Control"
+            }
+          },
+          {
+            "id": "476d7db602397d50",
+            "type": "leaf",
+            "state": {
+              "type": "git-history-view",
+              "state": {},
+              "icon": "history",
+              "title": "History"
             }
           }
         ],
@@ -177,45 +203,55 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "bbdeae85d947544f",
+  "active": "a8d86d74b6a4229d",
   "lastOpenFiles": [
+    "BE-NOTES/Java/Spring/Spring Data JPA/Hibernate-and-ORM/Hibernate Annotation.md",
+    "BE-NOTES/Java/OOP/Classi Astratte.md",
+    "BE-NOTES/Java/Base/Variabili e Tipi di Dati.md",
+    "BE-NOTES/Java/Base/Operazioni ed Espressioni.md",
+    "BE-NOTES/Java/Base/Method Class.md",
+    "BE-NOTES/Java/Base/Boolean e Condizioni.md",
+    "BE-NOTES/Java/Base/Costrutti di Iterazione.md",
+    "BE-NOTES/Java/Spring/Bean ed Application Context.md",
+    "BE-NOTES/Java/GLOSSARIO JAVA - SPRING.md",
+    "BE-NOTES/Java/Spring/Dependency Injection.md",
+    "BE-NOTES/Java/Spring/Best Practices per SpringBoot REST.md",
+    "BE-NOTES/Java/Spring/ACRONIMI E DESIGN PATTERNS.md",
+    "BE-NOTES/Java/Spring/Spring Data JPA/Spring Data JPA.md",
+    "BE-NOTES/Java/Spring/Spring Data JPA/Repository Pattern.md",
+    "BE-NOTES/Java/OOP/Ereditarietà.md",
+    "BE-NOTES/Java/OOP/Classi ed Oggetti.md",
+    "BE-NOTES/Java/Spring/Web.md",
+    "BE-NOTES/Java/Spring/SpringBoot.md",
+    "BE-NOTES/Java/Spring/Servlet.md",
+    "BE-NOTES/Java/Spring/Service Layer.md",
+    "BE-NOTES/Java/Spring/Libreria vs Framework.md",
+    "BE-NOTES/Java/Spring/Interfaces nei Services.md",
+    "BE-NOTES/Java/Spring/Controller e REST.md",
+    "BE-NOTES/Java/Spring/Spring Data JPA/Hibernate-and-ORM/JPA - Java Persistence API.md",
+    "BE-NOTES/Java/OOP/Transient Keyword.md",
+    "BE-NOTES/Java/OOP/Stream, Arrow Func, Lambda, classi Anonime.md",
+    "Pics/Screenshot 2025-04-11 093352.png",
+    "Pics/Pasted image 20251122161846.png",
+    "Pics/Screenshot 2025-04-28 095221.png",
+    "Pics/Screenshot 2025-04-11 104428.png",
+    "Pics/Screenshot 2025-04-11 092903.png",
+    "Pics/Screenshot 2025-04-11 091649.png",
+    "Pics/Pasted image 20251122162237.png",
+    "Pics/Pasted image 20251122162144.png",
+    "Pics/Pasted image 20251122162107.png",
+    "Pics/Pasted image 20251122162047.png",
+    "Pics",
+    "BE-NOTES/Java/ANGULAR.docx",
     "Untitled 1.base",
     "Untitled.base",
-    "Angularz/Untitled.md",
-    "BE-NOTES/Java/Base/Costrutti di Iterazione.md",
-    "BE-NOTES/Java/Base/Generics.md",
     "Angularz",
-    "BE-NOTES/Java/OOP/Generics.md",
-    "BE-NOTES/Java/GLOSSARIO JAVA - SPRING.md",
-    "BE-NOTES/Java/Base/Boolean e Condizioni.md",
-    "BE-NOTES/Java/Base/Method Class.md",
-    "BE-NOTES/Java/Base/Operazioni ed Espressioni.md",
-    "BE-NOTES/Java/Base/Variabili e Tipi di Dati.md",
-    "BE-NOTES/Java/Spring/AOP/PointCut.md",
-    "BE-NOTES/Java/OOP/Classi ed Oggetti.md",
-    "BE-NOTES/Java/OOP/Classi Astratte.md",
-    "BE-NOTES/Java/OOP/Stream, Arrow Func, Lambda, classi Anonime.md",
-    "BE-NOTES/Java/OOP/Stato, visibilità, SOC e STATIC.md",
-    "BE-NOTES/Java/OOP/Metodi.md",
-    "BE-NOTES/Java/OOP/Override, interfaces, Overload.md",
-    "BE-NOTES/Java/OOP/Transient Keyword.md",
-    "BE-NOTES/Java/OOP/Reflection API.md",
-    "BE-NOTES/Database/SQL/Approcci alla progettazione.md",
-    "BE-NOTES/Database/SQL/Chiavi e Relazioni.md",
-    "BE-NOTES/Database/SQL/Fondamenti SQL.md",
-    "BE-NOTES/Java/OOP/Polimorfismo.md",
-    "BE-NOTES/Java/Spring/AOP/Join Point e Pointcut.md",
-    "BE-NOTES/Java/Spring/AOP/AOP.md",
     "BE-NOTES/Java/Spring/AOP",
-    "BE-NOTES/Java/To View.md",
     "BE-NOTES/Java/AOP",
     "Untitled 1.canvas",
     "Untitled.canvas",
     "BE-NOTES",
     "BE-NOTES/Java/Spring/Spring Data JPA",
-    "BE-NOTES/Database/NoSQL",
-    "BE-NOTES/Database/SQL",
-    "BE-NOTES/Java/Base",
-    "BE-NOTES/Java/OOP"
+    "BE-NOTES/Database/NoSQL"
   ]
 }
