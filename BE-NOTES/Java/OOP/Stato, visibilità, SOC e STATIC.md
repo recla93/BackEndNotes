@@ -1,83 +1,159 @@
+# Stato, Visibilità, SoC, Static e Final
+
 ## Stato dell'Oggetto
 
-L'insieme dei valori delle proprietà in un determinato momento è lo **stato dell'oggetto**.
+Lo **stato** di un oggetto è l'insieme dei valori delle sue proprietà in un determinato momento.
 
-​
+```java
+Persona p = new Persona("Mario", 30);
+// Stato: { nome="Mario", eta=30 }
+p.setEta(31);
+// Stato: { nome="Mario", eta=31 } — lo stato è cambiato
+```
 
-L'esterno può modificare lo stato di un oggetto tramite metodi **Setter**, mentre interagisce con lo stato tramite **Getter e Setter**.
+Lo stato evolve tramite **metodi**. L'esterno interagisce con lo stato tramite **getter** (leggere) e **setter** (modificare).
 
-​
+**Principio:** l'oggetto deve essere responsabile del proprio stato.
 
-## Incapsulamento
+```java
+public class ContoBancario {
+    private double saldo;
 
-**Incapsulamento**: Principio per cui un oggetto è responsabile del proprio stato e l'esterno interagisce con esso tramite getter e setter.
+    public void preleva(double importo) {
+        if (importo <= 0) throw new IllegalArgumentException("Importo non valido");
+        if (importo > saldo) throw new IllegalStateException("Saldo insufficiente");
+        this.saldo -= importo;
+    }
+}
+```
 
-​
+## Incapsulamento (Encapsulation)
 
-Vogliamo **accesso controllato alle proprietà** dall'oggetto stesso. L'oggetto deve avere il controllo e non il resto del mondo.
+**Incapsulamento** = nascondere i dettagli interni, esporre solo ciò che serve.
 
-​
+```java
+public class Persona {
+    private String nome;
+    private int eta;
+
+    public String getNome() { return nome; }
+    public void setNome(String nome) {
+        if (nome == null || nome.isBlank())
+            throw new IllegalArgumentException("Nome obbligatorio");
+        this.nome = nome;
+    }
+}
+```
+
+**Vantaggi:**
+- Validazione nei setter (controllo su cosa entra)
+- Libertà di cambiare implementazione interna senza impattare i client
+- Stato sempre coerente
 
 ## Separation of Concerns (SoC)
 
-La responsabilità deve essere gestita dall'oggetto stesso e non dal chiamante. La logica deve essere concentrata in un punto e quel punto è l'oggetto stesso per poterlo utilizzare in ogni caso secondo i suoi dettami.
+**SoC** = ogni componente ha **una singola responsabilità** ben definita.
 
-​
+```java
+// ❌ VIOLAZIONE: una classe che fa tutto
+public class PersonaService {
+    public void salvaPersona(Persona p) {
+        // logica business + scrittura log + invio email + accesso DB
+    }
+}
 
-I controlli è bene farli sempre nel contesto di esecuzione/esistenza dell'oggetto.
+// ✅ CORRETTO: ogni classe ha una responsabilità
+@Service
+public class PersonaService { ... }
+@Component
+public class EmailService { ... }
+@Component
+public class AuditService { ... }
+```
 
-​
+I controlli e la logica devono stare nel contesto dell'oggetto che possiede i dati, non nel chiamante.
 
-## Modificatore STATIC
+## Modificatore Static
 
-Ciò che non è `static` appartiene allo **scope di oggetto**, mentre con `STATIC` quelle caratteristiche appartengono alla **classe** e non al singolo oggetto.
+`static` = appartiene alla **classe**, non all'istanza:
 
-​
+```java
+public class Contatore {
+    private static int contatoreGlobale = 0;  // 1 copia per TUTTA la classe
+    private int id;                            // 1 copia per OGNI oggetto
 
-## Caratteristiche di STATIC
+    public Contatore() {
+        contatoreGlobale++;
+        this.id = contatoreGlobale;
+    }
 
-- Appartiene direttamente alla classe e non ai singoli oggetti
-    
+    public static int getContatoreGlobale() { return contatoreGlobale; }
+}
 
-- ​
-    
-- Non ha accesso al `this`
-    
-- ​
-    
-- Può essere chiamato direttamente sulla classe senza creare un'istanza
-    
-- ​
-    
-- Esiste una sola copia per l'intera classe, indipendentemente dal numero di oggetti creati
-    
+// Uso
+new Contatore();  // id=1, contatoreGlobale=1
+new Contatore();  // id=2, contatoreGlobale=2
+Contatore.getContatoreGlobale();  // 2 — chiamato SULLA CLASSE
+```
 
-- ​
-    
+**Caratteristiche:**
+- Appartiene alla classe, non all'oggetto
+- Chiamabile senza istanza: `Math.max(5, 3)`
+- Non ha accesso a `this`
+- Non può accedere a variabili di istanza
+- Non può essere override (solo nascosto)
 
-**STATIC FINAL**: Valore costante che, nonostante le modifiche, tornerà sempre a quel valore.
+**Quando usare:**
+- Costanti (`public static final`)
+- Utility methods (`Math`, `Collections`)
+- Factory methods (`List.of()`)
+- Contatori globali
+- Metodo `main()`
 
-​
+## Static Final — Costanti
 
-## Modificatore FINAL
+```java
+public class Config {
+    public static final int MAX_TENTATIVI = 3;
+    public static final String APP_NAME = "TaskManager";
+    public static final double IVA = 0.22;
+}
 
-Una volta che una variabile `FINAL` viene assegnata, il suo valore non può più essere cambiato.
+Config.MAX_TENTATIVI  // 3
+```
 
-​
+- `static` → una copia per tutta la classe
+- `final` → non può essere riassegnata
 
-## Caratteristiche di FINAL
+**Convenzione:** `MAIUSCOLO_CON_UNDERSCORE` per le costanti.
 
-- Può essere usato sia per variabili di oggetto che per variabili di classe (static)
-    
+## Modificatore Final
 
-- ​
-    
-- Per le variabili di oggetto, ogni oggetto avrà la sua propria variabile final
-    
-- ​
-    
-- È spesso usato per definire costanti
-    
-- ​
-    
-- Aiuta a centralizzare valori importanti in un unico punto del codice
+`final` impedisce la riassegnazione:
+
+```java
+// Variabile locale
+final int x = 5;
+// x = 6;  ERRORE
+
+// Campo di istanza
+public class Persona {
+    private final long id;      // impostato nel costruttore, mai più cambiato
+    private final String nome;
+}
+
+// Metodo — non può essere override
+public final void metodoFinale() { ... }
+
+// Classe — non può essere estesa
+public final class String { ... }
+```
+
+**Differenza static vs final:**
+
+| | static | final |
+|---|---|---|
+| Cosa fa | Una copia per classe | Non può essere riassegnato |
+| Per oggetto? | No (una per classe) | Sì (se campo d'istanza) |
+| Combinato | `static final` = costante globale |
+| Esempio | `contatoreGlobale` | `id` univoco per persona |

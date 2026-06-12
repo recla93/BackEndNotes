@@ -11,32 +11,13 @@
             "id": "8dd58567c6e5c69c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "BE-NOTES/Java/OOP/Classi ed Oggetti.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Classi ed Oggetti"
-            }
-          },
-          {
-            "id": "a8d86d74b6a4229d",
-            "type": "leaf",
-            "state": {
-              "type": "split-diff-view",
-              "state": {
-                "aFile": "BE-NOTES/Java/Spring/Spring Data JPA/Hibernate-and-ORM/Hibernate e Session Factory.md",
-                "bFile": "BE-NOTES/Java/Spring/Spring Data JPA/Hibernate-and-ORM/Hibernate e Session Factory.md",
-                "aRef": ""
-              },
-              "icon": "diff",
-              "title": "Diff: Hibernate e Session Factory"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Vista grafo"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -59,7 +40,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "Esplora risorse"
             }
           },
           {
@@ -93,7 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 208.5
   },
   "right": {
     "id": "9e8155d3900b3329",
@@ -155,13 +136,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "BE-NOTES/Java/Base/Method Class.md",
+                "file": "BE-NOTES/Python_Guida_Completa.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Method Class"
+              "title": "Struttura di Python_Guida_Completa"
             }
           },
           {
@@ -193,44 +174,54 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "bases:Create new base": false,
+      "switcher:Apri selezione rapida": false,
+      "graph:Apri vista grafo": false,
+      "canvas:Crea nuova lavagna": false,
+      "daily-notes:Apri nota del giorno": false,
+      "templates:Inserisci modello": false,
+      "command-palette:Apri riquadro comandi": false,
+      "bases:Crea nuova Base": false,
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a8d86d74b6a4229d",
+  "active": "8dd58567c6e5c69c",
   "lastOpenFiles": [
-    "BE-NOTES/Java/Spring/Spring Data JPA/Hibernate-and-ORM/Hibernate Annotation.md",
-    "BE-NOTES/Java/OOP/Classi Astratte.md",
-    "BE-NOTES/Java/Base/Variabili e Tipi di Dati.md",
-    "BE-NOTES/Java/Base/Operazioni ed Espressioni.md",
-    "BE-NOTES/Java/Base/Method Class.md",
-    "BE-NOTES/Java/Base/Boolean e Condizioni.md",
-    "BE-NOTES/Java/Base/Costrutti di Iterazione.md",
-    "BE-NOTES/Java/Spring/Bean ed Application Context.md",
-    "BE-NOTES/Java/GLOSSARIO JAVA - SPRING.md",
-    "BE-NOTES/Java/Spring/Dependency Injection.md",
-    "BE-NOTES/Java/Spring/Best Practices per SpringBoot REST.md",
-    "BE-NOTES/Java/Spring/ACRONIMI E DESIGN PATTERNS.md",
-    "BE-NOTES/Java/Spring/Spring Data JPA/Spring Data JPA.md",
-    "BE-NOTES/Java/Spring/Spring Data JPA/Repository Pattern.md",
+    "BE-NOTES/Java/Spring/Security/SecurityConfig e Filter Chain.md",
+    "BE-NOTES/Java/Tecnologie/Java Records.md",
+    "BE-NOTES/Java/Spring/Web/Web.md",
+    "BE-NOTES/Java/Spring/Security/Authorities e RBAC.md",
     "BE-NOTES/Java/OOP/Ereditarietà.md",
+    "BE-NOTES/Java/OOP/Enum.md",
     "BE-NOTES/Java/OOP/Classi ed Oggetti.md",
-    "BE-NOTES/Java/Spring/Web.md",
-    "BE-NOTES/Java/Spring/SpringBoot.md",
-    "BE-NOTES/Java/Spring/Servlet.md",
-    "BE-NOTES/Java/Spring/Service Layer.md",
-    "BE-NOTES/Java/Spring/Libreria vs Framework.md",
-    "BE-NOTES/Java/Spring/Interfaces nei Services.md",
-    "BE-NOTES/Java/Spring/Controller e REST.md",
-    "BE-NOTES/Java/Spring/Spring Data JPA/Hibernate-and-ORM/JPA - Java Persistence API.md",
-    "BE-NOTES/Java/OOP/Transient Keyword.md",
-    "BE-NOTES/Java/OOP/Stream, Arrow Func, Lambda, classi Anonime.md",
+    "BE-NOTES/Java/OOP/Classi Astratte.md",
+    "BE-NOTES/Database/SQL/Fondamenti SQL.md",
+    "BE-NOTES/Java/Spring/Data/JPA Best Practices.md",
+    "BE-NOTES/Java/Base/Java Best Practices.md",
+    "BE-NOTES/Java/Java.md",
+    "BE-NOTES/Java/Spring/Spring.md",
+    "BE-NOTES/Java/Tecnologie/Lombok - @Data e @Builder.md",
+    "BE-NOTES/Java/Tecnologie/Optional e Gestione Null.md",
+    "BE-NOTES/Java/Tecnologie/Java 21 - Pattern Matching.md",
+    "BE-NOTES/Java/Tecnologie/Core Concepts.md",
+    "BE-NOTES/Java/Tecnologie/Java.md",
+    "BE-NOTES/Java/Spring/Security/Token Blacklist.md",
+    "BE-NOTES/Java/Spring/Security/Spring Security.md",
+    "BE-NOTES/Java/Spring/Security/OAuth2 con Google e GitHub.md",
+    "BE-NOTES/Java/Spring/Security/JWT - Generazione e Validazione.md",
+    "BE-NOTES/Java/Spring/Boot/Spring Boot Best Practices.md",
+    "BE-NOTES/Java/Spring/Boot/Dipendenze con Maven.md",
+    "BE-NOTES/Java/Spring/Boot/Core Concepts.md",
+    "BE-NOTES/Java/Spring/Boot/Autoconfiguration e Starters.md",
+    "BE-NOTES/Java/Tecnologie/Java/Core Concepts",
+    "BE-NOTES/Java/Tecnologie/Java",
+    "BE-NOTES/Java/Spring/Infra/Docker",
+    "BE-NOTES/Java/Spring/Infra/Spring Doc",
+    "BE-NOTES/Java/Spring/Infra/MapStruct",
+    "BE-NOTES/Java/Spring/Security/Spring Security",
+    "BE-NOTES/Java/Spring/Boot/Spring Boot/Core Concepts",
+    "BE-NOTES/Java/Spring/Boot/Spring Boot",
+    "BE-NOTES/Glossario",
+    "BE-NOTES/Java/Tecnologie",
     "Pics/Screenshot 2025-04-11 093352.png",
     "Pics/Pasted image 20251122161846.png",
     "Pics/Screenshot 2025-04-28 095221.png",
@@ -241,17 +232,7 @@
     "Pics/Pasted image 20251122162144.png",
     "Pics/Pasted image 20251122162107.png",
     "Pics/Pasted image 20251122162047.png",
-    "Pics",
-    "BE-NOTES/Java/ANGULAR.docx",
-    "Untitled 1.base",
-    "Untitled.base",
-    "Angularz",
-    "BE-NOTES/Java/Spring/AOP",
-    "BE-NOTES/Java/AOP",
     "Untitled 1.canvas",
-    "Untitled.canvas",
-    "BE-NOTES",
-    "BE-NOTES/Java/Spring/Spring Data JPA",
-    "BE-NOTES/Database/NoSQL"
+    "Untitled.canvas"
   ]
 }

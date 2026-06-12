@@ -1,46 +1,141 @@
-L'override permette di ridefinire un metodo di una classe padre in una classe figlia. Consente di personalizzare il comportamento di un metodo ereditato mantenendo la stessa firma del metodo originale.
+# Override, Overload, Interfaces
 
-​
+Tre concetti fondamentali dell'OOP in Java: **override** (sostituire), **overload** (sovraccaricare), **interfacce** (contratti).
 
-## Interface (Interfacce)
+## Override — ridefinire un metodo ereditato
 
-## Cosa può contenere un'interfaccia
+Un metodo **override** ha la stessa firma (nome + parametri) di un metodo della superclasse, ma implementazione diversa.
 
-- FINAL STATIC: Sì
-- STATIC: No
-- METODI STATIC: Sì
-- METODI CONCRETI: Sì (con keyword `default` da Java 8)
-- METODI ASTRATTI: Sì
-- PROPRIETÀ NORMALI: No
-## Caratteristiche principali
+```java
+public class Animale {
+    public void verso() {
+        System.out.println("Verso generico");
+    }
+}
 
-- Può contenere solo costanti (proprietà final static) e metodi astratti di default
-- Non può essere istanziata direttamente
-- Serve a massimizzare la differenza tra tipo formale e tipo concreto
-- Permette l'implementazione multipla
-- Viene utilizzata principalmente come tipo formale
-- Tutti gli elementi sono implicitamente public e abstract
+public class Cane extends Animale {
+    @Override
+    public void verso() {               // stessa firma
+        System.out.println("Bau!");
+    }
+}
 
-Un'interfaccia è un tipo formale che dice al resto del programma che quella classe sa fare determinate cose.
-## StringBuilder
+// Uso
+Animale a = new Cane();
+a.verso();  // "Bau!" — a runtime usa il metodo del Cane (dynamic dispatch)
+```
 
-Utilizzato per la concatenazione di stringhe di grosse dimensioni, più efficiente rispetto alla concatenazione standard.
-## Interface Comparable
+**Regole dell'override:**
+- Firma identica (nome + parametri)
+- Visibilità non può essere più restrittiva (`public` → `public`, non `public` → `private`)
+- Il metodo sovrascritto può lanciare eccezioni più specifiche o nessuna
+- Usa sempre `@Override` — il compilatore controlla che la firma sia corretta
 
-L'interfaccia `Comparable` è implementabile agli oggetti per renderli comparabili. Quando gli oggetti sono in lista, saranno comparabili per caratteristica di oggetto.
-## Overload
+**Problemi comuni:**
+- **Dimenticare @Override** — se sbagli firma, fai overload invece di override (nessun errore, ma non funziona come previsto)
+- **Chiamare super per sbaglio** — se vuoi estendere, chiama `super.metodo()`, se vuoi sostituire completamente no
 
-Si ha **overload** quando si hanno versioni diverse dello stesso metodo distinte dal numero/tipo di parametri.
+## Overload — stesso nome, parametri diversi
 
-Il chiamante decide quale metodo usare in base ai parametri che passa.
+Metodi con lo stesso nome ma numero/tipo/ordine di parametri **diverso**.
 
-## Best Practice
+```java
+public class Calcolatrice {
+    // Overload per tipo
+    public int somma(int a, int b) { return a + b; }
+    public double somma(double a, double b) { return a + b; }
 
-È bene avere un metodo base (versione principale) e tante altre versioni che prendono input diversi e rimandano al metodo default.
+    // Overload per numero parametri
+    public int somma(int a, int b, int c) { return a + b + c; }
 
-**Principio DRY** (Don't Repeat Yourself): L'overload segue questo principio.
-## Casting
+    // Overload per ordine
+    public String somma(String a, int b) { return a + b; }
+    public String somma(int a, String b) { return a + b; }
+}
+```
 
-**Casting = cambio di tipo formale**.
+**Quando usarlo:**
+- Metodi che fanno la stessa cosa ma con input diversi
+- Costruttori multipli
+- Versioni con valori di default
+
+**Best Practice:** un metodo principale (con tutti i parametri) e overload che chiamano il principale con default.
+
+```java
+public void creaUtente(String nome, String email, boolean notify) { ... }
+public void creaUtente(String nome, String email) {
+    creaUtente(nome, email, true);  // notify = true di default
+}
+```
+
+**Problema comune:** overload con tipi primitivi e wrapper può essere ambiguo:
+
+```java
+void foo(int x) { }
+void foo(Integer x) { }
+foo(null);  // ambiguità — Integer o int? ERRORE in compilazione!
+```
+
+## Interfacce — contratti che le classi implementano
+
+Un'interfaccia definisce **cosa** una classe deve saper fare, non **come**.
+
+```java
+public interface Volante {
+    void decolla();
+    void atterra();
+}
+
+// Implementazione
+public class Aereo implements Volante {
+    @Override
+    public void decolla() {
+        System.out.println("L'aereo decolla");
+    }
+
+    @Override
+    public void atterra() {
+        System.out.println("L'aereo atterra");
+    }
+}
+```
+
+**Cosa può contenere un'interfaccia (Java 8+):**
+- Costanti (`public static final` — implicitamente)
+- Metodi astratti (da implementare)
+- Metodi `default` (con corpo — Java 8)
+- Metodi `static` (Java 8)
+
+**Vantaggi:**
+- **Implementazione multipla** — una classe può implementare più interfacce (non può estendere più classi)
+- **Tipo formale** — usi l'interfaccia come tipo, la classe concreta è intercambiabile
+- **Basso accoppiamento** — il codice dipende dal contratto, non dall'implementazione
+
+```java
+// Tutti i volatili possono essere trattati allo stesso modo
+Volante v1 = new Aereo();
+Volante v2 = new Uccello();
+v1.decolla();  // non importa cosa sia, so che può decollare
+```
+
+**Differenza classe astratta vs interfaccia:**
+
+| Aspetto | Classe Astratta | Interfaccia |
+|---|---|---|
+| Stato | Può avere campi di istanza | Solo costanti |
+| Costruttore | Sì | No |
+| Metodi concreti | Sì | Solo `default` e `static` |
+| Ereditarietà | Una sola classe | Molte interfacce |
+| Quando usarla | Classi imparentate con codice condiviso | Capacità trasversali (volante, confrontabile, serializzabile) |
+
+## Confronto Override vs Overload
+
+| | Override | Overload |
+|---|---|---|
+| Firma | Identica | Diversa (parametri) |
+| Classe | Diversa (super → sub) | Stessa classe |
+| Scopo | Sostituire comportamento | Aggiungere varianti |
+| Risoluzione | Runtime (dynamic dispatch) | Compilazione |
+| @Override | Obbligatorio (buona pratica) | Non si usa |
 
 ​
