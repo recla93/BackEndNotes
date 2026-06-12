@@ -11,10 +11,12 @@
             "id": "8dd58567c6e5c69c",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Vista grafo"
+              "type": "html-view",
+              "state": {
+                "file": "Angularz/guida-angular-claudio 1.html"
+              },
+              "icon": "code-glyph",
+              "title": "guida-angular-claudio 1"
             }
           }
         ]
@@ -49,7 +51,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:/BE-NOTES/Java",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -57,7 +59,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "Search"
+              "title": "Ricerca"
             }
           },
           {
@@ -136,13 +138,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "BE-NOTES/Python_Guida_Completa.md",
+                "file": "Angularz/guida-angular-claudio 1.html",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Struttura di Python_Guida_Completa"
+              "title": "Struttura di guida-angular-claudio 1"
             }
           },
           {
@@ -186,6 +188,12 @@
   },
   "active": "8dd58567c6e5c69c",
   "lastOpenFiles": [
+    "Angularz/Guida_Completa_Angular_Da_Zero_A_Produzione.md",
+    "Angularz/guida-angular-claudio 1.html",
+    "Angularz/Untitled.md",
+    "Angularz/guida-angular-claudio.html",
+    "Angularz/Angular OP.md",
+    "Angularz/Concetti_Angular_Approfonditi.md",
     "BE-NOTES/Java/Spring/Security/SecurityConfig e Filter Chain.md",
     "BE-NOTES/Java/Tecnologie/Java Records.md",
     "BE-NOTES/Java/Spring/Web/Web.md",
@@ -207,11 +215,6 @@
     "BE-NOTES/Java/Spring/Security/Token Blacklist.md",
     "BE-NOTES/Java/Spring/Security/Spring Security.md",
     "BE-NOTES/Java/Spring/Security/OAuth2 con Google e GitHub.md",
-    "BE-NOTES/Java/Spring/Security/JWT - Generazione e Validazione.md",
-    "BE-NOTES/Java/Spring/Boot/Spring Boot Best Practices.md",
-    "BE-NOTES/Java/Spring/Boot/Dipendenze con Maven.md",
-    "BE-NOTES/Java/Spring/Boot/Core Concepts.md",
-    "BE-NOTES/Java/Spring/Boot/Autoconfiguration e Starters.md",
     "BE-NOTES/Java/Tecnologie/Java/Core Concepts",
     "BE-NOTES/Java/Tecnologie/Java",
     "BE-NOTES/Java/Spring/Infra/Docker",
@@ -220,8 +223,6 @@
     "BE-NOTES/Java/Spring/Security/Spring Security",
     "BE-NOTES/Java/Spring/Boot/Spring Boot/Core Concepts",
     "BE-NOTES/Java/Spring/Boot/Spring Boot",
-    "BE-NOTES/Glossario",
-    "BE-NOTES/Java/Tecnologie",
     "Pics/Screenshot 2025-04-11 093352.png",
     "Pics/Pasted image 20251122161846.png",
     "Pics/Screenshot 2025-04-28 095221.png",
