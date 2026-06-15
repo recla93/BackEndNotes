@@ -81,13 +81,130 @@ boolean isBlacklisted(String token) {
 
 Il TTL della blacklist dovrebbe essere uguale alla durata massima del token — se un token scade in 24h, non serve tenerlo in blacklist per più di 24h.
 
-## In TaskMngr
+## Flusso logout completo (TaskMngr)
 
-- Blacklist in-memory (sufficiente per sviluppo e MVP)
-- Logout → aggiunge token corrente alla blacklist
-- `@Scheduled` per monitoraggio periodico della dimensione
-- Migrazione a Redis pianificata per produzione
+```
+┌────────────┐  POST /api/auth/logout   ┌────────────────┐
+│  Client    │ ────── Authorization: ──→ │ AuthController │
+│            │        Bearer <token>     │                │
+└────────────┘                           └───────┬────────┘
+                                                  │ authService.logout(token)
+                                                  ▼
+                                         ┌─────────────────┐
+                                         │  AuthServiceImpl │
+                                         │                  │
+                                         │ 1. jwtUtil       │
+                                         │    .getExpiration│
+                                         │    FromToken()   │
+                                         │                  │
+                                         │ 2. tokenBlacklist│
+                                         │    .blacklist(   │
+                                         │     token,expiry)│
+                                         └────────┬─────────┘
+                                                  │
+                                                  ▼
+                                         ┌─────────────────┐
+                                         │TokenBlacklistSvc │
+                                         │                  │
+                                         │ token → expiryMs │
+                                         │ (ConcurrentHashMap)│
+                                         └─────────────────┘
+
+  Ogni richiesta successiva:
+  ┌──────────┐  qualsiasi richiesta    ┌────────────────────┐
+  │  Client  │ ──────────────────────→ │ JwtAuthentication  │
+  │(loggato) │    Authorization: Bearer │ Filter              │
+  └──────────┘                         │                     │
+                                       │ 1. validate JWT     │
+                                       │ 2. tokenBlacklist   │
+                                       │    .isBlacklisted() │
+                                       │    (se SI → 401)    │
+                                       │ 3. SecurityContext  │
+                                       └────────────────────┘
+```
+
+## Blacklistare un token: significato
+
+"Blacklistare" significa **aggiungere il token a una lista nera** (`ConcurrentHashMap<String, Long>`) in modo che, pur essendo formalmente valido (firma HMAC corretta, non scaduto), il server lo rifiuti comunque. Il JWT non viene "cancellato" o "distrutto" — semplicemente il filtro JWT controlla la blacklist **dopo** aver validato la firma.
+
+### Implementazione reale in TaskMngr
+
+```java
+// TokenBlacklistService.java
+@Service
+public class TokenBlacklistService
+{
+    private final Map<String, Long> blacklist = new ConcurrentHashMap<>();
+    //                token    →  expiration (millis)
+
+    // Aggiunge token + timestamp di scadenza
+    public void blacklist(String token, long expiryMs) {
+        blacklist.put(token, expiryMs);
+    }
+
+    // Controlla e fa cleanup lazy degli scaduti
+    public boolean isBlacklisted(String token) {
+        cleanup();                    // rimuove token scaduti
+        return blacklist.containsKey(token);
+    }
+
+    // RemoveIf: scorre la mappa e cancella le entry expired
+    private void cleanup() {
+        long now = System.currentTimeMillis();
+        blacklist.values().removeIf(expiry -> expiry < now);
+    }
+}
+```
+
+Il cleanup è **lazy** — non c'è un thread schedulato. Viene eseguito ogni volta che `isBlacklisted()` viene chiamato (cioè ad ogni richiesta autenticata). I token scaduti vengono rimossi automaticamente, quindi la mappa non cresce all'infinito.
+
+### Logout endpoint
+
+```java
+// AuthController.java
+@PostMapping("/logout")
+public ResponseEntity<ApiResponse<Void>> logout(
+        @RequestHeader("Authorization") String authHeader)
+{
+    String token = authHeader.substring(7);  // toglie "Bearer "
+    authService.logout(token);
+    return ResponseEntity.ok(
+        ApiResponse.success("Logout effettuato con successo"));
+}
+```
+
+```java
+// AuthServiceImpl.java
+public void logout(String token)
+{
+    Date expiry = jwtUtil.getExpirationFromToken(token);
+    if (expiry != null)
+        tokenBlacklistService.blacklist(token, expiry.getTime());
+}
+```
+
+### Perché serve l'expiry?
+
+Il `TokenBlacklistService.blacklist(token, expiryMs)` salva il **timestamp di scadenza** del token. Quando `cleanup()` viene eseguito, rimuove solo i token la cui expiration è passata. Così:
+- I token in blacklist ma **non ancora scaduti** → vengono rifiutati (logout attivo)
+- I token **scaduti** → vengono rimossi dalla mappa (nessun memory leak)
+
+### Perché non basta invalidare il token lato client?
+
+Il client potrebbe cancellare il token dal proprio storage, ma se un attaccante lo ha intercettato (XSS, log, backup), può ancora usarlo. La blacklist server-side è l'unico modo per garantire che il logout sia effettivo.
+
+## Limiti dell'approccio in-memory (TaskMngr attuale)
+
+| Problema | Impatto |
+|---|---|
+| **Perdita al restart** | Se il server riparte, la blacklist svuota → token tornano validi |
+| **Non scala** | Ogni istanza ha la propria mappa → cluster incoerente |
+| **Memoria** | Potenzialmente migliaia di token in ConcurrentHashMap |
+
+Per produzione la soluzione è Redis con TTL nativo (come descritto sopra).
 
 ## Vedi anche
 
 - [[BE-NOTES/Java/Spring/Security/JWT - Generazione e Validazione|JWT — Generazione e Validazione]] — come il JWT viene generato e validato
+- [[BE-NOTES/Java/Spring/Security/SecurityConfig e Filter Chain|SecurityConfig e Filter Chain]] — dove il filtro JWT è configurato
+- [[BE-NOTES/Java/Spring/Security/Authorities e RBAC|Authorities e RBAC]] — autorizzazioni basate su ruolo

@@ -11,12 +11,14 @@
             "id": "8dd58567c6e5c69c",
             "type": "leaf",
             "state": {
-              "type": "html-view",
+              "type": "markdown",
               "state": {
-                "file": "Angularz/guida-angular-claudio 1.html"
+                "file": "Angularz/Guida_Completa_Angular_Da_Zero_A_Produzione.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "code-glyph",
-              "title": "guida-angular-claudio 1"
+              "icon": "lucide-file",
+              "title": "Guida_Completa_Angular_Da_Zero_A_Produzione"
             }
           }
         ]
@@ -138,13 +140,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Angularz/guida-angular-claudio 1.html",
+                "file": "Angularz/Guida_Completa_Angular_Da_Zero_A_Produzione.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Struttura di guida-angular-claudio 1"
+              "title": "Struttura di Guida_Completa_Angular_Da_Zero_A_Produzione"
             }
           },
           {
@@ -188,12 +190,12 @@
   },
   "active": "8dd58567c6e5c69c",
   "lastOpenFiles": [
-    "Angularz/Guida_Completa_Angular_Da_Zero_A_Produzione.md",
     "Angularz/guida-angular-claudio 1.html",
+    "Angularz/Guida_Completa_Angular_Da_Zero_A_Produzione.md",
+    "Angularz/Concetti_Angular_Approfonditi.md",
     "Angularz/Untitled.md",
     "Angularz/guida-angular-claudio.html",
     "Angularz/Angular OP.md",
-    "Angularz/Concetti_Angular_Approfonditi.md",
     "BE-NOTES/Java/Spring/Security/SecurityConfig e Filter Chain.md",
     "BE-NOTES/Java/Tecnologie/Java Records.md",
     "BE-NOTES/Java/Spring/Web/Web.md",

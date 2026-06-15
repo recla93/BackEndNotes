@@ -1,15 +1,15 @@
 # 🚀 Guida Completa Angular: Da Zero a Produzione
 
 ## Indice
-1. [Setup Progetto da Zero](#setup-progetto-da-zero)
-2. [Struttura Cartelle](#struttura-cartelle)
-3. [Configurazione Ambiente](#configurazione-ambiente)
-4. [Flusso Dati in Angular](#flusso-dati-in-angular)
-5. [Services: Fondamenti](#services-fondamenti)
-6. [Backend Detached (API Esterna)](#backend-detached)
-7. [Backend Integrato (Frontend)](#backend-integrato)
-8. [Angular Signals (Nuovo!)](#angular-signals)
-9. [Checklist Finale](#checklist-finale)
+1. [[#⚙️ Setup Progetto da Zero|Setup Progetto da Zero]]
+2. [[#📁 Struttura Cartelle Consigliata|Struttura Cartelle]]
+3. [[#🔧 Configurazione Ambiente|Configurazione Ambiente]]
+4. [[#📊 Flusso Dati in Angular|Flusso Dati in Angular]]
+5. [[#🎯 Services: Fondamenti|Services: Fondamenti]]
+6. [[#🌐 Backend Detached (API Esterna)|Backend Detached (API Esterna)]]
+7. [[#🔗 Backend Integrato (Frontend)|Backend Integrato (Frontend)]]
+8. [[#⚡ Angular Signals (Nuovo!)|Angular Signals (Nuovo!)]]
+9. [[#✅ Checklist: Nuovo Progetto Angular|Checklist Finale]]
 
 ---
 
