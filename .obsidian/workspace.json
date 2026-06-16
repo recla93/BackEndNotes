@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "8d3cb667abe5e9f4",
+        "id": "8a8e4ddeff4d38b4",
         "type": "tabs",
         "children": [
           {
-            "id": "8dd58567c6e5c69c",
+            "id": "11459231babf8184",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BE-NOTES/Java/Tecnologie/Lombok - @Data e @Builder.md",
+                "file": "BE-NOTES/Java/Glossario Java - Spring.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Lombok - @Data e @Builder"
+              "title": "Glossario Java - Spring"
             }
           }
         ]
@@ -188,13 +188,34 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "8dd58567c6e5c69c",
+  "active": "11459231babf8184",
   "lastOpenFiles": [
+    "BE-NOTES/Java/Java.md",
+    "BE-NOTES/Java/Glossario Java - Spring.md",
+    "BE-NOTES/Java/Spring/Spring.md",
+    "BE-NOTES/C#",
+    "BE-NOTES/Glossario/C",
+    "BE-NOTES/PHP",
+    "BE-NOTES/JS + TS",
+    "BE-NOTES/Python",
+    "BE-NOTES/Python/Python_Guida_Completa.md",
+    "BE-NOTES/Java/Spring/Core/AOP/AOP.md",
+    "graphify-out/GRAPH_REPORT.md",
+    "graphify-out/graph.html",
+    "Pics/Screenshot 2025-04-11 104428.png",
+    "Pics/Pasted image 20251122162047.png",
+    "Pics/Pasted image 20251122162107.png",
+    "Pics/Pasted image 20251122161926.png",
+    "Pics/Pasted image 20251122162144.png",
+    "Pics/Pasted image 20251122162237.png",
+    "Pics/Screenshot 2025-04-11 091649.png",
+    "Pics/Pasted image 20251122161846.png",
+    "Pics/Pasted image 20251122161713.png",
+    "BE-NOTES/Java/Tecnologie/Lombok - @Data e @Builder.md",
     "BE-NOTES/Java/Tecnologie/Optional e Gestione Null.md",
     "BE-NOTES/Java/Tecnologie/Java 21 - Pattern Matching.md",
     "BE-NOTES/Java/Tecnologie/Java.md",
     "BE-NOTES/Java/Tecnologie/Core Concepts.md",
-    "BE-NOTES/Java/Java.md",
     "BE-NOTES/Database/SQL/Fondamenti SQL.md",
     "BE-NOTES/Database/SQL/JOIN.md",
     "BE-NOTES/Database/SQL/Chiavi e Relazioni.md",
@@ -212,30 +233,9 @@
     "BE-NOTES/Java/Spring/Security/Authorities e RBAC.md",
     "BE-NOTES/Java/OOP/Ereditarietà.md",
     "BE-NOTES/Java/OOP/Enum.md",
-    "BE-NOTES/Java/OOP/Classi ed Oggetti.md",
-    "BE-NOTES/Java/OOP/Classi Astratte.md",
-    "BE-NOTES/Java/Spring/Data/JPA Best Practices.md",
-    "BE-NOTES/Java/Base/Java Best Practices.md",
-    "BE-NOTES/Java/Spring/Spring.md",
-    "BE-NOTES/Java/Tecnologie/Lombok - @Data e @Builder.md",
     "BE-NOTES/Java/Tecnologie/Java/Core Concepts",
     "BE-NOTES/Java/Tecnologie/Java",
-    "BE-NOTES/Java/Spring/Infra/Docker",
-    "BE-NOTES/Java/Spring/Infra/Spring Doc",
-    "BE-NOTES/Java/Spring/Infra/MapStruct",
-    "BE-NOTES/Java/Spring/Security/Spring Security",
-    "BE-NOTES/Java/Spring/Boot/Spring Boot/Core Concepts",
-    "BE-NOTES/Java/Spring/Boot/Spring Boot",
     "Pics/Screenshot 2025-04-11 093352.png",
-    "Pics/Pasted image 20251122161846.png",
-    "Pics/Screenshot 2025-04-28 095221.png",
-    "Pics/Screenshot 2025-04-11 104428.png",
-    "Pics/Screenshot 2025-04-11 092903.png",
-    "Pics/Screenshot 2025-04-11 091649.png",
-    "Pics/Pasted image 20251122162237.png",
-    "Pics/Pasted image 20251122162144.png",
-    "Pics/Pasted image 20251122162107.png",
-    "Pics/Pasted image 20251122162047.png",
     "Untitled 1.canvas",
     "Untitled.canvas"
   ]
