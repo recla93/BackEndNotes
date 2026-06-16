@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Angularz/Guida_Completa_Angular_Da_Zero_A_Produzione.md",
+                "file": "BE-NOTES/Java/Tecnologie/Lombok - @Data e @Builder.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Guida_Completa_Angular_Da_Zero_A_Produzione"
+              "title": "Lombok - @Data e @Builder"
             }
           }
         ]
@@ -190,10 +190,20 @@
   },
   "active": "8dd58567c6e5c69c",
   "lastOpenFiles": [
+    "BE-NOTES/Java/Tecnologie/Optional e Gestione Null.md",
+    "BE-NOTES/Java/Tecnologie/Java 21 - Pattern Matching.md",
+    "BE-NOTES/Java/Tecnologie/Java.md",
+    "BE-NOTES/Java/Tecnologie/Core Concepts.md",
+    "BE-NOTES/Java/Java.md",
+    "BE-NOTES/Database/SQL/Fondamenti SQL.md",
+    "BE-NOTES/Database/SQL/JOIN.md",
+    "BE-NOTES/Database/SQL/Chiavi e Relazioni.md",
+    "BE-NOTES/Database/SQL/Approcci alla progettazione.md",
+    "BE-NOTES/Database/NoSQL/MongoDB/MongoDB-Basics.md",
+    "Angularz/Untitled.md",
     "Angularz/guida-angular-claudio 1.html",
     "Angularz/Guida_Completa_Angular_Da_Zero_A_Produzione.md",
     "Angularz/Concetti_Angular_Approfonditi.md",
-    "Angularz/Untitled.md",
     "Angularz/guida-angular-claudio.html",
     "Angularz/Angular OP.md",
     "BE-NOTES/Java/Spring/Security/SecurityConfig e Filter Chain.md",
@@ -204,19 +214,10 @@
     "BE-NOTES/Java/OOP/Enum.md",
     "BE-NOTES/Java/OOP/Classi ed Oggetti.md",
     "BE-NOTES/Java/OOP/Classi Astratte.md",
-    "BE-NOTES/Database/SQL/Fondamenti SQL.md",
     "BE-NOTES/Java/Spring/Data/JPA Best Practices.md",
     "BE-NOTES/Java/Base/Java Best Practices.md",
-    "BE-NOTES/Java/Java.md",
     "BE-NOTES/Java/Spring/Spring.md",
     "BE-NOTES/Java/Tecnologie/Lombok - @Data e @Builder.md",
-    "BE-NOTES/Java/Tecnologie/Optional e Gestione Null.md",
-    "BE-NOTES/Java/Tecnologie/Java 21 - Pattern Matching.md",
-    "BE-NOTES/Java/Tecnologie/Core Concepts.md",
-    "BE-NOTES/Java/Tecnologie/Java.md",
-    "BE-NOTES/Java/Spring/Security/Token Blacklist.md",
-    "BE-NOTES/Java/Spring/Security/Spring Security.md",
-    "BE-NOTES/Java/Spring/Security/OAuth2 con Google e GitHub.md",
     "BE-NOTES/Java/Tecnologie/Java/Core Concepts",
     "BE-NOTES/Java/Tecnologie/Java",
     "BE-NOTES/Java/Spring/Infra/Docker",
