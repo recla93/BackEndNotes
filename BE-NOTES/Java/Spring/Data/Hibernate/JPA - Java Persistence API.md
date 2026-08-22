@@ -1,3 +1,8 @@
+---
+topic: "JPA — Java Persistence API"
+nav_prev: "[[ORM.md]]"
+nav_next: "[[Hibernate e Session Factory.md]]"
+---
 
 **JPA** (Java Persistence API) è lo **standard Java per ORM**. Definisce come gli oggetti vengono persistiti (salvati) nel database.
 
@@ -159,6 +164,16 @@ public class Materia {
 }
 ```
 
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Usare Hibernate API invece di JPA API | Accoppiamento a Hibernate, difficile cambiare implementazione | Chiamare `session.save()` invece di `em.persist()` | Usa sempre `jakarta.persistence.*` (EntityManager) non `org.hibernate.*` (Session) |
+| `EntityManager` non chiuso | Memory leak, connessione non rilasciata | `em.close()` dimenticato | Chiudi in `finally` o usa `@PersistenceContext` in Spring (gestito automaticamente) |
+| `em.merge()` usato per creare nuove entità | SELECT aggiuntiva prima di INSERT | `merge()` fa prima una query per verificare se l'entità esiste | Usa `em.persist()` per nuove entità, `em.merge()` solo per update di entità detached |
+| `em.remove()` su entità detached | `IllegalArgumentException` o `EntityNotFoundException` | Rimuovere un'entità non gestita dal persistence context | Usa `find()` prima di `remove()`, o passa `em.merge(entity)` a remove |
+| Transazione manuale senza rollback in caso di errore | Dati parziali, DB inconsistente | `tx.rollback()` non chiamato se eccezione | Avvolgi in try-catch e fai rollback nel catch |
+
 ### @Transactional
 
 Gestisce le transazioni (tutto o niente):
@@ -175,6 +190,16 @@ public class PersonaService {
     }
 }
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Usare Hibernate API invece di JPA API | Accoppiamento a Hibernate, difficile cambiare implementazione | Chiamare `session.save()` invece di `em.persist()` | Usa sempre `jakarta.persistence.*` (EntityManager) non `org.hibernate.*` (Session) |
+| `EntityManager` non chiuso | Memory leak, connessione non rilasciata | `em.close()` dimenticato | Chiudi in `finally` o usa `@PersistenceContext` in Spring (gestito automaticamente) |
+| `em.merge()` usato per creare nuove entità | SELECT aggiuntiva prima di INSERT | `merge()` fa prima una query per verificare se l'entità esiste | Usa `em.persist()` per nuove entità, `em.merge()` solo per update di entità detached |
+| `em.remove()` su entità detached | `IllegalArgumentException` o `EntityNotFoundException` | Rimuovere un'entità non gestita dal persistence context | Usa `find()` prima di `remove()`, o passa `em.merge(entity)` a remove |
+| Transazione manuale senza rollback in caso di errore | Dati parziali, DB inconsistente | `tx.rollback()` non chiamato se eccezione | Avvolgi in try-catch e fai rollback nel catch |
 
 ### @DiscriminatorColumn (Single Table Inheritance)
 

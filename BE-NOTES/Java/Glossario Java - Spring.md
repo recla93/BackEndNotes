@@ -305,7 +305,6 @@ Esempio: `List<String> nomelista = new ArrayList<String>()`
 
 ---
 
-# Spring Framework
 
 ## Concetti Fondamentali
 
@@ -447,3 +446,18 @@ Le annotazioni JPA permettono di automatizzare ORM (Object Relational Mapping) â
 ## Altri Concetti
 
 **JSON (JavaScript Object Notation)**: Sintassi per rappresentare oggetti anonimi JavaScript (non appartengono a una classe).
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Oggetto non inizializzato | `NullPointerException` | Dichiarare variabile senza `new` | Inizializza sempre con `new` o un costruttore |
+| Confondere `=` con `==` | Condizione sempre vera/falsa | Assegnamento invece di confronto | Usa `==` per primitivi, `.equals()` per oggetti |
+| Array index out of bounds | `ArrayIndexOutOfBoundsException` | Accedere a indice oltre la lunghezza | Verifica la dimensione con `array.length - 1` |
+| `static` chiamato su oggetto invece che classe | Funziona ma confonde | Chiamare metodo static su istanza | Usa `NomeClasse.metodoStatico()` per chiarezza |
+| Dimenticare `break` in switch | Caso successivo eseguito inaspettatamente (fall-through) | `break` mancante dopo un case | Aggiungi `break` o usa switch expression (Java 14+) |
+| Non implementare `Serializable` | `NotSerializableException` | Classe non marcata per serializzazione | Implementa `Serializable` se l'oggetto deve essere serializzato |
+| `@Autowired` su field | Dipendenza nascosta, difficile da testare | Field injection invece di constructor injection | Usa constructor injection (`private final` + costruttore) |
+| Entity con `@Data` di Lombok | `equals/hashCode` con ID null (bug Hibernate) | `@Data` genera `equals/hashCode` su tutti i campi | Usa `@Getter @Setter` manuali su entity JPA |
+| FetchType.EAGER su relazioni | Performance degradata, JOIN inutili su ogni query | `@ManyToOne(fetch = FetchType.EAGER)` | Usa `FetchType.LAZY` + `JOIN FETCH` quando serve |
+| Transazione lunga in service | Lock sul DB, concorrenza ridotta | `@Transactional` su metodi che includono operazioni lente | Transazioni brevi e mirate: sposta operazioni lunghe fuori dalla transazione |

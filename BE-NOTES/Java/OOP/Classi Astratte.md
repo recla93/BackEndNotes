@@ -1,12 +1,17 @@
-### Cos'è una Classe Astratta?
+﻿---
+topic: "Classi Astratte"
+nav_prev: "[[Ereditarietà.md]]"
+nav_next: "[[Interfaces.md]]"
+---
+### Cos'Ã¨ una Classe Astratta?
 
-Una **classe astratta** è una classe che **non può essere istanziata** direttamente. Serve come punto di partenza per altre classi che la estendono:
+Una **classe astratta** Ã¨ una classe che **non puÃ² essere istanziata** direttamente. Serve come punto di partenza per altre classi che la estendono:
 
 ```java
-// ❌ Non si può istanziare
+// âŒ Non si puÃ² istanziare
 // Persona p = new Persona();  // ERRORE!
 
-// ✅ Si estende
+// âœ… Si estende
 public class Studente extends Persona { }
 Studente s = new Studente();  // OK
 ```
@@ -38,16 +43,16 @@ public class Studente extends Persona {
 
 ### Cosa Contiene una Classe Astratta
 
-- ✓ Proprietà di oggetto e di classe (static)
-- ✓ Metodi statici e concreti
-- ✓ Metodi astratti
-- ✓ Costruttori
-- ✗ Non può essere istanziata direttamente
+- âœ“ ProprietÃ  di oggetto e di classe (static)
+- âœ“ Metodi statici e concreti
+- âœ“ Metodi astratti
+- âœ“ Costruttori
+- âœ— Non puÃ² essere istanziata direttamente
 
 ```java
 public abstract class Persona {
-    private String nome;  // Proprietà di oggetto
-    private static int contatore = 0;  // Proprietà di classe
+    private String nome;  // ProprietÃ  di oggetto
+    private static int contatore = 0;  // ProprietÃ  di classe
     
     public Persona() {}  // Costruttore
     
@@ -69,83 +74,18 @@ public abstract class Persona {
 | ------------- | ------------------- | --------------------- |
 | Istanziazione | No                  | No                    |
 | Estensione    | Una sola            | Infinite              |
-| Stato         | Sì (proprietà)      | No (solo costanti)    |
+| Stato         | SÃ¬ (proprietÃ )      | No (solo costanti)    |
 | Metodi        | Concreti e astratti | Astratti (di default) |
-| Uso           | "è un" (IS-A)       | "può fare" (CAN-DO)   |
-| Costruttore   | Sì                  | No                    |
+| Uso           | "Ã¨ un" (IS-A)       | "puÃ² fare" (CAN-DO)   |
+| Costruttore   | SÃ¬                  | No                    |
 
 ---
 
-## Classi Astratte
+## Errori comuni
 
-**Non può essere istanziata** nel main, viene usata come punto di partenza per altre classi, nasce per essere estesa.
-
-​
-
-## Cosa può contenere una classe astratta
-
-- FINAL STATIC: Sì
-    
-
-- ​
-    
-- STATIC: Sì
-    
-- ​
-    
-- Metodi STATIC: Sì
-    
-- ​
-    
-- Proprietà di oggetto: Sì
-    
-- ​
-    
-- Metodi normali: Sì
-    
-- ​
-    
-- Metodi astratti: Sì
-    
-
-- ​
-    
-
-Una classe astratta può avere **TUTTO**.
-
-​
-
-## Caratteristiche principali
-
-- È utilizzata come punto di partenza per altre classi
-    
-
-- ​
-    
-- È progettata per essere estesa da altre classi
-    
-- ​
-    
-- Può contenere proprietà e metodi statici
-    
-- ​
-    
-- Fornisce una struttura comune permettendo la definizione di metodi astratti
-    
-
-- ​
-    
-
-## Metodi Astratti
-
-Metodo **senza corpo**, senza codice, solo firma. Verrà implementato ed utilizzato da altre classi.
-
-​
-
-Implica che ogni figlio **dovrà avere** questo metodo, ma le regole vengono definite dai figli.
-
-​
-
-Quando una classe concreta eredita da una classe astratta, è **obbligata a fare override** e implementare tutti i metodi astratti ereditati.
-
-​
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Istanziare una classe astratta | Errore di compilazione | Le classi astratte non possono essere istanziate | Correggi l'istanza o rendi la classe concreta rimuovendo `abstract` |
+| Dimenticare di implementare un metodo astratto | Errore di compilazione nella sottoclasse concreta | La classe figlia non implementa tutti i metodi astratti del genitore | Implementa tutti i metodi astratti, oppure dichiara la figlia `abstract` |
+| Astratto senza metodo astratto | Classe astratta con solo metodi concreti — possibile ma inutile | Serve una base comune ma nessun comportamento da forzare | Valuta se serve una classe astratta o se una classe concreta basta |
+| Usare classe astratta dove basta un'interfaccia | Accoppiamento stretto (ereditarietà singola bruciata) | "Classe astratta con solo metodi astratti" = interfaccia | Usa `interface` invece di `abstract class` se non c'è stato condiviso |

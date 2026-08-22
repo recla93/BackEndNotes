@@ -1,9 +1,9 @@
 ---
 topic: "Token Blacklist"
 parent: "[[BE-NOTES/Java/Spring/Security/Spring Security|Spring Security]]"
+nav_prev: "[[Authorities e RBAC.md]]"
 ---
 
-# Token Blacklist
 
 Il JWT è **intrinsecamente non revocabile**: una volta emesso, è valido fino alla scadenza. Se un utente fa logout, il token continua a funzionare. La blacklist risolve questo problema: teniamo traccia dei token revocati e li rifiutiamo nel filtro JWT.
 
@@ -202,6 +202,16 @@ Il client potrebbe cancellare il token dal proprio storage, ma se un attaccante 
 | **Memoria** | Potenzialmente migliaia di token in ConcurrentHashMap |
 
 Per produzione la soluzione è Redis con TTL nativo (come descritto sopra).
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Blacklist non controllata nel JWT filter | Token revocato ancora valido | Il filtro JWT valida la firma ma non controlla la blacklist | Aggiungi check `isBlacklisted(token)` dopo la validazione della firma |
+| Pulizia blacklist mai eseguita | `OutOfMemoryError` dopo giorni di attività | La ConcurrentHashMap cresce all'infinito senza rimuovere token scaduti | Implementa cleanup periodico (es. `@Scheduled`) o lazy cleanup in `isBlacklisted()` |
+| Token memorizzato interamente in blacklist | Memoria sprecata per token lunghi | Il JWT può essere > 1KB, la blacklist tiene l'intera stringa | Memorizza l'hash del token (SHA-256) invece del token completo |
+| Blacklist in-memory in cluster multi-istanza | Token revocato su istanza A ma valido su istanza B | Ogni istanza ha la propria ConcurrentHashMap | Usa Redis condiviso o database per la blacklist in produzione |
+| Blacklistare il refresh token ma non l'access token | L'access token continua a funzionare fino a scadenza | Solo il refresh token viene invalidato | Blacklista ANCHE l'access token corrente al logout |
 
 ## Vedi anche
 

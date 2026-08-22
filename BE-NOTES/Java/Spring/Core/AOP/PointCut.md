@@ -1,4 +1,8 @@
-# Cosa sono i PointCut?  
+---
+topic: "PointCut"
+nav_prev: "[[AOP.md]]"
+nav_next: "[[Join Point e Pointcut.md]]"
+---
   
 I **Pointcut** sono il "cervello selettivo" degli Aspect: decidono **DOVE** applicare il tuo codice (Advice). Sono espressioni/predicati che matchano uno o più Join Point, cioè i punti del programma dove vuoi intercettare l'esecuzione.[1][2][5]  
   

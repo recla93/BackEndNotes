@@ -1,10 +1,10 @@
 ---
 topic: "Optional e Gestione Null"
 parent: "[[BE-NOTES/Java/Tecnologie/Core Concepts|Core Concepts]]"
-prev: "[[BE-NOTES/Java/Tecnologie/Java 21 - Pattern Matching]]"
+nav_prev: "[[Java 21 - Pattern Matching.md]]"
+nav_next: "[[Lombok - @Data e @Builder.md]]"
 ---
 
-# Optional e Gestione Null
 
 `Optional<T>` è un contenitore che rappresenta **esplicitamente l'assenza di un valore**. Introdotto in Java 8 per risolvere il problema dei `NullPointerException` silenziosi. Il suo scopo non è eliminare i null, ma **costringere il chiamante a gestire il caso "vuoto"**.
 
@@ -76,6 +76,18 @@ Optional<Task> task = userRepo.findByEmail(email)
     .flatMap(user -> taskRepo.findByUserId(user.getId()));
     // senza flatMap: Optional<Optional<Task>>
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `Optional.get()` senza controllo | `NoSuchElementException` a runtime | Chiami `.get()` su `Optional.empty()` | Usa `.orElse()`, `.orElseGet()`, o `.orElseThrow()` invece di `get()` diretto |
+| `Optional` come campo di classe | `NotSerializableException` o errori JPA/Jackson | `Optional` non implementa `Serializable`; Lombok e JPA non lo gestiscono | Lascia il campo semplicemente `null` o con valore di default |
+| `Optional` come parametro di metodo | Il chiamante ignora l'Optional e passa `null` lo stesso | `Optional` non impedisce `null` — il parametro può essere null | Usa overloading: `findByName(String)` e `findByName()` |
+| `Optional` per collezioni | Ridondanza: `Optional<List<T>>` | Una lista vuota (`[]`) è già un contenitore che rappresenta assenza | Restituisci `Collections.emptyList()` invece di `Optional<List<T>>` |
+| `orElse` con espressione costosa | Calcolo eseguito ANCHE quando l'Optional è pieno | `orElse(expensive())` valuta sempre l'argomento | Usa `orElseGet(() -> expensive())` — valutazione lazy solo se vuoto |
+| `isPresent()`-`get()` invece di `ifPresent` | Codice verboso, più soggetto a errori | Pattern `if (opt.isPresent()) { opt.get()... }` | Preferisci `ifPresent()`, `map()`, `flatMap()`, o `orElseThrow()` |
+| Usare `Optional.of()` con valore potenzialmente null | `NullPointerException` | `Optional.of(null)` lancia subito NPE | Usa `Optional.ofNullable(valore)` se il valore può essere null |
 
 ## In TaskMngr
 

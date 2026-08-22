@@ -1,9 +1,10 @@
 ---
 topic: "Core Concepts — fondamenti di Java"
 parent: "[[BE-NOTES/Java/Tecnologie/Java|Java]]"
+nav_prev: "[[Java.md]]"
+nav_next: "[[Java Records.md]]"
 ---
 
-# Core Concepts
 
 Concetti fondamentali del linguaggio Java, con focus sulle novità di **Java 21** e sulle best practice usate in [[TaskMngr]].
 

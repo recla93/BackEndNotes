@@ -1,9 +1,10 @@
 ---
 topic: "Autoconfiguration e Starters"
 parent: "[[BE-NOTES/Java/Spring/Boot/Core Concepts|Core Concepts]]"
+nav_prev: "[[Core Concepts.md]]"
+nav_next: "[[Application Properties.md]]"
 ---
 
-# Autoconfiguration e Starters
 
 Spring Boot elimina la configurazione manuale che caratterizzava Spring classico (XML, `@Enable*` espliciti). Lo fa con due meccanismi: **starters** (dipendenze preassemblate) e **autoconfiguration** (bean creati automaticamente in base alle librerie presenti).
 
@@ -59,6 +60,16 @@ spring:
 ```
 
 Utile quando vuoi gestire manualmente un bean che Spring Boot configurerebbe automaticamente.
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Starter mancante | `ClassNotFoundException` o bean non trovato | La dipendenza non è nel classpath, quindi l'autoconfiguration non si attiva | Aggiungi lo starter corretto a `pom.xml`/`build.gradle` |
+| Versione starter non allineata al BOM | `NoSuchMethodError`, conflitti di classpath | Versioni di starter e Spring Boot non compatibili | Lascia che il BOM Spring Boot gestisca le versioni; non specificare versioni manuali |
+| Autoconfiguration esclusa per errore | Funzionalità mancante (es. DataSource non configurato) | `spring.autoconfigure.exclude` rimuove configurazione necessaria | Verifica gli exclude e rimuovi quelli non intenzionali |
+| Più starter che fanno la stessa cosa | Conflitto di bean, configurazione duplicata | Es. due starter di template engine (Thymeleaf + Freemarker) | Tieni un solo starter per categoria funzionale |
+| `@ConditionalOnMissingBean` ignorato | Bean custom sovrascritto dall'autoconfiguration | Il tuo bean ha stesso tipo di quello configurato automaticamente | L'autoconfiguration rispetta `@ConditionalOnMissingBean` — se il tuo bean non viene iniettato, controlla condizioni |
 
 ## In TaskMngr
 

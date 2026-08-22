@@ -1,9 +1,10 @@
 ---
 topic: "ApiResponse Pattern"
 parent: "[[BE-NOTES/Java/Spring/Web/REST API Design|REST API Design]]"
+nav_prev: "[[Validazione con Bean Validation.md]]"
+nav_next: "[[Global Exception Handler.md]]"
 ---
 
-# ApiResponse Pattern
 
 Tutte le risposte API di [[TaskMngr]] seguono una **struttura uniforme**: un envelope che contiene l'esito dell'operazione, un messaggio, i dati e (opzionalmente) gli errori campo per campo.
 
@@ -106,6 +107,15 @@ public ResponseEntity<ApiResponse<Void>> deleteTask(@PathVariable Long id) {
 | **Naming** | Convenzione diversa per ogni dev | Schema standardizzato |
 | **Backward compat** | Cambiare struttura rompe i client | Aggiungi campi all'envelope |
 | **Testing** | Assert diversi per ogni endpoint | Un unico `assertSuccess()` |
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| ApiResponse senza generics | Warning del compilatore, rischio cast errati | `ApiResponse` usato come raw type invece di `ApiResponse<T>` | Specifica il tipo: `ApiResponse<TaskDto>`, mai `ApiResponse` nudo |
+| errors è una mappa ma il client lo tratta come stringa | Parsing JSON fallisce lato client | La struttura `errors` cambia da `null` a mappa | Il client deve gestire sia null che Map; documenta nel contratto API |
+| Messaggio di errore che espone dettagli interni | Fuga di informazione in produzione | `e.getMessage()` passato direttamente all'utente | Messaggi user-friendly per il client, stack trace solo in log |
+| Restituire data = null in caso di success | Il client fa check su null per ogni risposta | Il pattern prevede data null solo in errore | In success, restituisci sempre data (anche `Void`) |
 
 ## In TaskMngr
 

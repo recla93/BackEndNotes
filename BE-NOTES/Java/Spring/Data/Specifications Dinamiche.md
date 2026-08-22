@@ -1,9 +1,10 @@
 ---
 topic: "Specifications Dinamiche"
 parent: "[[BE-NOTES/Java/Spring/Data/Spring Data JPA|Spring Data JPA]]"
+nav_prev: "[[Repository Pattern.md]]"
+nav_next: "[[Entity Mapping.md]]"
 ---
 
-# Specifications Dinamiche
 
 Le specifiche risolvono un problema comune: **filtri che cambiano in base all'input dell'utente**. Con `JpaSpecificationExecutor` costruisci query WHERE dinamicamente, unendo condizioni solo se necessario, senza scrivere `@Query` per ogni combinazione.
 
@@ -100,6 +101,16 @@ return taskRepository.findAll(spec, pageable).map(mapper::toDto);
 ```
 
 Una `Specification` combinata fa tutto in una query SQL — nessun N+1, nessuna logica sparsa nei service.
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Specification non gestisce `null` | `NullPointerException` se filtro opzionale è null | `Specification.where(null)` non è gestito di default | Ogni metodo deve fare `if (value == null) return Specification.where(null)` per saltare il filtro |
+| `root.get("...").get("...")` eccessivo | JOIN multipli impliciti, query lente | Attraversare relazioni con `.get()` crea JOIN aggiuntivi | Limita a 2 livelli di profondità; usa `@EntityGraph` per carichi anticipati |
+| `Specification.where(null).and(spec)` | La specifica viene ignorata | "Se è tutto null, non applico filtri" — ma a volte serve almeno 1 condizione | Separa condizioni obbligatorie da opzionali; le obbligatorie sempre presenti |
+| Dimenticare di estendere `JpaSpecificationExecutor` | `findAll(Specification)` non disponibile | Il repository non implementa l'interfaccia | Aggiungi `JpaSpecificationExecutor<T>` alla dichiarazione del repository |
+| Usare Specification su query semplici e fisse | Over-engineering, codice più complesso del necessario | "Tanto funziona" | Per 1-2 filtri fissi, usa query derivation o `@Query` — è più leggibile |
 
 ## Attenzione a JOIN impliciti
 

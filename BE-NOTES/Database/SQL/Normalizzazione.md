@@ -1,4 +1,3 @@
-# Normalizzazione
 
 La normalizzazione è il processo di **organizzazione dei dati** per ridurre ridondanza e dipendenze inconsistenti.
 

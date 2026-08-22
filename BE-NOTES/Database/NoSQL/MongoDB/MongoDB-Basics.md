@@ -1,4 +1,3 @@
-# MongoDB - NoSQL Database
 
 ## Cos'è MongoDB?
 

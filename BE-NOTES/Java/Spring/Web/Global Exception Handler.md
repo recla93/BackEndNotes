@@ -1,9 +1,10 @@
 ---
 topic: "Global Exception Handler"
 parent: "[[BE-NOTES/Java/Spring/Web/REST API Design|REST API Design]]"
+nav_prev: "[[ApiResponse Pattern.md]]"
+nav_next: "[[Paginazione.md]]"
 ---
 
-# Global Exception Handler
 
 In un'applicazione Spring, le eccezioni possono venire da ovunque: service, repository, validazione, sicurezza. Senza un handler centralizzato, ogni controller dovrebbe gestirle con `try-catch` — codice ripetitivo e fragile. `@RestControllerAdvice` risolve il problema intercettando TUTTE le eccezioni non gestite e convertendole in una risposta standard.
 
@@ -97,6 +98,16 @@ public TaskDto getTask(Long id) {
     // Se task non esiste → 404 con messaggio chiaro
 }
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `@ExceptionHandler` su eccezione troppo generica | Errore 500 per cose che dovrebbero essere 400 | `catch(Exception.class)` prima di catch specifici | Metti handler specifici PRIMA del catch-all Exception.class |
+| Stack trace nell'HTTP response | Dettagli implementativi esposti in produzione | `ex.printStackTrace()` o `ex.toString()` nel body | Mai esporre stack trace al client — logga sul server |
+| `@RestControllerAdvice` dimenticato | Risposta vuota o HTML invece di JSON | `@ControllerAdvice` restituisce view, non JSON | Usa `@RestControllerAdvice` o aggiungi `@ResponseBody` su ogni metodo |
+| Try-catch in ogni controller | Codice duplicato, fragilità | "Non mi fido del GlobalExceptionHandler" | Lascia le eccezioni non gestite: l'handler globale le cattura tutte |
+| Non gestire `MethodArgumentNotValidException` | Errore 400 senza dettagli campo per campo | `@Valid` fallisce ma nessun handler cattura l'eccezione specifica | Aggiungi handler esplicito per `MethodArgumentNotValidException` |
 
 ## Cosa NON fare
 

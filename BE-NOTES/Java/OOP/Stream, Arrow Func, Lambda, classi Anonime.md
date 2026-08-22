@@ -1,4 +1,8 @@
-# Lambda, Stream e Classi Anonime
+---
+topic: "Stream, Arrow Func, Lambda, classi Anonime"
+nav_prev: "[[Enum.md]]"
+nav_next: "[[Reflection API.md]]"
+---
 
 Java 8 ha introdotto la programmazione funzionale con lambda e stream, riducendo drasticamente la verbosità del codice.
 

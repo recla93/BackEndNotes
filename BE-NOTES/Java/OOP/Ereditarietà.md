@@ -1,6 +1,11 @@
+﻿---
+topic: "Ereditarietà"
+nav_prev: "[[Override, interfaces, Overload.md]]"
+nav_next: "[[Classi Astratte.md]]"
+---
 ### Concetto Fondamentale
 
-L'**ereditarietà** permette a una classe di ereditare proprietà e metodi da un'altra classe (superclasse):
+L'**ereditarietÃ ** permette a una classe di ereditare proprietÃ  e metodi da un'altra classe (superclasse):
 
 ```java
 // Superclasse
@@ -22,16 +27,16 @@ public class Studente extends Persona {
 }
 ```
 
-### Modificatori di Visibilità
+### Modificatori di VisibilitÃ 
 
 | Modificatore | Classe | Package | Sottoclasse | Ovunque |
 |--------------|--------|---------|------------|---------|
-| `public` | ✓ | ✓ | ✓ | ✓ |
-| `protected` | ✓ | ✓ | ✓ | ✗ |
-| `default` | ✓ | ✓ | ✗ | ✗ |
-| `private` | ✓ | ✗ | ✗ | ✗ |
+| `public` | âœ“ | âœ“ | âœ“ | âœ“ |
+| `protected` | âœ“ | âœ“ | âœ“ | âœ— |
+| `default` | âœ“ | âœ“ | âœ— | âœ— |
+| `private` | âœ“ | âœ— | âœ— | âœ— |
 
-**Protected** è il modificatore ideale per le proprietà di superclassi che si vogliono ereditare:
+**Protected** Ã¨ il modificatore ideale per le proprietÃ  di superclassi che si vogliono ereditare:
 
 ```java
 public class Persona {
@@ -68,10 +73,10 @@ if (p instanceof Studente) {
 
 ### DRY Principle (Don't Repeat Yourself)
 
-L'ereditarietà aiuta a evitare la ripetizione di codice:
+L'ereditarietÃ  aiuta a evitare la ripetizione di codice:
 
 ```java
-// ❌ MALE - Ripetizione
+// âŒ MALE - Ripetizione
 public class Studente {
     private String nome;
     private int eta;
@@ -84,7 +89,7 @@ public class Docente {
     private String stipendio;
 }
 
-// ✅ BENE - Ereditarietà
+// âœ… BENE - EreditarietÃ 
 public class Persona {
     protected String nome;
     protected int eta;
@@ -126,22 +131,31 @@ Persona p3 = new Persona();   // OK
 // studenti, docenti, o persone generiche (concreti)
 ```
 
+## Ereditarietà e metodi astratti
+Quando una superclasse astratta o un'interfaccia dichiara metodi astratti (senza corpo), le sottoclassi **devono** fornire un'implementazione concreta tramite override. È il meccanismo che garantisce che ogni sottoclasse abbia il comportamento specifico, pur rispettando il contratto definito dalla superclasse.
 
+Vedi [[Classi Astratte]] per i dettagli — l'ereditarietà è il presupposto strutturale, le classi astratte sono il veicolo che impone il contratto.
 
-/////
+## Ereditarietà e polimorfismo
 
-EREDITARIETA’ =
+L'override dei metodi è la base del polimorfismo in Java: una variabile di tipo superclasse può riferirsi a oggetti di sottoclassi diverse, e la chiamata a un metodo override esegue l'implementazione della **classe concreta** (non di quella dichiarata).
 
- redita dei MEMBRI / proprietà  / variabili in un'altra classe che sarà specializzata in altro.  
-Es: Persona padre di Studente (persona che è Studente)  
-vogliamo passare  
-DRY: non ripetere le proprietà del SUPER nel sottotipo (Single Source of truth)
+```java
+Persona p1 = new Studente();
+Persona p2 = new Docente();
+p1.saluta();  // esegue Studente.saluta() — non Persona.saluta()
+p2.saluta();  // esegue Docente.saluta() — comportamento diverso
+```
 
-In Java, "DRY" è l'acronimo di "Don't Repeat Yourself". È un principio di programmazione che incoraggia la riduzione della duplicazione del codice. L'idea è di evitare di scrivere lo stesso codice o logica più volte, promuovendo invece la riusabilità e la manutenzione del codice. Applicando il principio DRY, il codice diventa più pulito, più facile da mantenere e meno soggetto a errori.
+## Errori comuni
 
-  
-**Ovverride**: Vogliamo sovrascrivere il metodo di una funzione che viene ereditata.  
-ESEMPIO: si fa per migliorarlo o per farne un altro utilizzo in base alle esigenze.  
-  
-**Implementazione di metodi astratti:** Quando una classe astratta o un'interfaccia definisce metodi astratti, le sottoclassi devono sovrascrivere questi metodi per fornire una concreta implementazione.  
-Polimorfismo: L'override permette di sfruttare il polimorfismo, dove una superclasse può riferirsi a oggetti di sottoclassi diverse e chiamare i metodi sovrascritti, ottenendo comportamenti diversi a seconda dell'oggetto.
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Ereditare per riuso invece che per specializzazione | Gerarchia innaturale, difficile da mantenere | "Voglio riusare quei metodi, quindi estendo" | Preferisci composizione (has-a) a ereditarietà (is-a) |
+| Downcasting senza `instanceof` | `ClassCastException` a runtime | Si assume che un oggetto sia di un tipo specifico senza verificare | Controlla sempre con `instanceof` prima del downcast |
+| Override senza `@Override` | Non ti accorgi che la firma è sbagliata (fai overload invece) | Il metodo non matcha nessun metodo del genitore, ma compila lo stesso | Aggiungi `@Override` — il compilatore verifica la firma |
+| Chiamare `super` quando non serve | Comportamento duplicato o errato | Chiami `super.metodo()` anche quando vuoi sostituire completamente | Se l'override è totale, non chiamare `super` |
+| Metodo privato "ereditato" | Non compila: il figlio non vede il metodo privato del genitore | I metodi `private` non sono visibili alle sottoclassi | Usa `protected` se il figlio deve accedere |
+| Deep inheritance (> 3 livelli) | Manutenzione impossibile, cambiamenti a cascata | Una modifica alla radice impatta tutte le sottoclassi | Preferisci composizione o interfacce. Massimo 2-3 livelli |
+
+Vedi [[Polimorfismo]] per il trattamento completo.

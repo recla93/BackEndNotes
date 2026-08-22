@@ -1,3 +1,8 @@
+---
+topic: "Controller e REST"
+nav_prev: "[[Servlet.md]]"
+nav_next: "[[REST API Design.md]]"
+---
 ### Servlet Base (Java Servlet)
 
 Un **servlet** è una classe Java che riceve richieste e produce risposte HTTP:
@@ -201,4 +206,14 @@ public class PersonaController {
         return service.activate(id);
     }
 }
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `@RestController` dimenticato | La risposta è un template HTML o errore 406 | Spring pensa sia un controller MVC, non REST | Usa `@RestController` o aggiungi `@ResponseBody` |
+| `@PathVariable` con nome sbagliato | 400 Bad Request o variabile non popolata | Il nome del parametro non matcha il placeholder | Allinea i nomi: `{id}` → `@PathVariable int id` o usa `@PathVariable("id")` |
+| `@RequestBody` mancante | Tutti i parametri arrivano null | Spring non sa che deve deserializzare il body in un oggetto | Aggiungi `@RequestBody` esplicitamente |
+| Entità restituita direttamente invece di DTO | Password/token esposti in JSON | L'entità JPA viene serializzata direttamente | Usa DTO esplicitamente con MapStruct o manuale |
+| Endpoint restituisce `ResponseEntity<?>` senza tipo | Type erasure, documentazione OpenAPI scarsa | Wildcard `?` perde il tipo | Specifica il tipo: `ResponseEntity<ApiResponse<TaskDto>>` |
 ```

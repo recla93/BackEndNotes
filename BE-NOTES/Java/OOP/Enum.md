@@ -1,4 +1,8 @@
-# Enum
+---
+topic: "Enum"
+nav_prev: "[[Polimorfismo.md]]"
+nav_next: "[[Stream, Arrow Func, Lambda, classi Anonime.md]]"
+---
 
 ## Cos'è un Enum?
 

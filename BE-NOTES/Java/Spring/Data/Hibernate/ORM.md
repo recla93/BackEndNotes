@@ -1,3 +1,8 @@
+---
+topic: "ORM"
+nav_prev: "[[../Entity Mapping.md]]"
+nav_next: "[[JPA - Java Persistence API.md]]"
+---
 ### Cos'è ORM?
 
 **ORM** (Object-Relational Mapping) è una tecnica che **mappa gli oggetti Java alle righe delle tabelle del database**.
@@ -42,13 +47,11 @@ List<Persona> persone = session.createQuery(
 - ✓ Relazioni automaticamente gestite
 - ✓ Sicurezza (protezione da SQL injection)
 
-ORM == Far sapere a java la relazione tra Classi e DB (facciamo sapere a Java com’è fatto il nostro DB)  
-JAKARTA PERSISTENCE -> ORM  
+## Errori comuni
 
-ORM sta per Object-Relational Mapping.
-È una metodologia che permette di mappare gli oggetti delle classi Java alle tabelle di un database relazionale. In pratica, crea una corrispondenza tra le entità Java e la struttura del database, semplificando la gestione dei dati tra l'applicazione e il database stesso. Non è un framework di per sé, ma una tecnica implementata da vari strumenti come JPA in Spring.  
-  
-** Repository= PARTE DEL PROGRAMMA CHE FA CRUD PER UNA DETERMINATA ENTITA’** (Perché lo fa per un’entità per volta)
-
-  
-Una repository  è un pattern che fornisce un'astrazione del livello di accesso ai dati. Essenzialmente, funge da intermediario tra la logica di business dell'applicazione e il database, permettendo di separare la logica di accesso ai dati dal resto del codice. Questo pattern facilita le operazioni CRUD (Create, Read, Update, Delete) sul database, nascondendo la complessità delle query e delle operazioni di persistenza dei dati.
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Mappare ogni tabella a ogni costo | Over-engineering per viste e query semplici | "Ogni risultato SQL deve essere un'entità" | Usa `@SqlResultSetMapping`, DTO o proiezioni per query di sola lettura |
+| Ignorare i proxy Hibernate | `LazyInitializationException` fuori dalla transazione | Si accede a una relazione lazy quando la sessione è chiusa | Carica i dati necessari dentro la transazione con `JOIN FETCH` o `@EntityGraph` |
+| N+1 query | Performance pessima su liste | Si itera su entità e per ogni una lazy load | Usa `JOIN FETCH`, `@EntityGraph`, o `@BatchSize` |
+| Modificare entità fuori dalla transazione | Le modifiche NON vengono salvate | Hibernate traccia i cambiamenti solo dentro una transazione attiva | Fai tutte le modifiche dentro il metodo `@Transactional` |

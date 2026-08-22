@@ -1,4 +1,8 @@
-# Override, Overload, Interfaces
+---
+topic: "Override, interfaces, Overload"
+nav_prev: "[[Stato, visibility, SOC e STATIC.md]]"
+nav_next: "[[Ereditarietà.md]]"
+---
 
 Tre concetti fondamentali dell'OOP in Java: **override** (sostituire), **overload** (sovraccaricare), **interfacce** (contratti).
 
@@ -130,6 +134,17 @@ v1.decolla();  // non importa cosa sia, so che può decollare
 
 ## Confronto Override vs Overload
 
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Confondere override con overload | Il metodo non viene chiamato come previsto | Stessa firma? → Override. Parametri diversi? → Overload | Verifica la firma: se i parametri cambiano, è overload, non override |
+| Override con visibilità più restrittiva | Errore di compilazione | `protected → private` non è permesso | Puoi solo allargare la visibilità (`protected → public`), mai restringerla |
+| Overload ambiguo con tipi wrapper | `The method is ambiguous` a compilazione | `foo(Integer)` e `foo(int)` con `foo(null)` | Evita overload con stesso nome e tipi imparentati |
+| Interfaccia con troppi metodi | Difficile da implementare, viola ISP | Interfaccia "grassa" con 10+ metodi | Separa in interfacce più piccole (Interface Segregation Principle) |
+| Default method conflict | `Diamond problem` — due interfacce hanno stesso default method | La classe deve scegliere quale implementazione usare | Override esplicito con `Interfaccia.super.metodo()` |
+| Implementare interfaccia senza servirsi del tipo formale | `implements` ma il codice usa sempre il tipo concreto | Il vantaggio del polimorfismo è perso | Usa l'interfaccia come tipo di variabile e parametro |
+
 | | Override | Overload |
 |---|---|---|
 | Firma | Identica | Diversa (parametri) |
@@ -137,5 +152,3 @@ v1.decolla();  // non importa cosa sia, so che può decollare
 | Scopo | Sostituire comportamento | Aggiungere varianti |
 | Risoluzione | Runtime (dynamic dispatch) | Compilazione |
 | @Override | Obbligatorio (buona pratica) | Non si usa |
-
-​

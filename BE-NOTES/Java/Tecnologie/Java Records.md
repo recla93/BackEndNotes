@@ -1,10 +1,10 @@
 ---
 topic: "Java Records — classi dati immutabili"
 parent: "[[BE-NOTES/Java/Tecnologie/Core Concepts|Core Concepts]]"
-next: "[[BE-NOTES/Java/Tecnologie/Java 21 - Pattern Matching]]"
+nav_prev: "[[Core Concepts.md]]"
+nav_next: "[[Java 21 - Pattern Matching.md]]"
 ---
 
-# Java Records
 
 I **records** (introdotti in Java 16, standardizzati in Java 17) sono un modo compatto per dichiarare classi che sono contenitori trasparenti di dati immutabili. In [[TaskMngr]] sono la scelta principale per DTO di risposta e richiesta.
 
@@ -80,7 +80,7 @@ return switch (response) {
 
 ## Uso con MapStruct
 
-I records sono un target eccellente per [[BE-NOTES/Java/Spring/Infra/MapStruct/MapStruct|MapStruct]] perché sono immutabili — il mapper genera codice che usa il costruttore canonico o il builder se annotato con `@Builder`.
+I records sono un target eccellente per [[BE-NOTES/Java/Spring/Infrastructure/MapStruct/MapStruct|MapStruct]] perché sono immutabili — il mapper genera codice che usa il costruttore canonico o il builder se annotato con `@Builder`.
 
 ```java
 // TaskMapper.java
@@ -90,6 +90,16 @@ public interface TaskMapper {
     // MapStruct genera: new TaskDto(task.getId(), task.getTitle(), ...)
 }
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Record usato come entità JPA | `HibernateException` o proxy non funzionante | I record sono `final`, non hanno costruttore vuoto, non permettono setter | Usa una classe normale per entità JPA; i record solo per DTO/Value Object |
+| Tentativo di estendere un record | Errore di compilazione | I record sono implicitamente `final`, non estendibili | Usa composizione o interfacce; i record possono implementare interfacce ma non estendere classi |
+| Accessor con prefisso `get` | Inconsistenza di stile, mappatura Jackson errata | I record generano accessor come `name()` non `getName()` | Jackson (2.12+) supporta gli accessor dei record; se devi retro-compatibilità, usa `@JsonGetter("name")` |
+| Compact constructor troppo invasivo | Effetto collaterale inaspettato | Modifichi il parametro invece di validarlo | Il compact constructor è solo per validazione/normalizzazione; non assegnare campi esplicitamente |
+| equals/hashCode non adatti al contesto | Due istanze logicamente diverse sono considerate uguali | `equals()` usa TUTTI i componenti del record | Se l'uguaglianza deve ignorare certi campi, non usare record: scrivi una classe normale con equals custom |
 
 ## In TaskMngr
 

@@ -1,4 +1,8 @@
-# Servlet
+---
+topic: "Servlet"
+nav_prev: "[[Web.md]]"
+nav_next: "[[Controller e REST.md]]"
+---
 
 Una **Servlet** è una classe Java che riceve richieste HTTP e produce risposte. È il fondamento su cui Spring costruisce i Controller.
 
@@ -95,3 +99,12 @@ public class EsemploServlet extends HttpServlet {
 - **Filtri**: `javax.servlet.Filter` (o `jakarta.servlet.Filter`) — ancora usati in Spring per CORS, logging, autenticazione
 - **WebSocket** endpoint di basso livello
 - **Se stai costruendo** un framework MVC da zero (raro)
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Scrivere servlet direttamente in Spring Boot | Codice non integrato con Spring (no DI, no validazione) | "Tanto funziona" | Usa `@Controller`/`@RestController` sempre in progetti Spring Boot |
+| Dimenticare `@WebServlet` | Servlet mai chiamata, 404 | La servlet non è registrata | Aggiungi `@WebServlet("/path")` o registra via `web.xml` |
+| Dimenticare `throws` per `IOException` | Errore di compilazione: `PrintWriter.getWriter()` lancia | `doGet`/`doPost` dichiarano le eccezioni nella firma | Usa `@Controller` invece della servlet — Spring gestisce le eccezioni |
+| Gestione manuale dei parametri | Boilerplate, null check ovunque | `req.getParameter()` restituisce stringa o null | Spring bootstrappa direttamente a `@RequestParam`, `@PathVariable`, DTO |

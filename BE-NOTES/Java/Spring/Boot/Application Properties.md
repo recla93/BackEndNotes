@@ -1,9 +1,10 @@
 ---
 topic: "Application Properties"
 parent: "[[BE-NOTES/Java/Spring/Boot/Core Concepts|Core Concepts]]"
+nav_prev: "[[Autoconfiguration e Starters.md]]"
+nav_next: "[[Dipendenze con Maven.md]]"
 ---
 
-# Application Properties
 
 Spring Boot externalizza la configurazione: stesso jar, comportamenti diversi in base all'ambiente. Supporta file YAML/properties, variabili d'ambiente, argomenti CLI e file `.env`.
 
@@ -71,6 +72,17 @@ public class JwtProperties {
 ```
 
 Evita `@Value("${app.jwt.secret}")` sparsi nel codice — raggruppa le property in classi coese.
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Secret hardcodato in application.yml | Credenziali in VCS, leak in repo pubblico | La password/chiave è scritta direttamente nel file YAML | Usa `${VARIABILE_AMBIENTE}` e `.env` locale |
+| Profilo non attivato | Le property del profilo non vengono caricate | `application-prod.yml` ignorato se non attivi il profilo | Usa `--spring.profiles.active=prod` o `SPRING_PROFILES_ACTIVE=prod` |
+| `@ConfigurationProperties` senza getter/setter | Bean non creato, errore all'avvio | Spring richiede getter e setter per bindare le property | Aggiungi getter/setter (o usa `record` con Spring Boot 3+) |
+| Property riferita ma mancante | `IllegalArgumentException` o valore null | `${PROPERTY}` non definita in nessuna fonte | Usa `${PROPERTY:valore_default}` per dare un default |
+| Nomi property Java vs YAML inconsistenti | `@Value("${app.jwt.secret}")` non trova la property | `app.jwt.secret` vs `app.jwt-secret` in YAML | I separatori YAML ('.' e '-') sono entrambi validi ma usali consistentemente |
+| `.env` non caricato in esecuzione | Le variabili d'ambiente locali non vengono lette | Spring Boot non carica `.env` automaticamente | Aggiungi `@PropertySource(".env")` o usa il plugin `spring-boot-maven-plugin` con `.env` |
 
 ## Best practice
 

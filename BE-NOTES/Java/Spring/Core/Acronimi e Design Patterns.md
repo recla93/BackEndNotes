@@ -1,3 +1,7 @@
+---
+topic: "Acronimi e Design Patterns"
+nav_prev: "[[Interfaces nei Services.md]]"
+---
 
 ***  
   
@@ -182,7 +186,6 @@ class Project {
   
 ***  
   
-# Design Pattern Comuni con esempi semplificati  
   
 ***  
   
@@ -264,6 +267,18 @@ Questo mix di acronimi, principi e design pattern serve per scrivere codice puli
   
 Se vuoi si può aggiungere un approfondimento su specifici pattern o casi d’uso particolari.  
   
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Singleton thread-unsafe | Race condition in multi-thread | Doppio check senza `synchronized` o volatile | Usa `enum` Singleton (Java) o `synchronized` + volatile; per Spring basta un bean singleton |
+| Factory restituisce `null` | `NullPointerException` a runtime | Tipo non riconosciuto, factory non gestisce quel caso | Restituisci un'istanza di default o lancia `IllegalArgumentException` |
+| Strategy pattern over-engineered | 2-3 algoritmi, troppe interfacce | Pattern applicato dove bastava un `if-else` o `switch` | Usa pattern Strategy solo quando hai 4+ algoritmi che cambiano a runtime |
+| DTO usato come entità | Modifiche al DTO propagate al DB | Passare DTO direttamente a JpaRepository.save() | Mappa sempre DTO → Entity prima di salvare |
+| DRY applicato troppo aggressivo | Metodi generici con troppi parametri booleani | Estrarre codice simile ma non identico in un metodo unico | DRY non significa "una riga in meno"; codice simile ma con logica diversa va separato |
+| SRP violato | Classe service con 500+ righe, 10+ responsabilità | Crescita organica senza refactoring | Estrai classi separate per ogni responsabilità |
+| DIP ignorato | Dipendenza da classe concreta invece che interfaccia | `new ClasseConcreta()` dentro un service o controller | Inietta dipendenze via costruttore usando interfacce |
+
 [1](https://innovaformazione.net/principi-solid-nella-programmazione/)  
 [2](https://www.spacecoding.it/principi-solid-java/)  
 [3](https://codegym.cc/it/groups/posts/it.232.solid-cinque-principi-di-base-della-progettazione-di-classi-in-java)  

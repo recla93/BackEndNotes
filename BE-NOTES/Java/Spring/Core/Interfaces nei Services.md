@@ -1,3 +1,8 @@
+---
+topic: "Interfaces nei Services"
+nav_prev: "[[Service Layer.md]]"
+nav_next: "[[Acronimi e Design Patterns.md]]"
+---
 ## 4. Interface nei Service  
   
 #spring #architecture #best-practices  
@@ -179,4 +184,14 @@ public class UserServiceMock implements UserService {
 > - Logica business nel service  
 > - `@Transactional` sull'implementazione  
 > - Interface e impl nello stesso package  
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Interfaccia service inutile | Solo una implementazione, mai cambiata | Pattern applicato senza necessità reale | Se c'è una sola implementazione stabile, salta l'interfaccia; Spring la supporta |
+| Iniettare implementazione invece che interfaccia | Accoppiamento stretto, testabilità ridotta | `private final UserServiceImpl userService` nel controller | Usa `private final UserService userService` (l'interfaccia) |
+| `@Transactional` solo sull'interfaccia | Proxy AOP ignora l'annotazione | `@Transactional` sull'interfaccia non viene sempre ereditata | Metti `@Transactional` sull'implementazione |
+| Nomi incoerenti | `UserManager`, `UserService`, `UserHandler` mischiati | Nessuna convenzione di naming nel team | Standard: `UserService` (interface), `UserServiceImpl` (impl) |
+| Interfaccia condivisa tra progetti | Breaking change in un progetto rompe l'altro | Interfaccia service esposta come API pubblica | Separa API contract in un modulo dedicato o usa DTO specifici per progetto |
   

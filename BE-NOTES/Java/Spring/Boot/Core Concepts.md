@@ -1,9 +1,10 @@
 ---
 topic: "Core Concepts — Spring Boot"
 parent: "[[BE-NOTES/Java/Spring/Boot/Spring Boot|Spring Boot]]"
+nav_prev: "[[Spring Boot.md]]"
+nav_next: "[[Autoconfiguration e Starters.md]]"
 ---
 
-# Core Concepts
 
 Concetti fondamentali di Spring Boot utilizzati nel progetto [[TaskMngr]].
 

@@ -1,9 +1,9 @@
 ---
 topic: "Lombok — riduzione boilerplate"
 parent: "[[BE-NOTES/Java/Tecnologie/Java|Java]]"
+nav_prev: "[[Optional e Gestione Null.md]]"
 ---
 
-# Lombok — @Data e @Builder
 
 Lombok genera codice boilerplate (getter, setter, costruttori, builder, logger) tramite annotazioni, **in fase di compilazione**. Il codice generato è invisibile, ma esiste nel `.class`. In [[TaskMngr]] è usato per DTO, classi di configurazione e talvolta entità.
 
@@ -70,6 +70,17 @@ public class Task {
 `@Data` genera `toString()` che accede a `user.getEmail()` fuori dalla transazione → `LazyInitializationException`. Anche `equals()` e `hashCode()` caricano tutte le relazioni.
 
 **Soluzione in TaskMngr:** usare solo `@Getter`/`@Setter` sulle entità e gestire manualmente `toString()` con solo campi semplici.
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `@Data` su entità JPA con relazioni lazy | `LazyInitializationException` fuori dalla transazione | `@Data` genera `toString()`, `equals()`, `hashCode()` che accedono a tutte le relazioni | Usa solo `@Getter`/`@Setter` sulle entità, non `@Data` |
+| `@Builder` + `@NoArgsConstructor` su stessa classe | Builder genera campi null (aggira i vincoli del costruttore) | `@Builder` usa il costruttore con tutti i parametri; `@NoArgsConstructor` crea istanze senza campi | Usa `@Builder` e `@AllArgsConstructor` insieme; evita `@NoArgsConstructor` sui builder |
+| `@Slf4j` su enum | Errore di compilazione | Lombok non può generare campi statici non final su enum | Dichiara il logger manualmente sulle enum |
+| `@EqualsAndHashCode` su entità JPA | Loop infinito in bidirezionale, performance degradata | Lazy loading carica tutta la catena di relazioni | Escludi le relazioni: `@EqualsAndHashCode(exclude = {"user", "tasks"})` |
+| Usare `@Value` su classe che sarà proxyzata da Spring | Proxy fallisce, comportamenti inaspettati | `@Value` rende campi `final`, Spring AOP non può sovrascrivere | Usa `@Getter` su classe normale per bean Spring |
+| `@Builder` non funziona con Jackson deserialization | Deserializzazione JSON fallisce | Jackson ha bisogno di costruttore vuoto o `@JsonDeserialize` | Aggiungi `@NoArgsConstructor`, `@AllArgsConstructor`, `@Jacksonized` (Lombok 1.18.14+) |
 
 ## Attenzione ai conflitti con Records
 

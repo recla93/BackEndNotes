@@ -1,4 +1,8 @@
-# Service Layer
+---
+topic: "Service Layer"
+nav_prev: "[[Dependency Injection.md]]"
+nav_next: "[[Interfaces nei Services.md]]"
+---
 
 ## Cos'è il Service Layer
 

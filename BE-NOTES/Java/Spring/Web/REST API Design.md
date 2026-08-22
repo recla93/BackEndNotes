@@ -1,9 +1,10 @@
 ---
 topic: "REST API Design — pattern per API web"
 parent: "[[BE-NOTES/Java/Spring/Web/Web|Web]]"
+nav_prev: "[[Controller e REST.md]]"
+nav_next: "[[DTO e Mappers.md]]"
 ---
 
-# REST API Design
 
 Pattern e buone pratiche per la progettazione di API RESTful, come implementate in [[TaskMngr]].
 

@@ -1,0 +1,383 @@
+{
+  "communities": {
+    "0": [
+      "boolean_condizioni",
+      "costrutti_iterazione",
+      "operazioni_espressioni"
+    ],
+    "1": [
+      "generics_doc"
+    ],
+    "2": [
+      "java_best_practices"
+    ],
+    "3": [
+      "method_class_doc"
+    ],
+    "4": [
+      "variabili_tipi_dati"
+    ],
+    "5": [
+      "glossario_java_spring"
+    ],
+    "6": [
+      "java_index"
+    ],
+    "7": [
+      "classi_astratte_doc"
+    ],
+    "8": [
+      "classi_oggetti_doc"
+    ],
+    "9": [
+      "enum_doc"
+    ],
+    "10": [
+      "ereditarieta_doc"
+    ],
+    "11": [
+      "interfaces_doc"
+    ],
+    "12": [
+      "metodi_doc"
+    ],
+    "13": [
+      "override_interfaces_overload_doc"
+    ],
+    "14": [
+      "polimorfismo_doc"
+    ],
+    "15": [
+      "reflection_api_doc"
+    ],
+    "16": [
+      "stato_visibility_soc_static_doc"
+    ],
+    "17": [
+      "stream_lambda_anon"
+    ],
+    "18": [
+      "transient_keyword_doc"
+    ],
+    "19": [
+      "application_properties_doc"
+    ],
+    "20": [
+      "autoconfig_starters_doc"
+    ],
+    "21": [
+      "core_concepts_doc"
+    ],
+    "22": [
+      "dipendenze_maven_doc"
+    ],
+    "23": [
+      "spring_boot_best_practices_doc"
+    ],
+    "24": [
+      "spring_boot_doc"
+    ],
+    "25": [
+      "taskmngr_approfondimenti_doc"
+    ],
+    "26": [
+      "aop_doc"
+    ],
+    "27": [
+      "join_point_pointcut_doc"
+    ],
+    "28": [
+      "pointcut_doc"
+    ],
+    "29": [
+      "acronimi_design_patterns_doc"
+    ],
+    "30": [
+      "bean_application_context_doc"
+    ],
+    "31": [
+      "dependency_injection_doc"
+    ],
+    "32": [
+      "interfaces_services_doc"
+    ],
+    "33": [
+      "libreria_vs_framework_doc"
+    ],
+    "34": [
+      "service_layer_doc"
+    ],
+    "35": [
+      "entity_mapping_doc"
+    ],
+    "36": [
+      "hibernate_annotation_doc"
+    ],
+    "37": [
+      "hibernate_session_factory_doc"
+    ],
+    "38": [
+      "hql_doc"
+    ],
+    "39": [
+      "jpa_doc"
+    ],
+    "40": [
+      "orm_doc"
+    ],
+    "41": [
+      "relazioni_mappature_doc"
+    ],
+    "42": [
+      "jpa_auditing_doc"
+    ],
+    "43": [
+      "jpa_best_practices_doc"
+    ],
+    "44": [
+      "lock_doc"
+    ],
+    "45": [
+      "repository_pattern_doc"
+    ],
+    "46": [
+      "specifications_doc"
+    ],
+    "47": [
+      "spring_data_jpa_doc"
+    ],
+    "48": [
+      "docker_doc"
+    ],
+    "49": [
+      "mapstruct_doc"
+    ],
+    "50": [
+      "mapping_entity_dto_doc"
+    ],
+    "51": [
+      "spring_doc_doc"
+    ],
+    "52": [
+      "authorities_rbac_doc"
+    ],
+    "53": [
+      "jwt_doc"
+    ],
+    "54": [
+      "oauth2_doc"
+    ],
+    "55": [
+      "doc_securityconfig_filterchain"
+    ],
+    "56": [
+      "doc_spring_security"
+    ],
+    "57": [
+      "doc_spring"
+    ],
+    "58": [
+      "doc_apiresponse_pattern"
+    ],
+    "59": [
+      "doc_controller_rest"
+    ],
+    "60": [
+      "doc_dto_mappers"
+    ],
+    "61": [
+      "doc_global_exception_handler"
+    ],
+    "62": [
+      "doc_paginazione"
+    ],
+    "63": [
+      "doc_rest_api_design"
+    ],
+    "64": [
+      "doc_servlet"
+    ],
+    "65": [
+      "doc_bean_validation"
+    ],
+    "66": [
+      "doc_web"
+    ],
+    "67": [
+      "doc_core_concepts"
+    ],
+    "68": [
+      "doc_pattern_matching"
+    ],
+    "69": [
+      "doc_java_records"
+    ],
+    "70": [
+      "doc_java"
+    ],
+    "71": [
+      "doc_lombok"
+    ],
+    "72": [
+      "doc_optional_null"
+    ]
+  },
+  "cohesion": {
+    "0": 0.6666666666666666,
+    "1": 1.0,
+    "2": 1.0,
+    "3": 1.0,
+    "4": 1.0,
+    "5": 1.0,
+    "6": 1.0,
+    "7": 1.0,
+    "8": 1.0,
+    "9": 1.0,
+    "10": 1.0,
+    "11": 1.0,
+    "12": 1.0,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0,
+    "17": 1.0,
+    "18": 1.0,
+    "19": 1.0,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0,
+    "30": 1.0,
+    "31": 1.0,
+    "32": 1.0,
+    "33": 1.0,
+    "34": 1.0,
+    "35": 1.0,
+    "36": 1.0,
+    "37": 1.0,
+    "38": 1.0,
+    "39": 1.0,
+    "40": 1.0,
+    "41": 1.0,
+    "42": 1.0,
+    "43": 1.0,
+    "44": 1.0,
+    "45": 1.0,
+    "46": 1.0,
+    "47": 1.0,
+    "48": 1.0,
+    "49": 1.0,
+    "50": 1.0,
+    "51": 1.0,
+    "52": 1.0,
+    "53": 1.0,
+    "54": 1.0,
+    "55": 1.0,
+    "56": 1.0,
+    "57": 1.0,
+    "58": 1.0,
+    "59": 1.0,
+    "60": 1.0,
+    "61": 1.0,
+    "62": 1.0,
+    "63": 1.0,
+    "64": 1.0,
+    "65": 1.0,
+    "66": 1.0,
+    "67": 1.0,
+    "68": 1.0,
+    "69": 1.0,
+    "70": 1.0,
+    "71": 1.0,
+    "72": 1.0
+  },
+  "gods": [
+    {
+      "id": "boolean_condizioni",
+      "label": "Boolean e Condizioni",
+      "degree": 2
+    },
+    {
+      "id": "costrutti_iterazione",
+      "label": "Costrutti di Iterazione",
+      "degree": 1
+    },
+    {
+      "id": "operazioni_espressioni",
+      "label": "Operazioni ed Espressioni",
+      "degree": 1
+    },
+    {
+      "id": "generics_doc",
+      "label": "Generics",
+      "degree": 0
+    },
+    {
+      "id": "java_best_practices",
+      "label": "Java Best Practices",
+      "degree": 0
+    },
+    {
+      "id": "method_class_doc",
+      "label": "Method Class",
+      "degree": 0
+    },
+    {
+      "id": "variabili_tipi_dati",
+      "label": "Variabili e Tipi di Dati",
+      "degree": 0
+    },
+    {
+      "id": "glossario_java_spring",
+      "label": "Glossario Java - Spring",
+      "degree": 0
+    },
+    {
+      "id": "java_index",
+      "label": "Java — linguaggio di programmazione",
+      "degree": 0
+    },
+    {
+      "id": "classi_astratte_doc",
+      "label": "Classi Astratte",
+      "degree": 0
+    }
+  ],
+  "surprises": [
+    {
+      "source": "Boolean e Condizioni",
+      "target": "Costrutti di Iterazione",
+      "source_files": [
+        "Core Concepts/Boolean e Condizioni.md",
+        "Core Concepts/Costrutti di Iterazione.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "Operazioni ed Espressioni",
+      "target": "Boolean e Condizioni",
+      "source_files": [
+        "Core Concepts/Operazioni ed Espressioni.md",
+        "Core Concepts/Boolean e Condizioni.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "cross-file semantic connection"
+    }
+  ],
+  "questions": [
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `Costrutti di Iterazione`, `Generics`, `Java Best Practices` to the rest of the system?",
+      "why": "74 weakly-connected nodes found - possible documentation gaps or missing edges."
+    }
+  ]
+}

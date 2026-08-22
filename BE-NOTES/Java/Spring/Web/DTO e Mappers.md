@@ -1,3 +1,8 @@
+---
+topic: "DTO e Mappers"
+nav_prev: "[[REST API Design.md]]"
+nav_next: "[[Validazione con Bean Validation.md]]"
+---
 ### Cos'è un DTO?
 
 Un **DTO** (Data Transfer Object) è un oggetto che contiene **solo i dati da trasferire**, senza logica. Separa le **entità del DB** dai **dati inviati al client**:
@@ -95,6 +100,16 @@ public class PersonaService {
     }
 }
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Usare l'entità JPA come DTO | Password/token esposti in JSON, lazy loading serializzato | Nessuna separazione tra modello DB e contratto API | Crea DTO separati per ogni operazione CRUD |
+| Getter mancante nel DTO | Campo vuoto in JSON (Jackson non serializza) | Jackson usa getter per serializzare, non campi pubblici | Aggiungi getter, usa `record`, o annota con `@JsonProperty` |
+| DTO con troppi campi | Over-fetching: il client riceve dati che non usa | DTO generico riusato per più endpoint | Crea DTO specifici per contesto: `TaskCreateRequest`, `TaskResponse`, `TaskSummary` |
+| Copia manuale Entity→DTO in ogni metodo | Codice ripetitivo, errori al cambio campo | `new TaskDTO(entity.getId(), entity.getTitle()...)` ovunque | Usa MapStruct, ModelMapper, o costruttore di copia in una classe mapper |
+| Ignorare la direzione del mapping | Mappatura bidirezionale ricorsiva (stack overflow) | `Task → User → List<Task> → User → ...` | Usa DTO piatti senza riferimenti ciclici; annota con `@JsonIgnoreProperties` sul lato entità |
 
 ### Vantaggi dei DTO
 

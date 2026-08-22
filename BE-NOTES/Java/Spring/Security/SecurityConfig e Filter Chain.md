@@ -1,9 +1,10 @@
 ---
 topic: "SecurityConfig e Filter Chain"
 parent: "[[BE-NOTES/Java/Spring/Security/Spring Security|Spring Security]]"
+nav_prev: "[[Spring Security.md]]"
+nav_next: "[[JWT - Generazione e Validazione.md]]"
 ---
 
-# SecurityConfig e Filter Chain
 
 Spring Security lavora a **catena di filtri**: ogni richiesta HTTP attraversa una serie di filtri (CORS, CSRF, autenticazione, autorizzazione) prima di arrivare al controller. In [[TaskMngr]] la catena è personalizzata per supportare JWT + OAuth2, con route pubbliche e protette.
 
@@ -123,6 +124,17 @@ GrantedAuthority nel SecurityContext
 |---|---|
 | `USER` (default) | CRUD sui propri dati, task, team |
 | `ADMIN` | Gestione utenti (DELETE, update di qualsiasi utente), accesso a route `/api/admin/**` |
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Ordine delle regole `authorizeHttpRequests` sbagliato | Route specifica non matcha, cade nel `permitAll` sbagliato | Spring valuta le regole in ordine; la prima che matcha vince | Metti regole più specifiche PRIMA di quelle generiche (`/api/admin/**` prima di `/api/**`) |
+| `anyRequest().authenticated()` mancante | Route non configurate sono accessibili a tutti | Senza catch-all, le route non elencate sono permesse | Aggiungi sempre `anyRequest().authenticated()` o `anyRequest().denyAll()` come ultima regola |
+| `@EnableMethodSecurity` dimenticato | `@PreAuthorize` e `@PostAuthorize` ignorati | Spring non abilita method security per default | Aggiungi `@EnableMethodSecurity` nella configurazione |
+| Filtro JWT inserito dopo `UsernamePasswordAuthenticationFilter` | Il SecurityContext è vuoto nel controller | Il filtro JWT viene eseguito troppo tardi nella catena | Usa `addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)` |
+| CORS mal configurato | Il frontend riceve errori CORS anche con JWT valido | `allowedOrigins` non include l'origine del frontend | Configura esplicitamente `AllowedOrigin` per il tuo frontend, non usare `*` in produzione |
+| CSRF abilitato su API stateless | 403 per ogni richiesta POST/PUT/DELETE | Il CSRF è abilitato di default, ma le API stateless non lo gestiscono | Disabilita CSRF: `.csrf(AbstractHttpConfigurer::disable)` per API JWT |
 
 ## In TaskMngr
 

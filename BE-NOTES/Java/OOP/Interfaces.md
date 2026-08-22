@@ -1,3 +1,8 @@
+---
+topic: "Interfaces"
+nav_prev: "[[Classi Astratte.md]]"
+nav_next: "[[Polimorfismo.md]]"
+---
 ### Cos'è un'Interfaccia?
 
 Un'**interfaccia** è un "contratto" che definisce **COSA** una classe deve fare (metodi astratti), ma non **COME** farlo:
@@ -103,3 +108,13 @@ public class Auto implements Veicolo {
     // suona() è ereditato dall'interfaccia
 }
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Interfaccia istanziata direttamente | `Cannot instantiate the interface` | `new Veicolo()` — le interfacce non sono classi concrete | Usa una classe che la implementa: `new Auto()` |
+| Metodo dell'interfaccia non implementato | `Class must be declared abstract` o errore compilazione | Manca `@Override` di un metodo dell'interfaccia | Implementa TUTTI i metodi astratti dell'interfaccia |
+| Default method conflict | `Duplicate default method` con multiple interfacce | Due interfacce definiscono lo stesso default method | Sovrascrivi il metodo nella classe con `@Override` |
+| `@FunctionalInterface` con 2+ metodi | Errore compilazione | Interfaccia funzionale deve avere un solo metodo astratto | Rimuovi `@FunctionalInterface` o sposta metodi extra in default |
+| Interfaccia troppo grande (God Interface) | Tutte le classi implementano metodi che non servono | Troppi metodi in una singola interfaccia | Applica ISP: dividi in interfacce più piccole e specifiche |

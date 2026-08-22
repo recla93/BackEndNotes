@@ -1,3 +1,7 @@
+---
+topic: "Classi ed Oggetti"
+nav_next: "[[Metodi.md]]"
+---
 ### Concetto Fondamentale
 
 Una **classe** è un modello (template) che definisce:
@@ -121,3 +125,13 @@ p.setEta(30);
 p.setEta(31);
 // Nuovo stato di p: {nome: "Mario", eta: 31}
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Proprietà pubbliche | Incapsulamento rotto, chiunque modifica lo stato | Campi dichiarati `public` invece di `private` | Usa `private` + getter/setter con validazione |
+| Oggetto non inizializzato | `NullPointerException` al primo uso | Dichiarare variabile senza inizializzarla | Inizializza con `new ClassName()` o costruttore |
+| `NullPointerException` su getter a catena | `persona.getIndirizzo().getVia()` lancia NPE | Getter che restituisce `null` su oggetti annidati | Usa `Optional` o controlla null intermedi |
+| Setter senza validazione | Stato inconsistente (es. età negativa) | Assegnazione diretta senza controlli | Aggiungi validazione nei setter |
+| Riferimento condiviso (aliasing) | Modificare un oggetto ne modifica un altro inaspettatamente | Assegnare stessa istanza a due variabili | Copia difensiva (`new` o clone) se serve indipendenza |

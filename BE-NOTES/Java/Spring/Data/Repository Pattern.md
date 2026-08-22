@@ -1,9 +1,10 @@
 ---
 topic: "Repository Pattern"
 parent: "[[BE-NOTES/Java/Spring/Data/Spring Data JPA|Spring Data JPA]]"
+nav_prev: "[[Spring Data JPA.md]]"
+nav_next: "[[Specifications Dinamiche.md]]"
 ---
 
-# Repository Pattern
 
 Il Repository è l'interfaccia tra il layer di servizio e il database. Spring Data JPA fornisce **implementazioni automatiche** — scrivi solo l'interfaccia, il codice concreto è generato al volo.
 
@@ -81,6 +82,17 @@ List<Task> findByUserNative(@Param("uid") Long uid, @Param("status") String stat
 ```
 
 **Attenzione:** le query native sono legate allo specifico DB (PostgreSQL). Usale solo per funzionalità DB-specifiche (ES. full-text search, window functions).
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Nome metodo di derivazione troppo lungo | Illeggibile, difficile da mantenere | `findByUserEmailAndStatusAndCreatedAtBefore` | Usa `@Query` con JPQL per query con 3+ condizioni |
+| Query derivation per filtri dinamici | Combinazioni esplodono: 4 filtri = 16 metodi | La derivazione non supporta condizioni opzionali | Usa `JpaSpecificationExecutor` + Specifications |
+| `@Query` con nomi parametro non corrispondenti | `No parameter registered` o parametro null | `:paramName` nel JPQL ma `@Param("altroNome")` nel metodo | Allinea `:nome` in JPQL con `@Param("nome")` nel metodo |
+| `@Modifying` dimenticato su UPDATE/DELETE | `QueryExecutionRequestException` | Spring Data rileva operazioni di modifica senza `@Modifying` | Aggiungi `@Modifying` + `@Transactional` su query di modifica |
+| Transazione mancante per query di modifica | `javax.persistence.TransactionRequiredException` | `save()`, `delete()` require transazione attiva | Aggiungi `@Transactional` sul metodo del service |
+| Repository che accetta/restituisce entità JSON | Ciclo infinito se ci sono relazioni bidirezionali | Jackson serializza l'entità con tutte le relazioni | Usa DTO nel controller, mai entità direttamente |
 
 ## In TaskMngr
 

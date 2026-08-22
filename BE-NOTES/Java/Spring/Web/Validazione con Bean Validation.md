@@ -1,9 +1,10 @@
 ---
 topic: "Validazione con Bean Validation"
 parent: "[[BE-NOTES/Java/Spring/Web/REST API Design|REST API Design]]"
+nav_prev: "[[DTO e Mappers.md]]"
+nav_next: "[[ApiResponse Pattern.md]]"
 ---
 
-# Validazione con Bean Validation
 
 La validazione lato server è **obbligatoria** — il client può mandare dati invalidi (volontariamente o no). Bean Validation (Hibernate Validator) permette di dichiarare regole di validazione sui DTO tramite annotazioni, senza scrivere `if` manuali.
 
@@ -114,6 +115,17 @@ public record TaskFilterRequest(
     Status status
 ) { }
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `@Valid` dimenticato | I dati arrivano al service senza validazione | Spring non attiva Bean Validation senza `@Valid` | Aggiungi `@Valid` su ogni `@RequestBody` di POST/PUT/PATCH |
+| Messaggio di errore non personalizzato | `must not be blank` invece di "Il titolo è obbligatorio" | Messaggio di default di Hibernate Validator | Specifica `message = "..."` in italiano su ogni annotazione |
+| Validazione solo lato controller | Regola di business bypassabile via test diretto del service | "Tanto valida il controller" | Aggiungi validazione anche nel service per regole di dominio non banali |
+| Custom validator che rifiuta null | Doppia segnalazione di errore (not null + custom) | Se `@NotNull` e custom validator gestisci null come invalido | Il custom validator deve restituire `true` se value == null; lascia a `@NotNull` la gestione |
+| `@Size` su campo numerico | L'annotazione non funziona (è per stringhe/collezioni) | `@Size` non si applica a `Integer`, `int`, `Long` | Usa `@Min/@Max` per numeri, `@Size` per stringhe e collezioni |
+| Validazione annidata senza `@Valid` | I campi del sotto-oggetto non vengono validati | Spring non valida ricorsivamente senza `@Valid` esplicito | Aggiungi `@Valid` sul campo che contiene l'oggetto annidato |
 
 ## In TaskMngr
 

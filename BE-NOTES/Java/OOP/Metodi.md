@@ -1,4 +1,8 @@
-# Metodi
+---
+topic: "Metodi"
+nav_prev: "[[Classi ed Oggetti.md]]"
+nav_next: "[[Stato, visibility, SOC e STATIC.md]]"
+---
 
 ## Firma del Metodo
 

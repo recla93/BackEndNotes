@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>graphify - C:\Users\recla\Desktop\New Obs\BackEndNotes\BE-NOTES\Java\graphify-out/graph.html</title>
+<script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"
+        integrity="sha384-Ux6phic9PEHJ38YtrijhkzyJ8yQlH8i/+buBR8s3mAZOJrP1gwyvAcIYl3GWtpX1"
+        crossorigin="anonymous"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f0f1a; color: #e0e0e0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; display: flex; height: 100vh; overflow: hidden; }
+  #graph { flex: 1; }
+  #sidebar { width: 280px; background: #1a1a2e; border-left: 1px solid #2a2a4e; display: flex; flex-direction: column; overflow: hidden; }
+  #search-wrap { padding: 12px; border-bottom: 1px solid #2a2a4e; }
+  #search { width: 100%; background: #0f0f1a; border: 1px solid #3a3a5e; color: #e0e0e0; padding: 7px 10px; border-radius: 6px; font-size: 13px; outline: none; }
+  #search:focus { border-color: #4E79A7; }
+  #search-results { max-height: 140px; overflow-y: auto; padding: 4px 12px; border-bottom: 1px solid #2a2a4e; display: none; }
+  .search-item { padding: 4px 6px; cursor: pointer; border-radius: 4px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .search-item:hover { background: #2a2a4e; }
+  #info-panel { padding: 14px; border-bottom: 1px solid #2a2a4e; min-height: 140px; }
+  #info-panel h3 { font-size: 13px; color: #aaa; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  #info-content { font-size: 13px; color: #ccc; line-height: 1.6; }
+  #info-content .field { margin-bottom: 5px; }
+  #info-content .field b { color: #e0e0e0; }
+  #info-content .empty { color: #555; font-style: italic; }
+  .neighbor-link { display: block; padding: 2px 6px; margin: 2px 0; border-radius: 3px; cursor: pointer; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-left: 3px solid #333; }
+  .neighbor-link:hover { background: #2a2a4e; }
+  #neighbors-list { max-height: 160px; overflow-y: auto; margin-top: 4px; }
+  #legend-wrap { flex: 1; overflow-y: auto; padding: 12px; }
+  #legend-wrap h3 { font-size: 13px; color: #aaa; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .legend-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; cursor: pointer; border-radius: 4px; font-size: 12px; }
+  .legend-item:hover { background: #2a2a4e; padding-left: 4px; }
+  .legend-item.dimmed { opacity: 0.35; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .legend-label { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .legend-count { color: #666; font-size: 11px; }
+  #stats { padding: 10px 14px; border-top: 1px solid #2a2a4e; font-size: 11px; color: #555; }
+  #legend-controls { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; padding: 4px 0; }
+  #legend-controls label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px; color: #aaa; user-select: none; }
+  #legend-controls label:hover { color: #e0e0e0; }
+  .legend-cb, #select-all-cb { appearance: none; -webkit-appearance: none; width: 14px; height: 14px; border: 1.5px solid #3a3a5e; border-radius: 3px; background: #0f0f1a; cursor: pointer; position: relative; flex-shrink: 0; }
+  .legend-cb:checked, #select-all-cb:checked { background: #4E79A7; border-color: #4E79A7; }
+  .legend-cb:checked::after, #select-all-cb:checked::after { content: ''; position: absolute; left: 3.5px; top: 1px; width: 4px; height: 7px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  #select-all-cb:indeterminate { background: #4E79A7; border-color: #4E79A7; }
+  #select-all-cb:indeterminate::after { content: ''; position: absolute; left: 2px; top: 5px; width: 8px; height: 2px; background: #fff; border: none; transform: none; }
+</style>
+</head>
+<body>
+<div id="graph"></div>
+<div id="sidebar">
+  <div id="search-wrap">
+    <input id="search" type="text" placeholder="Search nodes..." autocomplete="off">
+    <div id="search-results"></div>
+  </div>
+  <div id="info-panel">
+    <h3>Node Info</h3>
+    <div id="info-content"><span class="empty">Click a node to inspect it</span></div>
+  </div>
+  <div id="legend-wrap">
+    <h3>Communities</h3>
+    <div id="legend-controls">
+      <label><input type="checkbox" id="select-all-cb" checked onchange="toggleAllCommunities(!this.checked)">Select All</label>
+    </div>
+    <div id="legend"></div>
+  </div>
+  <div id="stats">75 nodes &middot; 2 edges &middot; 73 communities</div>
+</div>
+<script>
+const RAW_NODES = [{"id": "boolean_condizioni", "label": "Boolean e Condizioni", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 40.0, "font": {"size": 12, "color": "#ffffff"}, "title": "Boolean e Condizioni", "community": 0, "community_name": "Java Core: Control Flow & Expressions", "source_file": "Core Concepts/Boolean e Condizioni.md", "file_type": "document", "degree": 2}, {"id": "costrutti_iterazione", "label": "Costrutti di Iterazione", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 25.0, "font": {"size": 12, "color": "#ffffff"}, "title": "Costrutti di Iterazione", "community": 0, "community_name": "Java Core: Control Flow & Expressions", "source_file": "Core Concepts/Costrutti di Iterazione.md", "file_type": "document", "degree": 1}, {"id": "generics_doc", "label": "Generics", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Generics", "community": 1, "community_name": "Generics", "source_file": "Core Concepts/Generics.md", "file_type": "document", "degree": 0}, {"id": "java_best_practices", "label": "Java Best Practices", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Java Best Practices", "community": 2, "community_name": "Java Best Practices", "source_file": "Core Concepts/Java Best Practices.md", "file_type": "document", "degree": 0}, {"id": "method_class_doc", "label": "Method Class", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Method Class", "community": 3, "community_name": "Method Class", "source_file": "Core Concepts/Method Class.md", "file_type": "document", "degree": 0}, {"id": "operazioni_espressioni", "label": "Operazioni ed Espressioni", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 25.0, "font": {"size": 12, "color": "#ffffff"}, "title": "Operazioni ed Espressioni", "community": 0, "community_name": "Java Core: Control Flow & Expressions", "source_file": "Core Concepts/Operazioni ed Espressioni.md", "file_type": "document", "degree": 1}, {"id": "variabili_tipi_dati", "label": "Variabili e Tipi di Dati", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Variabili e Tipi di Dati", "community": 4, "community_name": "Variabili e Tipi di Dati", "source_file": "Core Concepts/Variabili e Tipi di Dati.md", "file_type": "document", "degree": 0}, {"id": "glossario_java_spring", "label": "Glossario Java - Spring", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Glossario Java - Spring", "community": 5, "community_name": "Glossario Java - Spring", "source_file": "Glossario Java - Spring.md", "file_type": "document", "degree": 0}, {"id": "java_index", "label": "Java \u2014 linguaggio di programmazione", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Java \u2014 linguaggio di programmazione", "community": 6, "community_name": "Java \u2014 linguaggio di programmazione", "source_file": "Java.md", "file_type": "document", "degree": 0}, {"id": "classi_astratte_doc", "label": "Classi Astratte", "color": {"background": "#FF9DA7", "border": "#FF9DA7", "highlight": {"background": "#ffffff", "border": "#FF9DA7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Classi Astratte", "community": 7, "community_name": "Classi Astratte", "source_file": "OOP/Classi Astratte.md", "file_type": "document", "degree": 0}, {"id": "classi_oggetti_doc", "label": "Classi ed Oggetti", "color": {"background": "#9C755F", "border": "#9C755F", "highlight": {"background": "#ffffff", "border": "#9C755F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Classi ed Oggetti", "community": 8, "community_name": "Classi ed Oggetti", "source_file": "OOP/Classi ed Oggetti.md", "file_type": "document", "degree": 0}, {"id": "enum_doc", "label": "Enum", "color": {"background": "#BAB0AC", "border": "#BAB0AC", "highlight": {"background": "#ffffff", "border": "#BAB0AC"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Enum", "community": 9, "community_name": "Enum", "source_file": "OOP/Enum.md", "file_type": "document", "degree": 0}, {"id": "ereditarieta_doc", "label": "Ereditariet\u00e0", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Ereditariet\u00e0", "community": 10, "community_name": "Ereditariet\u00e0", "source_file": "OOP/Ereditariet\u00e0.md", "file_type": "document", "degree": 0}, {"id": "interfaces_doc", "label": "Interfaces", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Interfaces", "community": 11, "community_name": "Interfaces", "source_file": "OOP/Interfaces.md", "file_type": "document", "degree": 0}, {"id": "metodi_doc", "label": "Metodi", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Metodi", "community": 12, "community_name": "Metodi", "source_file": "OOP/Metodi.md", "file_type": "document", "degree": 0}, {"id": "override_interfaces_overload_doc", "label": "Override, interfaces, Overload", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Override, interfaces, Overload", "community": 13, "community_name": "Override, interfaces, Overload", "source_file": "OOP/Override, interfaces, Overload.md", "file_type": "document", "degree": 0}, {"id": "polimorfismo_doc", "label": "Polimorfismo", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Polimorfismo", "community": 14, "community_name": "Polimorfismo", "source_file": "OOP/Polimorfismo.md", "file_type": "document", "degree": 0}, {"id": "reflection_api_doc", "label": "Reflection API", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Reflection API", "community": 15, "community_name": "Reflection API", "source_file": "OOP/Reflection API.md", "file_type": "document", "degree": 0}, {"id": "stato_visibility_soc_static_doc", "label": "Stato, visibility, SOC e STATIC", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Stato, visibility, SOC e STATIC", "community": 16, "community_name": "Stato, visibility, SOC e STATIC", "source_file": "OOP/Stato, visibility, SOC e STATIC.md", "file_type": "document", "degree": 0}, {"id": "stream_lambda_anon", "label": "Stream, Lambda, Anonymous Classes", "color": {"background": "#FF9DA7", "border": "#FF9DA7", "highlight": {"background": "#ffffff", "border": "#FF9DA7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Stream, Lambda, Anonymous Classes", "community": 17, "community_name": "Stream, Lambda, Anonymous Classes", "source_file": "OOP/Stream, Arrow Func, Lambda, classi Anonime.md", "file_type": "document", "degree": 0}, {"id": "transient_keyword_doc", "label": "Transient Keyword", "color": {"background": "#9C755F", "border": "#9C755F", "highlight": {"background": "#ffffff", "border": "#9C755F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Transient Keyword", "community": 18, "community_name": "Transient Keyword", "source_file": "OOP/Transient Keyword.md", "file_type": "document", "degree": 0}, {"id": "application_properties_doc", "label": "Application Properties", "color": {"background": "#BAB0AC", "border": "#BAB0AC", "highlight": {"background": "#ffffff", "border": "#BAB0AC"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Application Properties", "community": 19, "community_name": "Application Properties", "source_file": "Spring/Boot/Application Properties.md", "file_type": "document", "degree": 0}, {"id": "autoconfig_starters_doc", "label": "Autoconfiguration e Starters", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Autoconfiguration e Starters", "community": 20, "community_name": "Autoconfiguration e Starters", "source_file": "Spring/Boot/Autoconfiguration e Starters.md", "file_type": "document", "degree": 0}, {"id": "core_concepts_doc", "label": "Core Concepts \u2014 Spring Boot", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Core Concepts \u2014 Spring Boot", "community": 21, "community_name": "Core Concepts \u2014 Spring Boot", "source_file": "Spring/Boot/Core Concepts.md", "file_type": "document", "degree": 0}, {"id": "dipendenze_maven_doc", "label": "Dipendenze con Maven", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Dipendenze con Maven", "community": 22, "community_name": "Dipendenze con Maven", "source_file": "Spring/Boot/Dipendenze con Maven.md", "file_type": "document", "degree": 0}, {"id": "spring_boot_best_practices_doc", "label": "Spring Boot Best Practices", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Spring Boot Best Practices", "community": 23, "community_name": "Spring Boot Best Practices", "source_file": "Spring/Boot/Spring Boot Best Practices.md", "file_type": "document", "degree": 0}, {"id": "spring_boot_doc", "label": "Spring Boot Framework", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Spring Boot Framework", "community": 24, "community_name": "Spring Boot Framework", "source_file": "Spring/Boot/Spring Boot.md", "file_type": "document", "degree": 0}, {"id": "taskmngr_approfondimenti_doc", "label": "TaskMngr Approfondimenti", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "TaskMngr Approfondimenti", "community": 25, "community_name": "TaskMngr Approfondimenti", "source_file": "Spring/Boot/TaskMngr Approfondimenti.md", "file_type": "document", "degree": 0}, {"id": "aop_doc", "label": "AOP \u2014 Aspect Oriented Programming", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "AOP \u2014 Aspect Oriented Programming", "community": 26, "community_name": "AOP \u2014 Aspect Oriented Programming", "source_file": "Spring/Core/AOP/AOP.md", "file_type": "document", "degree": 0}, {"id": "join_point_pointcut_doc", "label": "Join Point e Pointcut", "color": {"background": "#FF9DA7", "border": "#FF9DA7", "highlight": {"background": "#ffffff", "border": "#FF9DA7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Join Point e Pointcut", "community": 27, "community_name": "Join Point e Pointcut", "source_file": "Spring/Core/AOP/Join Point e Pointcut.md", "file_type": "document", "degree": 0}, {"id": "pointcut_doc", "label": "PointCut", "color": {"background": "#9C755F", "border": "#9C755F", "highlight": {"background": "#ffffff", "border": "#9C755F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "PointCut", "community": 28, "community_name": "PointCut", "source_file": "Spring/Core/AOP/PointCut.md", "file_type": "document", "degree": 0}, {"id": "acronimi_design_patterns_doc", "label": "Acronimi e Design Patterns", "color": {"background": "#BAB0AC", "border": "#BAB0AC", "highlight": {"background": "#ffffff", "border": "#BAB0AC"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Acronimi e Design Patterns", "community": 29, "community_name": "Acronimi e Design Patterns", "source_file": "Spring/Core/Acronimi e Design Patterns.md", "file_type": "document", "degree": 0}, {"id": "bean_application_context_doc", "label": "Bean e Application Context", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Bean e Application Context", "community": 30, "community_name": "Bean e Application Context", "source_file": "Spring/Core/Bean e Application Context.md", "file_type": "document", "degree": 0}, {"id": "dependency_injection_doc", "label": "Dependency Injection", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Dependency Injection", "community": 31, "community_name": "Dependency Injection", "source_file": "Spring/Core/Dependency Injection.md", "file_type": "document", "degree": 0}, {"id": "interfaces_services_doc", "label": "Interfaces nei Services", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Interfaces nei Services", "community": 32, "community_name": "Interfaces nei Services", "source_file": "Spring/Core/Interfaces nei Services.md", "file_type": "document", "degree": 0}, {"id": "libreria_vs_framework_doc", "label": "Libreria vs Framework", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Libreria vs Framework", "community": 33, "community_name": "Libreria vs Framework", "source_file": "Spring/Core/Libreria vs Framework.md", "file_type": "document", "degree": 0}, {"id": "service_layer_doc", "label": "Service Layer", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Service Layer", "community": 34, "community_name": "Service Layer", "source_file": "Spring/Core/Service Layer.md", "file_type": "document", "degree": 0}, {"id": "entity_mapping_doc", "label": "Entity Mapping \u2014 JPA", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Entity Mapping \u2014 JPA", "community": 35, "community_name": "Entity Mapping \u2014 JPA", "source_file": "Spring/Data/Entity Mapping.md", "file_type": "document", "degree": 0}, {"id": "hibernate_annotation_doc", "label": "Hibernate Annotation", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Hibernate Annotation", "community": 36, "community_name": "Hibernate Annotation", "source_file": "Spring/Data/Hibernate/Hibernate Annotation.md", "file_type": "document", "degree": 0}, {"id": "hibernate_session_factory_doc", "label": "Hibernate e Session Factory", "color": {"background": "#FF9DA7", "border": "#FF9DA7", "highlight": {"background": "#ffffff", "border": "#FF9DA7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Hibernate e Session Factory", "community": 37, "community_name": "Hibernate e Session Factory", "source_file": "Spring/Data/Hibernate/Hibernate e Session Factory.md", "file_type": "document", "degree": 0}, {"id": "hql_doc", "label": "HQL \u2014 Hibernate Query Language", "color": {"background": "#9C755F", "border": "#9C755F", "highlight": {"background": "#ffffff", "border": "#9C755F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "HQL \u2014 Hibernate Query Language", "community": 38, "community_name": "HQL \u2014 Hibernate Query Language", "source_file": "Spring/Data/Hibernate/HQL - Hibernate Query Language.md", "file_type": "document", "degree": 0}, {"id": "jpa_doc", "label": "JPA \u2014 Java Persistence API", "color": {"background": "#BAB0AC", "border": "#BAB0AC", "highlight": {"background": "#ffffff", "border": "#BAB0AC"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "JPA \u2014 Java Persistence API", "community": 39, "community_name": "JPA \u2014 Java Persistence API", "source_file": "Spring/Data/Hibernate/JPA - Java Persistence API.md", "file_type": "document", "degree": 0}, {"id": "orm_doc", "label": "ORM", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "ORM", "community": 40, "community_name": "ORM", "source_file": "Spring/Data/Hibernate/ORM.md", "file_type": "document", "degree": 0}, {"id": "relazioni_mappature_doc", "label": "Relazioni e Mappature", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Relazioni e Mappature", "community": 41, "community_name": "Relazioni e Mappature", "source_file": "Spring/Data/Hibernate/Relazioni e Mappature.md", "file_type": "document", "degree": 0}, {"id": "jpa_auditing_doc", "label": "JPA Auditing", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "JPA Auditing", "community": 42, "community_name": "JPA Auditing", "source_file": "Spring/Data/JPA Auditing.md", "file_type": "document", "degree": 0}, {"id": "jpa_best_practices_doc", "label": "JPA Best Practices", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "JPA Best Practices", "community": 43, "community_name": "JPA Best Practices", "source_file": "Spring/Data/JPA Best Practices.md", "file_type": "document", "degree": 0}, {"id": "lock_doc", "label": "Lock Ottimistico e Pessimistico", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Lock Ottimistico e Pessimistico", "community": 44, "community_name": "Lock Ottimistico e Pessimistico", "source_file": "Spring/Data/Lock Ottimistico e Pessimistico.md", "file_type": "document", "degree": 0}, {"id": "repository_pattern_doc", "label": "Repository Pattern", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Repository Pattern", "community": 45, "community_name": "Repository Pattern", "source_file": "Spring/Data/Repository Pattern.md", "file_type": "document", "degree": 0}, {"id": "specifications_doc", "label": "Specifications Dinamiche", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Specifications Dinamiche", "community": 46, "community_name": "Specifications Dinamiche", "source_file": "Spring/Data/Specifications Dinamiche.md", "file_type": "document", "degree": 0}, {"id": "spring_data_jpa_doc", "label": "Spring Data JPA", "color": {"background": "#FF9DA7", "border": "#FF9DA7", "highlight": {"background": "#ffffff", "border": "#FF9DA7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Spring Data JPA", "community": 47, "community_name": "Spring Data JPA", "source_file": "Spring/Data/Spring Data JPA.md", "file_type": "document", "degree": 0}, {"id": "docker_doc", "label": "Docker", "color": {"background": "#9C755F", "border": "#9C755F", "highlight": {"background": "#ffffff", "border": "#9C755F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Docker", "community": 48, "community_name": "Docker", "source_file": "Spring/Infrastructure/Docker/Docker.md", "file_type": "document", "degree": 0}, {"id": "mapstruct_doc", "label": "MapStruct", "color": {"background": "#BAB0AC", "border": "#BAB0AC", "highlight": {"background": "#ffffff", "border": "#BAB0AC"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "MapStruct", "community": 49, "community_name": "MapStruct", "source_file": "Spring/Infrastructure/MapStruct/MapStruct.md", "file_type": "document", "degree": 0}, {"id": "mapping_entity_dto_doc", "label": "Mapping Entity-DTO", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Mapping Entity-DTO", "community": 50, "community_name": "Mapping Entity-DTO", "source_file": "Spring/Infrastructure/MapStruct/Mapping Entity-DTO.md", "file_type": "document", "degree": 0}, {"id": "spring_doc_doc", "label": "Spring Doc", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Spring Doc", "community": 51, "community_name": "Spring Doc", "source_file": "Spring/Infrastructure/Spring Doc/Spring Doc.md", "file_type": "document", "degree": 0}, {"id": "authorities_rbac_doc", "label": "Authorities e RBAC", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Authorities e RBAC", "community": 52, "community_name": "Authorities e RBAC", "source_file": "Spring/Security/Authorities e RBAC.md", "file_type": "document", "degree": 0}, {"id": "jwt_doc", "label": "JWT \u2014 Generazione e Validazione", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "JWT \u2014 Generazione e Validazione", "community": 53, "community_name": "JWT \u2014 Generazione e Validazione", "source_file": "Spring/Security/JWT - Generazione e Validazione.md", "file_type": "document", "degree": 0}, {"id": "oauth2_doc", "label": "OAuth2 con Google e GitHub", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "OAuth2 con Google e GitHub", "community": 54, "community_name": "OAuth2 con Google e GitHub", "source_file": "Spring/Security/OAuth2 con Google e GitHub.md", "file_type": "document", "degree": 0}, {"id": "doc_securityconfig_filterchain", "label": "SecurityConfig e Filter Chain", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "SecurityConfig e Filter Chain", "community": 55, "community_name": "SecurityConfig e Filter Chain", "source_file": "Spring/Security/SecurityConfig e Filter Chain.md", "file_type": "document", "degree": 0}, {"id": "doc_spring_security", "label": "Spring Security", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Spring Security", "community": 56, "community_name": "Spring Security", "source_file": "Spring/Security/Spring Security.md", "file_type": "document", "degree": 0}, {"id": "doc_spring", "label": "Spring", "color": {"background": "#FF9DA7", "border": "#FF9DA7", "highlight": {"background": "#ffffff", "border": "#FF9DA7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Spring", "community": 57, "community_name": "Spring", "source_file": "Spring/Spring.md", "file_type": "document", "degree": 0}, {"id": "doc_apiresponse_pattern", "label": "ApiResponse Pattern", "color": {"background": "#9C755F", "border": "#9C755F", "highlight": {"background": "#ffffff", "border": "#9C755F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "ApiResponse Pattern", "community": 58, "community_name": "ApiResponse Pattern", "source_file": "Spring/Web/ApiResponse Pattern.md", "file_type": "document", "degree": 0}, {"id": "doc_controller_rest", "label": "Controller e REST", "color": {"background": "#BAB0AC", "border": "#BAB0AC", "highlight": {"background": "#ffffff", "border": "#BAB0AC"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Controller e REST", "community": 59, "community_name": "Controller e REST", "source_file": "Spring/Web/Controller e REST.md", "file_type": "document", "degree": 0}, {"id": "doc_dto_mappers", "label": "DTO e Mappers", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "DTO e Mappers", "community": 60, "community_name": "DTO e Mappers", "source_file": "Spring/Web/DTO e Mappers.md", "file_type": "document", "degree": 0}, {"id": "doc_global_exception_handler", "label": "Global Exception Handler", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Global Exception Handler", "community": 61, "community_name": "Global Exception Handler", "source_file": "Spring/Web/Global Exception Handler.md", "file_type": "document", "degree": 0}, {"id": "doc_paginazione", "label": "Paginazione", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Paginazione", "community": 62, "community_name": "Paginazione", "source_file": "Spring/Web/Paginazione.md", "file_type": "document", "degree": 0}, {"id": "doc_rest_api_design", "label": "REST API Design", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "REST API Design", "community": 63, "community_name": "REST API Design", "source_file": "Spring/Web/REST API Design.md", "file_type": "document", "degree": 0}, {"id": "doc_servlet", "label": "Servlet", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Servlet", "community": 64, "community_name": "Servlet", "source_file": "Spring/Web/Servlet.md", "file_type": "document", "degree": 0}, {"id": "doc_bean_validation", "label": "Validazione con Bean Validation", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Validazione con Bean Validation", "community": 65, "community_name": "Validazione con Bean Validation", "source_file": "Spring/Web/Validazione con Bean Validation.md", "file_type": "document", "degree": 0}, {"id": "doc_web", "label": "Web", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Web", "community": 66, "community_name": "Web", "source_file": "Spring/Web/Web.md", "file_type": "document", "degree": 0}, {"id": "doc_core_concepts", "label": "Core Concepts", "color": {"background": "#FF9DA7", "border": "#FF9DA7", "highlight": {"background": "#ffffff", "border": "#FF9DA7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Core Concepts", "community": 67, "community_name": "Core Concepts", "source_file": "Tecnologie/Core Concepts.md", "file_type": "document", "degree": 0}, {"id": "doc_pattern_matching", "label": "Java 21 - Pattern Matching", "color": {"background": "#9C755F", "border": "#9C755F", "highlight": {"background": "#ffffff", "border": "#9C755F"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Java 21 - Pattern Matching", "community": 68, "community_name": "Java 21 - Pattern Matching", "source_file": "Tecnologie/Java 21 - Pattern Matching.md", "file_type": "document", "degree": 0}, {"id": "doc_java_records", "label": "Java Records", "color": {"background": "#BAB0AC", "border": "#BAB0AC", "highlight": {"background": "#ffffff", "border": "#BAB0AC"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Java Records", "community": 69, "community_name": "Java Records", "source_file": "Tecnologie/Java Records.md", "file_type": "document", "degree": 0}, {"id": "doc_java", "label": "Java", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Java", "community": 70, "community_name": "Java", "source_file": "Tecnologie/Java.md", "file_type": "document", "degree": 0}, {"id": "doc_lombok", "label": "Lombok - @Data e @Builder", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Lombok - @Data e @Builder", "community": 71, "community_name": "Lombok - @Data e @Builder", "source_file": "Tecnologie/Lombok - @Data e @Builder.md", "file_type": "document", "degree": 0}, {"id": "doc_optional_null", "label": "Optional e Gestione Null", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "Optional e Gestione Null", "community": 72, "community_name": "Optional e Gestione Null", "source_file": "Tecnologie/Optional e Gestione Null.md", "file_type": "document", "degree": 0}];
+const RAW_EDGES = [{"from": "boolean_condizioni", "to": "costrutti_iterazione", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "operazioni_espressioni", "to": "boolean_condizioni", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}];
+const LEGEND = [{"cid": 0, "color": "#4E79A7", "label": "Java Core: Control Flow &amp; Expressions", "count": 3}, {"cid": 1, "color": "#F28E2B", "label": "Generics", "count": 1}, {"cid": 2, "color": "#E15759", "label": "Java Best Practices", "count": 1}, {"cid": 3, "color": "#76B7B2", "label": "Method Class", "count": 1}, {"cid": 4, "color": "#59A14F", "label": "Variabili e Tipi di Dati", "count": 1}, {"cid": 5, "color": "#EDC948", "label": "Glossario Java - Spring", "count": 1}, {"cid": 6, "color": "#B07AA1", "label": "Java \u2014 linguaggio di programmazione", "count": 1}, {"cid": 7, "color": "#FF9DA7", "label": "Classi Astratte", "count": 1}, {"cid": 8, "color": "#9C755F", "label": "Classi ed Oggetti", "count": 1}, {"cid": 9, "color": "#BAB0AC", "label": "Enum", "count": 1}, {"cid": 10, "color": "#4E79A7", "label": "Ereditariet\u00e0", "count": 1}, {"cid": 11, "color": "#F28E2B", "label": "Interfaces", "count": 1}, {"cid": 12, "color": "#E15759", "label": "Metodi", "count": 1}, {"cid": 13, "color": "#76B7B2", "label": "Override, interfaces, Overload", "count": 1}, {"cid": 14, "color": "#59A14F", "label": "Polimorfismo", "count": 1}, {"cid": 15, "color": "#EDC948", "label": "Reflection API", "count": 1}, {"cid": 16, "color": "#B07AA1", "label": "Stato, visibility, SOC e STATIC", "count": 1}, {"cid": 17, "color": "#FF9DA7", "label": "Stream, Lambda, Anonymous Classes", "count": 1}, {"cid": 18, "color": "#9C755F", "label": "Transient Keyword", "count": 1}, {"cid": 19, "color": "#BAB0AC", "label": "Application Properties", "count": 1}, {"cid": 20, "color": "#4E79A7", "label": "Autoconfiguration e Starters", "count": 1}, {"cid": 21, "color": "#F28E2B", "label": "Core Concepts \u2014 Spring Boot", "count": 1}, {"cid": 22, "color": "#E15759", "label": "Dipendenze con Maven", "count": 1}, {"cid": 23, "color": "#76B7B2", "label": "Spring Boot Best Practices", "count": 1}, {"cid": 24, "color": "#59A14F", "label": "Spring Boot Framework", "count": 1}, {"cid": 25, "color": "#EDC948", "label": "TaskMngr Approfondimenti", "count": 1}, {"cid": 26, "color": "#B07AA1", "label": "AOP \u2014 Aspect Oriented Programming", "count": 1}, {"cid": 27, "color": "#FF9DA7", "label": "Join Point e Pointcut", "count": 1}, {"cid": 28, "color": "#9C755F", "label": "PointCut", "count": 1}, {"cid": 29, "color": "#BAB0AC", "label": "Acronimi e Design Patterns", "count": 1}, {"cid": 30, "color": "#4E79A7", "label": "Bean e Application Context", "count": 1}, {"cid": 31, "color": "#F28E2B", "label": "Dependency Injection", "count": 1}, {"cid": 32, "color": "#E15759", "label": "Interfaces nei Services", "count": 1}, {"cid": 33, "color": "#76B7B2", "label": "Libreria vs Framework", "count": 1}, {"cid": 34, "color": "#59A14F", "label": "Service Layer", "count": 1}, {"cid": 35, "color": "#EDC948", "label": "Entity Mapping \u2014 JPA", "count": 1}, {"cid": 36, "color": "#B07AA1", "label": "Hibernate Annotation", "count": 1}, {"cid": 37, "color": "#FF9DA7", "label": "Hibernate e Session Factory", "count": 1}, {"cid": 38, "color": "#9C755F", "label": "HQL \u2014 Hibernate Query Language", "count": 1}, {"cid": 39, "color": "#BAB0AC", "label": "JPA \u2014 Java Persistence API", "count": 1}, {"cid": 40, "color": "#4E79A7", "label": "ORM", "count": 1}, {"cid": 41, "color": "#F28E2B", "label": "Relazioni e Mappature", "count": 1}, {"cid": 42, "color": "#E15759", "label": "JPA Auditing", "count": 1}, {"cid": 43, "color": "#76B7B2", "label": "JPA Best Practices", "count": 1}, {"cid": 44, "color": "#59A14F", "label": "Lock Ottimistico e Pessimistico", "count": 1}, {"cid": 45, "color": "#EDC948", "label": "Repository Pattern", "count": 1}, {"cid": 46, "color": "#B07AA1", "label": "Specifications Dinamiche", "count": 1}, {"cid": 47, "color": "#FF9DA7", "label": "Spring Data JPA", "count": 1}, {"cid": 48, "color": "#9C755F", "label": "Docker", "count": 1}, {"cid": 49, "color": "#BAB0AC", "label": "MapStruct", "count": 1}, {"cid": 50, "color": "#4E79A7", "label": "Mapping Entity-DTO", "count": 1}, {"cid": 51, "color": "#F28E2B", "label": "Spring Doc", "count": 1}, {"cid": 52, "color": "#E15759", "label": "Authorities e RBAC", "count": 1}, {"cid": 53, "color": "#76B7B2", "label": "JWT \u2014 Generazione e Validazione", "count": 1}, {"cid": 54, "color": "#59A14F", "label": "OAuth2 con Google e GitHub", "count": 1}, {"cid": 55, "color": "#EDC948", "label": "SecurityConfig e Filter Chain", "count": 1}, {"cid": 56, "color": "#B07AA1", "label": "Spring Security", "count": 1}, {"cid": 57, "color": "#FF9DA7", "label": "Spring", "count": 1}, {"cid": 58, "color": "#9C755F", "label": "ApiResponse Pattern", "count": 1}, {"cid": 59, "color": "#BAB0AC", "label": "Controller e REST", "count": 1}, {"cid": 60, "color": "#4E79A7", "label": "DTO e Mappers", "count": 1}, {"cid": 61, "color": "#F28E2B", "label": "Global Exception Handler", "count": 1}, {"cid": 62, "color": "#E15759", "label": "Paginazione", "count": 1}, {"cid": 63, "color": "#76B7B2", "label": "REST API Design", "count": 1}, {"cid": 64, "color": "#59A14F", "label": "Servlet", "count": 1}, {"cid": 65, "color": "#EDC948", "label": "Validazione con Bean Validation", "count": 1}, {"cid": 66, "color": "#B07AA1", "label": "Web", "count": 1}, {"cid": 67, "color": "#FF9DA7", "label": "Core Concepts", "count": 1}, {"cid": 68, "color": "#9C755F", "label": "Java 21 - Pattern Matching", "count": 1}, {"cid": 69, "color": "#BAB0AC", "label": "Java Records", "count": 1}, {"cid": 70, "color": "#4E79A7", "label": "Java", "count": 1}, {"cid": 71, "color": "#F28E2B", "label": "Lombok - @Data e @Builder", "count": 1}, {"cid": 72, "color": "#E15759", "label": "Optional e Gestione Null", "count": 1}];
+
+// HTML-escape helper — prevents XSS when injecting graph data into innerHTML
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// Build vis datasets
+const nodesDS = new vis.DataSet(RAW_NODES.map(n => ({
+  id: n.id, label: n.label, color: n.color, size: n.size,
+  font: n.font, title: n.title,
+  _community: n.community, _community_name: n.community_name,
+  _source_file: n.source_file, _file_type: n.file_type, _degree: n.degree,
+})));
+
+const edgesDS = new vis.DataSet(RAW_EDGES.map((e, i) => ({
+  id: i, from: e.from, to: e.to,
+  label: '',
+  title: e.title,
+  dashes: e.dashes,
+  width: e.width,
+  color: e.color,
+  arrows: { to: { enabled: true, scaleFactor: 0.5 } },
+})));
+
+const container = document.getElementById('graph');
+const network = new vis.Network(container, { nodes: nodesDS, edges: edgesDS }, {
+  physics: {
+    enabled: true,
+    solver: 'forceAtlas2Based',
+    forceAtlas2Based: {
+      gravitationalConstant: -60,
+      centralGravity: 0.005,
+      springLength: 120,
+      springConstant: 0.08,
+      damping: 0.4,
+      avoidOverlap: 0.8,
+    },
+    stabilization: { iterations: 200, fit: true },
+  },
+  interaction: {
+    hover: true,
+    tooltipDelay: 100,
+    hideEdgesOnDrag: true,
+    navigationButtons: false,
+    keyboard: false,
+  },
+  nodes: { shape: 'dot', borderWidth: 1.5 },
+  edges: { smooth: { type: 'continuous', roundness: 0.2 }, selectionWidth: 3 },
+});
+
+network.once('stabilizationIterationsDone', () => {
+  network.setOptions({ physics: { enabled: false } });
+});
+
+function showInfo(nodeId) {
+  const n = nodesDS.get(nodeId);
+  if (!n) return;
+  const neighborIds = network.getConnectedNodes(nodeId);
+  const neighborItems = neighborIds.map(nid => {
+    const nb = nodesDS.get(nid);
+    const color = nb ? nb.color.background : '#555';
+    return `<span class="neighbor-link" style="border-left-color:${esc(color)}" onclick="focusNode(${JSON.stringify(nid)})">${esc(nb ? nb.label : nid)}</span>`;
+  }).join('');
+  document.getElementById('info-content').innerHTML = `
+    <div class="field"><b>${esc(n.label)}</b></div>
+    <div class="field">Type: ${esc(n._file_type || 'unknown')}</div>
+    <div class="field">Community: ${esc(n._community_name)}</div>
+    <div class="field">Source: ${esc(n._source_file || '-')}</div>
+    <div class="field">Degree: ${n._degree}</div>
+    ${neighborIds.length ? `<div class="field" style="margin-top:8px;color:#aaa;font-size:11px">Neighbors (${neighborIds.length})</div><div id="neighbors-list">${neighborItems}</div>` : ''}
+  `;
+}
+
+function focusNode(nodeId) {
+  network.focus(nodeId, { scale: 1.4, animation: true });
+  network.selectNodes([nodeId]);
+  showInfo(nodeId);
+}
+
+// Track hovered node — hover detection is more reliable than click params
+let hoveredNodeId = null;
+network.on('hoverNode', params => {
+  hoveredNodeId = params.node;
+  container.style.cursor = 'pointer';
+});
+network.on('blurNode', () => {
+  hoveredNodeId = null;
+  container.style.cursor = 'default';
+});
+container.addEventListener('click', () => {
+  if (hoveredNodeId !== null) {
+    showInfo(hoveredNodeId);
+    network.selectNodes([hoveredNodeId]);
+  }
+});
+network.on('click', params => {
+  if (params.nodes.length > 0) {
+    showInfo(params.nodes[0]);
+  } else if (hoveredNodeId === null) {
+    document.getElementById('info-content').innerHTML = '<span class="empty">Click a node to inspect it</span>';
+  }
+});
+
+const searchInput = document.getElementById('search');
+const searchResults = document.getElementById('search-results');
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.toLowerCase().trim();
+  searchResults.innerHTML = '';
+  if (!q) { searchResults.style.display = 'none'; return; }
+  const matches = RAW_NODES.filter(n => n.label.toLowerCase().includes(q)).slice(0, 20);
+  if (!matches.length) { searchResults.style.display = 'none'; return; }
+  searchResults.style.display = 'block';
+  matches.forEach(n => {
+    const el = document.createElement('div');
+    el.className = 'search-item';
+    el.textContent = n.label;
+    el.style.borderLeft = `3px solid ${n.color.background}`;
+    el.style.paddingLeft = '8px';
+    el.onclick = () => {
+      network.focus(n.id, { scale: 1.5, animation: true });
+      network.selectNodes([n.id]);
+      showInfo(n.id);
+      searchResults.style.display = 'none';
+      searchInput.value = '';
+    };
+    searchResults.appendChild(el);
+  });
+});
+document.addEventListener('click', e => {
+  if (!searchResults.contains(e.target) && e.target !== searchInput)
+    searchResults.style.display = 'none';
+});
+
+const hiddenCommunities = new Set();
+
+const selectAllCb = document.getElementById('select-all-cb');
+
+function updateSelectAllState() {
+  const total = LEGEND.length;
+  const hidden = hiddenCommunities.size;
+  selectAllCb.checked = hidden === 0;
+  selectAllCb.indeterminate = hidden > 0 && hidden < total;
+}
+
+function toggleAllCommunities(hide) {
+  document.querySelectorAll('.legend-item').forEach(item => {
+    hide ? item.classList.add('dimmed') : item.classList.remove('dimmed');
+  });
+  document.querySelectorAll('.legend-cb').forEach(cb => {
+    cb.checked = !hide;
+  });
+  LEGEND.forEach(c => {
+    if (hide) hiddenCommunities.add(c.cid); else hiddenCommunities.delete(c.cid);
+  });
+  const updates = RAW_NODES.map(n => ({ id: n.id, hidden: hide }));
+  nodesDS.update(updates);
+  updateSelectAllState();
+}
+
+const legendEl = document.getElementById('legend');
+LEGEND.forEach(c => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  const cb = document.createElement('input');
+  cb.type = 'checkbox';
+  cb.className = 'legend-cb';
+  cb.checked = true;
+  cb.addEventListener('change', (e) => {
+    e.stopPropagation();
+    if (cb.checked) {
+      hiddenCommunities.delete(c.cid);
+      item.classList.remove('dimmed');
+    } else {
+      hiddenCommunities.add(c.cid);
+      item.classList.add('dimmed');
+    }
+    const updates = RAW_NODES
+      .filter(n => n.community === c.cid)
+      .map(n => ({ id: n.id, hidden: !cb.checked }));
+    nodesDS.update(updates);
+    updateSelectAllState();
+  });
+  item.innerHTML = `<div class="legend-dot" style="background:${c.color}"></div>
+    <span class="legend-label">${c.label}</span>
+    <span class="legend-count">${c.count}</span>`;
+  item.prepend(cb);
+  item.onclick = (e) => {
+    if (e.target === cb) return;
+    cb.checked = !cb.checked;
+    cb.dispatchEvent(new Event('change'));
+  };
+  legendEl.appendChild(item);
+});
+</script>
+<script>
+// Render hyperedges as shaded regions
+const hyperedges = [{"id": "oop_foundations", "label": "Fondamenti OOP", "nodes": ["classi_oggetti_doc", "ereditarieta_doc", "polimorfismo_doc", "interfaces_doc", "classi_astratte_doc"], "relation": "form", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "Java.md"}, {"id": "spring_ioc_container_system", "label": "Spring IoC Container System", "nodes": ["bean_spring", "application_context", "dependency_injection_principle", "component_scanning", "bean_lifecycle"], "relation": "implement", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "Spring/Core/Bean e Application Context.md"}, {"id": "aop_mechanism", "label": "AOP Mechanism", "nodes": ["aspect_oriented_programming", "join_point_concept", "pointcut_expression", "advice_types", "cross_cutting_concern", "weaving_process"], "relation": "form", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "Spring/Core/AOP/AOP.md"}, {"id": "java_functional_programming", "label": "Java Functional Programming", "nodes": ["lambda_expressions", "stream_api", "functional_interfaces", "anonymous_classes"], "relation": "form", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "OOP/Stream, Arrow Func, Lambda, classi Anonime.md"}, {"id": "persistence_stack", "label": "JPA-Hibernate Persistence Stack", "nodes": ["jpa_standard", "hibernate_orm", "entity_manager", "session_factory", "spring_data_jpa_module"], "relation": "implement", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "Spring/Data/Spring Data JPA.md"}, {"id": "security_pipeline", "label": "Authentication-Authorization Pipeline", "nodes": ["oauth2_social_login", "jwt_token", "jwt_filter", "granted_authority", "rbac"], "relation": "participate_in", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "Spring/Security/JWT - Generazione e Validazione.md"}, {"id": "api_documentation_toolchain", "label": "API Documentation Toolchain", "nodes": ["spring_doc_doc", "openapi", "swagger_ui"], "relation": "form", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "Spring/Infrastructure/Spring Doc/Spring Doc.md"}, {"id": "auth_filter_chain_flow", "label": "Spring Security Authentication and Authorization Flow", "nodes": ["rat_security_filter_chain", "rat_jwt_authentication", "rat_rbac_model", "rat_oauth2_social"], "relation": "implement", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "Spring/Security/SecurityConfig e Filter Chain.md"}, {"id": "api_response_pipeline", "label": "Standardized REST API Response Pipeline", "nodes": ["rat_apiresponse_envelope", "rat_global_exception_handler_advice", "rat_bean_validation_concept", "rat_dto_pattern"], "relation": "implement", "confidence": "INFERRED", "confidence_score": 0.75, "source_file": "Spring/Web/Global Exception Handler.md"}, {"id": "modern_java_data_patterns", "label": "Modern Java Data Integrity and Handling Patterns", "nodes": ["rat_java_records_concept", "rat_pattern_matching_concept", "rat_compact_constructor", "rat_optional_concept"], "relation": "form", "confidence": "INFERRED", "confidence_score": 0.75, "source_file": "Tecnologie/Java Records.md"}];
+// afterDrawing passes ctx already transformed to network coordinate space.
+// Draw node positions raw — no manual pan/zoom/DPR math needed.
+network.on('afterDrawing', function(ctx) {
+    hyperedges.forEach(h => {
+        const positions = h.nodes
+            .map(nid => network.getPositions([nid])[nid])
+            .filter(p => p !== undefined);
+        if (positions.length < 2) return;
+        ctx.save();
+        ctx.globalAlpha = 0.12;
+        ctx.fillStyle = '#6366f1';
+        ctx.strokeStyle = '#6366f1';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        // Centroid and expanded hull in network coordinates
+        const cx = positions.reduce((s, p) => s + p.x, 0) / positions.length;
+        const cy = positions.reduce((s, p) => s + p.y, 0) / positions.length;
+        const expanded = positions.map(p => ({
+            x: cx + (p.x - cx) * 1.15,
+            y: cy + (p.y - cy) * 1.15
+        }));
+        ctx.moveTo(expanded[0].x, expanded[0].y);
+        expanded.slice(1).forEach(p => ctx.lineTo(p.x, p.y));
+        ctx.closePath();
+        ctx.fill();
+        ctx.globalAlpha = 0.4;
+        ctx.stroke();
+        // Label
+        ctx.globalAlpha = 0.8;
+        ctx.fillStyle = '#4f46e5';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(h.label, cx, cy - 5);
+        ctx.restore();
+    });
+});
+</script>
+</body>
+</html>

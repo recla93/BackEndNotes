@@ -1,3 +1,8 @@
+---
+topic: "Polimorfismo"
+nav_prev: "[[Interfaces.md]]"
+nav_next: "[[Enum.md]]"
+---
 ### Definizione
 
 Il **polimorfismo** significa "molte forme". In Java:
@@ -98,3 +103,12 @@ for (Persona p : persone) {
 // Sono un docente
 // Sono una persona
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Overload confuso con Override | Chiama metodo sbagliato, comportamento inaspettato | Stesso nome ma firma diversa (parametri) = overload; stesso nome e stessa firma = override | Overload: stessa classe, parametri diversi. Override: classe diversa, stessi parametri |
+| `@Override` mancante | Metodo non sovrascritto ma overloadato (per errore di firma) | Firma leggermente diversa (es. `Object` vs `String`) | Metti sempre `@Override` — se la firma è sbagliata, il compilatore avverte |
+| `ClassCastException` a runtime | `Exception in thread "main" java.lang.ClassCastException` | Downcasting senza `instanceof` | Usa sempre `if (p instanceof Studente)` prima del cast |
+| Lista polimorfica con mixed types | `instanceof` a pioggia nel codice | La lista contiene tipi diversi ma li tratti in modo diverso | Ripensa il design: usa il polimorfismo invece di `instanceof` |

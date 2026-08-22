@@ -1,9 +1,9 @@
 ---
 topic: "Spring Boot — framework applicativo"
 parent: "[[BE-NOTES/Java/Spring/Spring|Spring]]"
+nav_next: "[[Core Concepts.md]]"
 ---
 
-# Spring Boot
 
 Framework principale del progetto [[TaskMngr]] (Spring Boot 4.0.6). Fornisce autoconfiguration, gestione dipendenze, e un ecosistema ricco di starter.
 

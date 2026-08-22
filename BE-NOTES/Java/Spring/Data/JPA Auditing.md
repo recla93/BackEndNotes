@@ -1,9 +1,10 @@
 ---
 topic: "JPA Auditing"
 parent: "[[BE-NOTES/Java/Spring/Data/Spring Data JPA|Spring Data JPA]]"
+nav_prev: "[[Lock Ottimistico e Pessimistico.md]]"
+nav_next: "[[JPA Best Practices.md]]"
 ---
 
-# JPA Auditing
 
 L'auditing automatico popola i campi `createdAt`, `updatedAt`, `createdBy`, `lastModifiedBy` senza scrivere una riga di logica nei service. Spring Data JPA lo fa tramite **entity listeners** attivati da annotazioni.
 
@@ -94,6 +95,17 @@ public class User extends BaseEntity { ... }
 - `Instant` è un timestamp UTC — funziona correttamente in fusi orari diversi
 - `LocalDateTime` dipende dal fuso orario del server — causa bug quando si cambia regione
 - Con `Instant`, il frontend converte nel fuso orario locale del client
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `@EntityListeners(AuditingEntityListener.class)` dimenticato | `createdAt` e `updatedAt` rimangono null | Le annotazioni `@CreatedDate` e `@LastModifiedDate` non vengono processate | Aggiungi l'annotazione sulla classe entità o sulla `@MappedSuperclass` |
+| `@EnableJpaAuditing` dimenticato | Auditing non funziona su nessuna entità | Spring Data JPA non attiva l'auditing senza config | Aggiungi `@EnableJpaAuditing` sulla configurazione |
+| `auditorAwareRef` errato | `createdBy` null o eccezione | Il nome del bean non corrisponde al metodo `@Bean` | Assicurati che `auditorAwareRef = "nomeMetodo"` matchi il nome del bean |
+| `SecurityContextHolder` vuoto in contesti non HTTP | `NullPointerException` in scheduler, batch, test | `SecurityUtils.getCurrentUserId()` fallisce fuori da richiesta web | Restituisci `Optional.empty()` se non c'è utente autenticato |
+| `LocalDateTime` invece di `Instant` | Bug di fuso orario: timestamp salvato con offset sbagliato | `LocalDateTime` dipende dal fuso del server | Usa `Instant` per timestamp UTC sempre |
+| `createdAt` senza `updatable = false` | La data di creazione viene sovrascritta a ogni update | JPA aggiorna il campo automaticamente | Aggiungi `@Column(updatable = false)` su `@CreatedDate` e `@CreatedBy` |
 
 ## Alternativa: auditing manuale
 

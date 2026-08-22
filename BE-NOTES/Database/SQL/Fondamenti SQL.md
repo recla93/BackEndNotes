@@ -1,4 +1,3 @@
-# Fondamenti SQL
 
 **CRUD** = Create, Read, Update, Delete — le 4 operazioni fondamentali sui dati.
 

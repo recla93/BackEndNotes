@@ -1,0 +1,1010 @@
+{
+  "nodes": [
+    {
+      "id": "boolean_condizioni",
+      "label": "Boolean e Condizioni",
+      "file_type": "document",
+      "source_file": "Core Concepts/Boolean e Condizioni.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "costrutti_iterazione",
+      "label": "Costrutti di Iterazione",
+      "file_type": "document",
+      "source_file": "Core Concepts/Costrutti di Iterazione.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "generics_doc",
+      "label": "Generics",
+      "file_type": "document",
+      "source_file": "Core Concepts/Generics.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "java_best_practices",
+      "label": "Java Best Practices",
+      "file_type": "document",
+      "source_file": "Core Concepts/Java Best Practices.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "method_class_doc",
+      "label": "Method Class",
+      "file_type": "document",
+      "source_file": "Core Concepts/Method Class.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "operazioni_espressioni",
+      "label": "Operazioni ed Espressioni",
+      "file_type": "document",
+      "source_file": "Core Concepts/Operazioni ed Espressioni.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "variabili_tipi_dati",
+      "label": "Variabili e Tipi di Dati",
+      "file_type": "document",
+      "source_file": "Core Concepts/Variabili e Tipi di Dati.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "glossario_java_spring",
+      "label": "Glossario Java - Spring",
+      "file_type": "document",
+      "source_file": "Glossario Java - Spring.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "java_index",
+      "label": "Java — linguaggio di programmazione",
+      "file_type": "document",
+      "source_file": "Java.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "classi_astratte_doc",
+      "label": "Classi Astratte",
+      "file_type": "document",
+      "source_file": "OOP/Classi Astratte.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "classi_oggetti_doc",
+      "label": "Classi ed Oggetti",
+      "file_type": "document",
+      "source_file": "OOP/Classi ed Oggetti.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "enum_doc",
+      "label": "Enum",
+      "file_type": "document",
+      "source_file": "OOP/Enum.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "ereditarieta_doc",
+      "label": "Ereditarietà",
+      "file_type": "document",
+      "source_file": "OOP/Ereditarietà.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "interfaces_doc",
+      "label": "Interfaces",
+      "file_type": "document",
+      "source_file": "OOP/Interfaces.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "metodi_doc",
+      "label": "Metodi",
+      "file_type": "document",
+      "source_file": "OOP/Metodi.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "override_interfaces_overload_doc",
+      "label": "Override, interfaces, Overload",
+      "file_type": "document",
+      "source_file": "OOP/Override, interfaces, Overload.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "polimorfismo_doc",
+      "label": "Polimorfismo",
+      "file_type": "document",
+      "source_file": "OOP/Polimorfismo.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "reflection_api_doc",
+      "label": "Reflection API",
+      "file_type": "document",
+      "source_file": "OOP/Reflection API.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stato_visibility_soc_static_doc",
+      "label": "Stato, visibility, SOC e STATIC",
+      "file_type": "document",
+      "source_file": "OOP/Stato, visibility, SOC e STATIC.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stream_lambda_anon",
+      "label": "Stream, Lambda, Anonymous Classes",
+      "file_type": "document",
+      "source_file": "OOP/Stream, Arrow Func, Lambda, classi Anonime.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "transient_keyword_doc",
+      "label": "Transient Keyword",
+      "file_type": "document",
+      "source_file": "OOP/Transient Keyword.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "application_properties_doc",
+      "label": "Application Properties",
+      "file_type": "document",
+      "source_file": "Spring/Boot/Application Properties.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "autoconfig_starters_doc",
+      "label": "Autoconfiguration e Starters",
+      "file_type": "document",
+      "source_file": "Spring/Boot/Autoconfiguration e Starters.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "core_concepts_doc",
+      "label": "Core Concepts — Spring Boot",
+      "file_type": "document",
+      "source_file": "Spring/Boot/Core Concepts.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dipendenze_maven_doc",
+      "label": "Dipendenze con Maven",
+      "file_type": "document",
+      "source_file": "Spring/Boot/Dipendenze con Maven.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "spring_boot_best_practices_doc",
+      "label": "Spring Boot Best Practices",
+      "file_type": "document",
+      "source_file": "Spring/Boot/Spring Boot Best Practices.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "spring_boot_doc",
+      "label": "Spring Boot Framework",
+      "file_type": "document",
+      "source_file": "Spring/Boot/Spring Boot.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "taskmngr_approfondimenti_doc",
+      "label": "TaskMngr Approfondimenti",
+      "file_type": "document",
+      "source_file": "Spring/Boot/TaskMngr Approfondimenti.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "aop_doc",
+      "label": "AOP — Aspect Oriented Programming",
+      "file_type": "document",
+      "source_file": "Spring/Core/AOP/AOP.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "join_point_pointcut_doc",
+      "label": "Join Point e Pointcut",
+      "file_type": "document",
+      "source_file": "Spring/Core/AOP/Join Point e Pointcut.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "pointcut_doc",
+      "label": "PointCut",
+      "file_type": "document",
+      "source_file": "Spring/Core/AOP/PointCut.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "acronimi_design_patterns_doc",
+      "label": "Acronimi e Design Patterns",
+      "file_type": "document",
+      "source_file": "Spring/Core/Acronimi e Design Patterns.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "bean_application_context_doc",
+      "label": "Bean e Application Context",
+      "file_type": "document",
+      "source_file": "Spring/Core/Bean e Application Context.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dependency_injection_doc",
+      "label": "Dependency Injection",
+      "file_type": "document",
+      "source_file": "Spring/Core/Dependency Injection.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "interfaces_services_doc",
+      "label": "Interfaces nei Services",
+      "file_type": "document",
+      "source_file": "Spring/Core/Interfaces nei Services.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "libreria_vs_framework_doc",
+      "label": "Libreria vs Framework",
+      "file_type": "document",
+      "source_file": "Spring/Core/Libreria vs Framework.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "service_layer_doc",
+      "label": "Service Layer",
+      "file_type": "document",
+      "source_file": "Spring/Core/Service Layer.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "entity_mapping_doc",
+      "label": "Entity Mapping — JPA",
+      "file_type": "document",
+      "source_file": "Spring/Data/Entity Mapping.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "hibernate_annotation_doc",
+      "label": "Hibernate Annotation",
+      "file_type": "document",
+      "source_file": "Spring/Data/Hibernate/Hibernate Annotation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "hibernate_session_factory_doc",
+      "label": "Hibernate e Session Factory",
+      "file_type": "document",
+      "source_file": "Spring/Data/Hibernate/Hibernate e Session Factory.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "hql_doc",
+      "label": "HQL — Hibernate Query Language",
+      "file_type": "document",
+      "source_file": "Spring/Data/Hibernate/HQL - Hibernate Query Language.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "jpa_doc",
+      "label": "JPA — Java Persistence API",
+      "file_type": "document",
+      "source_file": "Spring/Data/Hibernate/JPA - Java Persistence API.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "orm_doc",
+      "label": "ORM",
+      "file_type": "document",
+      "source_file": "Spring/Data/Hibernate/ORM.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "relazioni_mappature_doc",
+      "label": "Relazioni e Mappature",
+      "file_type": "document",
+      "source_file": "Spring/Data/Hibernate/Relazioni e Mappature.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "jpa_auditing_doc",
+      "label": "JPA Auditing",
+      "file_type": "document",
+      "source_file": "Spring/Data/JPA Auditing.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "jpa_best_practices_doc",
+      "label": "JPA Best Practices",
+      "file_type": "document",
+      "source_file": "Spring/Data/JPA Best Practices.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lock_doc",
+      "label": "Lock Ottimistico e Pessimistico",
+      "file_type": "document",
+      "source_file": "Spring/Data/Lock Ottimistico e Pessimistico.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "repository_pattern_doc",
+      "label": "Repository Pattern",
+      "file_type": "document",
+      "source_file": "Spring/Data/Repository Pattern.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "specifications_doc",
+      "label": "Specifications Dinamiche",
+      "file_type": "document",
+      "source_file": "Spring/Data/Specifications Dinamiche.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "spring_data_jpa_doc",
+      "label": "Spring Data JPA",
+      "file_type": "document",
+      "source_file": "Spring/Data/Spring Data JPA.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "docker_doc",
+      "label": "Docker",
+      "file_type": "document",
+      "source_file": "Spring/Infrastructure/Docker/Docker.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mapstruct_doc",
+      "label": "MapStruct",
+      "file_type": "document",
+      "source_file": "Spring/Infrastructure/MapStruct/MapStruct.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mapping_entity_dto_doc",
+      "label": "Mapping Entity-DTO",
+      "file_type": "document",
+      "source_file": "Spring/Infrastructure/MapStruct/Mapping Entity-DTO.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "spring_doc_doc",
+      "label": "Spring Doc",
+      "file_type": "document",
+      "source_file": "Spring/Infrastructure/Spring Doc/Spring Doc.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "authorities_rbac_doc",
+      "label": "Authorities e RBAC",
+      "file_type": "document",
+      "source_file": "Spring/Security/Authorities e RBAC.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "jwt_doc",
+      "label": "JWT — Generazione e Validazione",
+      "file_type": "document",
+      "source_file": "Spring/Security/JWT - Generazione e Validazione.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "oauth2_doc",
+      "label": "OAuth2 con Google e GitHub",
+      "file_type": "document",
+      "source_file": "Spring/Security/OAuth2 con Google e GitHub.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_securityconfig_filterchain",
+      "label": "SecurityConfig e Filter Chain",
+      "file_type": "document",
+      "source_file": "Spring/Security/SecurityConfig e Filter Chain.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_spring_security",
+      "label": "Spring Security",
+      "file_type": "document",
+      "source_file": "Spring/Security/Spring Security.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_spring",
+      "label": "Spring",
+      "file_type": "document",
+      "source_file": "Spring/Spring.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_apiresponse_pattern",
+      "label": "ApiResponse Pattern",
+      "file_type": "document",
+      "source_file": "Spring/Web/ApiResponse Pattern.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_controller_rest",
+      "label": "Controller e REST",
+      "file_type": "document",
+      "source_file": "Spring/Web/Controller e REST.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_dto_mappers",
+      "label": "DTO e Mappers",
+      "file_type": "document",
+      "source_file": "Spring/Web/DTO e Mappers.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_global_exception_handler",
+      "label": "Global Exception Handler",
+      "file_type": "document",
+      "source_file": "Spring/Web/Global Exception Handler.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_paginazione",
+      "label": "Paginazione",
+      "file_type": "document",
+      "source_file": "Spring/Web/Paginazione.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_rest_api_design",
+      "label": "REST API Design",
+      "file_type": "document",
+      "source_file": "Spring/Web/REST API Design.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_servlet",
+      "label": "Servlet",
+      "file_type": "document",
+      "source_file": "Spring/Web/Servlet.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_bean_validation",
+      "label": "Validazione con Bean Validation",
+      "file_type": "document",
+      "source_file": "Spring/Web/Validazione con Bean Validation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_web",
+      "label": "Web",
+      "file_type": "document",
+      "source_file": "Spring/Web/Web.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_core_concepts",
+      "label": "Core Concepts",
+      "file_type": "document",
+      "source_file": "Tecnologie/Core Concepts.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_pattern_matching",
+      "label": "Java 21 - Pattern Matching",
+      "file_type": "document",
+      "source_file": "Tecnologie/Java 21 - Pattern Matching.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_java_records",
+      "label": "Java Records",
+      "file_type": "document",
+      "source_file": "Tecnologie/Java Records.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_java",
+      "label": "Java",
+      "file_type": "document",
+      "source_file": "Tecnologie/Java.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_lombok",
+      "label": "Lombok - @Data e @Builder",
+      "file_type": "document",
+      "source_file": "Tecnologie/Lombok - @Data e @Builder.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "doc_optional_null",
+      "label": "Optional e Gestione Null",
+      "file_type": "document",
+      "source_file": "Tecnologie/Optional e Gestione Null.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "boolean_condizioni",
+      "target": "costrutti_iterazione",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Core Concepts/Boolean e Condizioni.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "operazioni_espressioni",
+      "target": "boolean_condizioni",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Core Concepts/Operazioni ed Espressioni.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stream_lambda_anon",
+      "target": "lambda_expressions",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "OOP/Stream, Arrow Func, Lambda, classi Anonime.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "oop_foundations",
+      "label": "Fondamenti OOP",
+      "nodes": [
+        "classi_oggetti_doc",
+        "ereditarieta_doc",
+        "polimorfismo_doc",
+        "interfaces_doc",
+        "classi_astratte_doc"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Java.md"
+    },
+    {
+      "id": "spring_ioc_container_system",
+      "label": "Spring IoC Container System",
+      "nodes": [
+        "bean_spring",
+        "application_context",
+        "dependency_injection_principle",
+        "component_scanning",
+        "bean_lifecycle"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Spring/Core/Bean e Application Context.md"
+    },
+    {
+      "id": "aop_mechanism",
+      "label": "AOP Mechanism",
+      "nodes": [
+        "aspect_oriented_programming",
+        "join_point_concept",
+        "pointcut_expression",
+        "advice_types",
+        "cross_cutting_concern",
+        "weaving_process"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Spring/Core/AOP/AOP.md"
+    },
+    {
+      "id": "java_functional_programming",
+      "label": "Java Functional Programming",
+      "nodes": [
+        "lambda_expressions",
+        "stream_api",
+        "functional_interfaces",
+        "anonymous_classes"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "OOP/Stream, Arrow Func, Lambda, classi Anonime.md"
+    },
+    {
+      "id": "persistence_stack",
+      "label": "JPA-Hibernate Persistence Stack",
+      "nodes": [
+        "jpa_standard",
+        "hibernate_orm",
+        "entity_manager",
+        "session_factory",
+        "spring_data_jpa_module"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Spring/Data/Spring Data JPA.md"
+    },
+    {
+      "id": "security_pipeline",
+      "label": "Authentication-Authorization Pipeline",
+      "nodes": [
+        "oauth2_social_login",
+        "jwt_token",
+        "jwt_filter",
+        "granted_authority",
+        "rbac"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "Spring/Security/JWT - Generazione e Validazione.md"
+    },
+    {
+      "id": "api_documentation_toolchain",
+      "label": "API Documentation Toolchain",
+      "nodes": [
+        "spring_doc_doc",
+        "openapi",
+        "swagger_ui"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Spring/Infrastructure/Spring Doc/Spring Doc.md"
+    },
+    {
+      "id": "auth_filter_chain_flow",
+      "label": "Spring Security Authentication and Authorization Flow",
+      "nodes": [
+        "rat_security_filter_chain",
+        "rat_jwt_authentication",
+        "rat_rbac_model",
+        "rat_oauth2_social"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "Spring/Security/SecurityConfig e Filter Chain.md"
+    },
+    {
+      "id": "api_response_pipeline",
+      "label": "Standardized REST API Response Pipeline",
+      "nodes": [
+        "rat_apiresponse_envelope",
+        "rat_global_exception_handler_advice",
+        "rat_bean_validation_concept",
+        "rat_dto_pattern"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "Spring/Web/Global Exception Handler.md"
+    },
+    {
+      "id": "modern_java_data_patterns",
+      "label": "Modern Java Data Integrity and Handling Patterns",
+      "nodes": [
+        "rat_java_records_concept",
+        "rat_pattern_matching_concept",
+        "rat_compact_constructor",
+        "rat_optional_concept"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "Tecnologie/Java Records.md"
+    }
+  ],
+  "input_tokens": 114388,
+  "output_tokens": 19952
+}

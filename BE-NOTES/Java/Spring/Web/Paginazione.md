@@ -1,9 +1,9 @@
 ---
 topic: "Paginazione"
 parent: "[[BE-NOTES/Java/Spring/Web/REST API Design|REST API Design]]"
+nav_prev: "[[Global Exception Handler.md]]"
 ---
 
-# Paginazione
 
 Restituire TUTTI i record di una tabella in una sola risposta è sbagliato: dati troppi, memoria sprecata, tempi di risposta lunghi. La paginazione divide il risultato in pagine. Spring Data la supporta nativamente.
 
@@ -93,6 +93,16 @@ return new PageImpl<>(dtos, pageable, entities.getTotalElements());
 | `totalPages` | Totale pagine | Navigazione a pagine |
 | `first` / `last` | Prima/ultima pagina | Disabilitare bottoni |
 | `content` | Array degli elementi | Lista vera e propria |
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `page` 1-based invece di 0-based | La prima pagina è vuota, la seconda mostra i primi risultati | Spring Data è 0-based, ma alcuni client mandano `?page=1` per prima pagina | Adatta il client a 0-based o converti nel controller: `pageable.first()` se page > 0 |
+| Paginazione senza ordinamento | Ordine casuale tra pagine, stesso elemento su pagine diverse | `ORDER BY` senza campi deterministici | Aggiungi sempre `sort` (almeno per id) per ordinamento stabile tra pagine |
+| Page totale per milioni di record | `SELECT COUNT(*)` lentissimo su tabella enorme | `Page` esegue sempre count query | Usa `Slice` invece di `Page` se il conteggio esatto non serve, o implementa keyset pagination |
+| Paginazione applicata dopo il mapping | Performance: carichi tutte le entità in memoria | `repository.findAll()` senza Pageable poi fai `.stream().skip().limit()` | Usa Pageable nel repository: `findAll(spec, pageable)` — la query fa LIMIT/OFFSET |
+| Limit superato senza controllo | Client può richiedere 10000 elementi per pagina | `@PageableDefault(size = 20)` è un default, non un limite | Aggiungi `@Max(100) int size` o un `PageableHandlerMethodArgumentResolverCustomizer` per limitare size massimo |
 
 ## Attenzione a OFFSET su tabelle grandi
 

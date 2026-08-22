@@ -1,9 +1,10 @@
 ---
 topic: "Dipendenze con Maven"
 parent: "[[BE-NOTES/Java/Spring/Boot/Core Concepts|Core Concepts]]"
+nav_prev: "[[Application Properties.md]]"
+nav_next: "[[Spring Boot Best Practices.md]]"
 ---
 
-# Dipendenze con Maven
 
 Maven gestisce il ciclo di vita del progetto: compilazione, test, packaging, deploy. [[TaskMngr]] usa **Maven Wrapper** (`mvnw`), che garantisce che tutti usino la stessa versione di Maven senza installarla manualmente.
 
@@ -63,3 +64,13 @@ MapStruct e Lombok processano entrambi le annotazioni in compile-time. L'ordine 
 ```
 
 Se vedi `Can't map property "X"`, probabilmente l'ordine è sbagliato.
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Versione starter non specificata | Versione sbagliata importata dal BOM sbagliato | Aggiungi uno starter senza parent POM Spring Boot | Assicurati di avere `spring-boot-starter-parent` come parent |
+| Lombok + MapStruct ordine errato | `Can't map property "X"` o mapper non genera codice | MapStruct processa prima di Lombok e non trova getter | Ordina: Lombok prima, MapStruct dopo in `annotationProcessorPaths` |
+| Dipendenza con scope sbagliato | Classe non trovata a runtime | Starter con `scope: test` o `provided` usato nel codice | Controlla che lo starter abbia lo scope corretto (di default `compile`) |
+| Conflitto tra versioni transitive | `NoSuchMethodError` o `ClassNotFoundException` | Due dipendenze includono versioni diverse della stessa libreria | Usa `mvn dependency:tree` per diagnosticare, escludi la versione indesiderata |
+| Maven Wrapper non aggiornato | Build fallisce con feature nuove | `.mvn/wrapper/maven-wrapper.properties` punta a versione vecchia | Esegui `mvn wrapper:wrapper -Dmaven=3.9.9` per aggiornare |

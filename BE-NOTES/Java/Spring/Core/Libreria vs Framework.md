@@ -1,4 +1,7 @@
-# Libreria vs Framework
+---
+topic: "Libreria vs Framework"
+nav_next: "[[Bean e Application Context.md]]"
+---
 
 Entrambi sono **codice riutilizzabile** scritto da altri, ma cambia **chi controlla il flusso** dell'applicazione.
 

@@ -1,4 +1,8 @@
-# Dependency Injection
+---
+topic: "Dependency Injection"
+nav_prev: "[[Bean e Application Context.md]]"
+nav_next: "[[Service Layer.md]]"
+---
 
 **Dependency Injection (DI)** = Spring **fornisce** le dipendenze a una classe invece di farsele creare da sola.
 

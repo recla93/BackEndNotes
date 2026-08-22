@@ -1,9 +1,10 @@
 ---
 topic: "Lock Ottimistico e Pessimistico"
 parent: "[[BE-NOTES/Java/Spring/Data/Spring Data JPA|Spring Data JPA]]"
+nav_prev: "[[Hibernate/HQL - Hibernate Query Language.md]]"
+nav_next: "[[JPA Auditing.md]]"
 ---
 
-# Lock Ottimistico e Pessimistico
 
 Quando due utenti modificano la stessa risorsa contemporaneamente, l'ultimo a salvare sovrascrive le modifiche dell'altro (**lost update**). Il locking previene questo problema. La scelta tra ottimistico e pessimistico dipende dalla frequenza delle collisioni e dalla criticità dell'operazione.
 
@@ -89,6 +90,17 @@ public class TeamService {
     }
 }
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `@Version` su entità senza transazione | Il version non viene mai incrementato | Il lock ottimistico richiede una transazione attiva | Aggiungi `@Transactional` sul metodo che modifica l'entità |
+| `OptimisticLockException` non gestita | Errore 500 invece di 409 | Nessun handler cattura l'eccezione | Aggiungi handler nel `@RestControllerAdvice` → HTTP 409 |
+| Lock pessimistico senza transazione | Lock non acquisito (la lettura è fuori transazione) | `@Lock(PESSIMISTIC_WRITE)` richiede una transazione attiva | Aggiungi `@Transactional` sul metodo chiamante |
+| Deadlock per lock acquisiti in ordine diverso | `PessimisticLockException` o timeout | Due transazioni bloccano risorse in ordine inverso | Acquisisci i lock sempre nello STESSO ordine (es. per ID crescente) |
+| Lock pessimistico tenuto per operazioni lente | Pool connessioni esaurito, timeout DB | La transazione include chiamate HTTP lente o I/O su file | Riduci la transazione alla sola operazione DB; sposta logica lenta fuori |
+| `@Version` su campo non supportato | Errore a runtime | `@Version` accetta solo `int`, `Integer`, `short`, `Short`, `long`, `Long`, `Timestamp` | Usa `Long` come tipo per la versione |
 
 ## In TaskMngr
 

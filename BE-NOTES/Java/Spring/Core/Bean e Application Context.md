@@ -1,4 +1,8 @@
-# Bean e Application Context
+---
+topic: "Bean e Application Context"
+nav_prev: "[[Libreria vs Framework.md]]"
+nav_next: "[[Dependency Injection.md]]"
+---
 
 ## Cos'è un Bean?
 

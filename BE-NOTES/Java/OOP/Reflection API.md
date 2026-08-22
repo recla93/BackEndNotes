@@ -1,3 +1,8 @@
+---
+topic: "Reflection API"
+nav_prev: "[[Stream, Arrow Func, Lambda, classi Anonime.md]]"
+nav_next: "[[Transient Keyword.md]]"
+---
 ## 3. Reflection API  
   
 #java/reflection #advanced  
@@ -152,4 +157,14 @@ public class SimpleDI {
 > - **Sicurezza**: Viola incapsulamento  
 > - **Complessità**: Codice meno leggibile  
 > - **Type Safety**: Errori solo a runtime  
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `NoSuchMethodException` / `NoSuchFieldException` | Eccezione a runtime quando cerchi un metodo o campo | Il nome del metodo/campo non esiste o è scritto male | Usa `getDeclaredMethods()` per stampare i nomi disponibili prima |
+| `IllegalAccessException` | Non puoi accedere a campo/metodo privato | Manca `setAccessible(true)` | Chiama `field.setAccessible(true)` prima di leggere/scrivere |
+| `SecurityException` | Reflection bloccata dal Security Manager | L'ambiente (es. app server) blocca `setAccessible(true)` | Usa configurazione standard o evita reflection in ambienti ristretti |
+| Performance degradata | Il codice è 10-100x più lento | Reflection chiamata in loop o in hot path | Usa `MethodHandle` (Java 7+) o caching dei `Method`/`Field` |
+| `ClassNotFoundException` | `Class.forName("mio.package.MiaClasse")` lancia eccezione | Class name sbagliato o classe non nel classpath | Usa il fully qualified name corretto o controlla il classpath |
   

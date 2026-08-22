@@ -1,3 +1,8 @@
+---
+topic: "Relazioni e Mappature"
+nav_prev: "[[Hibernate Annotation.md]]"
+nav_next: "[[HQL - Hibernate Query Language.md]]"
+---
 ### Relazione OneToMany
 
 **Un studente ha molte presenze**:
@@ -177,5 +182,17 @@ Query q = session.createQuery(
 q.setParameter("nm", 12345);
 List<Studente> studenti = q.list();
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `LazyInitializationException` | `org.hibernate.LazyInitializationException` fuori dalla transazione | La relazione `LAZY` viene caricata dopo la chiusura della sessione | Usa `FetchType.EAGER` o `JOIN FETCH` nella query, o mantieni la transazione aperta |
+| `mappedBy` sbagliato o mancante | Hibernate crea una tabella di join inutile | Metti `@JoinColumn` su entrambi i lati invece di `mappedBy` | `mappedBy` va sul lato `@OneToMany` (il padre), `@JoinColumn` sul lato `@ManyToOne` (figlio) |
+| Cascade troppo aggressivo | Cancellazione involontaria di dati figli | `cascade = CascadeType.ALL` o `REMOVE` su relazione importante | Usa `CascadeType.PERSIST` e `MERGE` esplicitamente; mai `ALL` se non sicuro |
+| N+1 query | 1 query per la lista + N query per ogni relazione | `FetchType.LAZY` causa query separate quando accedi alle relazioni | Usa `JOIN FETCH`, `@EntityGraph`, o `@BatchSize` |
+| SSOT violato nella relazione | Relazione salvata solo da un lato, inconsistenze | Imposti solo `s.getPresenze().add(p)` ma non `p.setStudente(s)` | Usa un metodo helper `addPresenza()` che sincronizza entrambi i lati |
+| `@JoinColumn` su lato sbagliato | Chiave esterna nella tabella sbagliata | Metti `@JoinColumn` su `@OneToMany` invece che su `@ManyToOne` | La FK va sempre nel lato `@ManyToOne` (figlio) |
+| `@PrimaryKeyJoinColumn` senza `@Inheritance` | Schema errato, JOIN non funziona | Dimentichi di specificare la strategia di inheritance sulla superclasse | Aggiungi `@Inheritance(strategy = InheritanceType.JOINED)` su `Persona` |
 
 ---

@@ -1,3 +1,8 @@
+---
+topic: "Hibernate e Session Factory"
+nav_prev: "[[JPA - Java Persistence API.md]]"
+nav_next: "[[Hibernate Annotation.md]]"
+---
 ### Cos'è Hibernate?
 
 **Hibernate** è un **framework ORM** per Java che semplifica l'interazione con i database relazionali. È l'implementazione più popolare di JPA.
@@ -57,6 +62,16 @@ try {
     </session-factory>
 </hibernate-configuration>
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Session non chiusa nel `finally` | Connection leak, pool esaurito | `session.close()` non eseguito se eccezione | Usa try-with-resources o chiudi sempre in `finally` |
+| `hibernate.hbm2ddl.auto=update` in produzione | Perdita involontaria di dati | Hibernate altera lo schema automaticamente | Usa Flyway per migrazioni versionate |
+| `hibernate.show_sql=true` in produzione | Performance degradata, log enormi | Ogni query SQL viene stampata su stdout | Disabilita in produzione; usa logging SQL con parametri per debug |
+| Session factory creata per ogni richiesta | Lento, memory leak | `SessionFactory` è costosa da creare | È singleton: creala una volta all'avvio |
+| Transazione non gestita per operazioni multiple | Dati parziali in caso di errore | Operazioni senza transazione non fanno rollback | Usa sempre `beginTransaction()` + `commit()`/`rollback()` |
 
 ### Operazioni CRUD con Hibernate
 

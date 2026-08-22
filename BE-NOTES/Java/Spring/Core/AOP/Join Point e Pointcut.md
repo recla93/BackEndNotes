@@ -1,3 +1,7 @@
+---
+topic: "Join Point e Pointcut"
+nav_prev: "[[PointCut.md]]"
+---
 ## Cosa sono i Join Point  
   
 I **Join Point** sono punti specifici durante l'esecuzione del programma dove un aspect può essere applicato. Sono le "opportunità di intercettazione" che il framework AOP offre.[3][4]  
@@ -693,3 +697,15 @@ Spero questa guida completa ti abbia chiarito la relazione tra Join Point, Point
 [6](https://www.emmecilab.net/blog/un-esempio-pratico-di-aop-aspect-oriented-programming-in-spring/)  
 [7](https://www.baeldung.com/spring-aop-pointcut-tutorial)  
 [8](https://www.youtube.com/watch?v=8OKC3c6ryKg)
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Pointcut troppo generico | Matcha molti più join point del previsto | `execution(* *(..))` senza filtri di package o annotazioni | Restringi il pointcut: specifica package, classe o annotazione |
+| Self-invocation non intercettata | L'advice non viene eseguito | Un metodo pubblico chiama un altro metodo pubblico della stessa classe | L'advice AOP non viene eseguito su self-invocation (proxy limitation) | Rifattorizza: chiama il metodo da un altro bean o usa `AopContext.currentProxy()` |
+| Pointcut su metodo privato | L'advice non viene mai eseguito | `execution(* private *..*)` — Spring AOP intercetta solo metodi pubblici | Spring AOP usa proxy dinamici — solo metodi pubblici esterni |
+| Espressione AspectJ non valida | `Pointcut is not well-formed: expecting '('` | Errore di sintassi nell'espressione del pointcut | Verifica la sintassi con un tool di validazione AspectJ |
+| `ProceedingJoinPoint` in `@Before` | `No method found with name 'proceed'` | Usare `ProceedingJoinPoint` invece di `JoinPoint` | `@Before` e `@After` usano `JoinPoint`; solo `@Around` usa `ProceedingJoinPoint` |
+| Ordine degli aspect non controllato | Un aspect esegue dopo l'altro quando serve l'inverso | Nessun `@Order` specificato sugli aspect | Usa `@Order(1)`, `@Order(2)` per definire l'ordine di esecuzione |
+| `@Around` senza `pjp.proceed()` | Il metodo target non viene mai eseguito | Dimenticare di chiamare `pjp.proceed()` nel corpo dell'advice | Chiama sempre `return pjp.proceed()` nel `@Around`, a meno che non sia intenzionale |

@@ -1,9 +1,10 @@
 ---
 topic: "OAuth2 con Google e GitHub"
 parent: "[[BE-NOTES/Java/Spring/Security/Spring Security|Spring Security]]"
+nav_prev: "[[JWT - Generazione e Validazione.md]]"
+nav_next: "[[Authorities e RBAC.md]]"
 ---
 
-# OAuth2 con Google e GitHub
 
 L'OAuth2 login sociale permette agli utenti di autenticarsi con un account esistente (Google, GitHub) invece di creare username/password. [[TaskMngr]] supporta Google (tramite OIDC) e GitHub (tramite OAuth2 standard). Gli utenti possono anche collegare più account social allo stesso profilo.
 
@@ -142,6 +143,16 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 ```
 
 Il frontend estrae il token dal fragment e lo usa per le richieste successive.
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Client secret hardcodato in application.yml | Secret in VCS, esposizione pubblica | Le credenziali OAuth2 finite in VCS | Usa `${GOOGLE_CLIENT_ID}` e `${GOOGLE_CLIENT_SECRET}` placeholder con variabili d'ambiente |
+| Callback URL non registrata | `400 redirect_uri_mismatch` dal provider OAuth | Google/GitHub hanno la URI una specifica registrata | Registra in console sviluppatori la callback esatta (es. `http://localhost:8080/login/oauth2/code/google`) |
+| Scope richiesto non autorizzato | Login OAuth2 funziona ma dati utente mancanti | Lo scope richiesto non è stato approvato dal provider | Allinea gli scope con ciò che effettivamente ti serve; chiedi solo scope necessari |
+| Non gestire il linking account esistente | Utente bloccato se email già usata | Login social con email che matcha un account esistente senza collegamento | Controlla email prima di creare nuovo utente: se esiste, collega account sociale |
+| Mancata gestione errore OAuth2 | Redirect a pagina di errore generica | L'utente annulla il consenso o il provider restituisce errore | Implementa `OAuth2AuthenticationFailureHandler` per redirect a pagina FE con messaggio |
 
 ## In TaskMngr
 

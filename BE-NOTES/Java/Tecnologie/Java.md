@@ -1,9 +1,9 @@
 ---
 topic: "Java — linguaggio e piattaforma"
 parent: "[[BE-NOTES/Java/Java|Java]]"
+nav_next: "[[Core Concepts.md]]"
 ---
 
-# Java
 
 Il linguaggio principale del progetto [[TaskMngr]], sviluppato con **Java 21**. Include le novità moderne come records, pattern matching, text blocks e sealed classes.
 

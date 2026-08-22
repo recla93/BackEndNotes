@@ -1,9 +1,10 @@
 ---
 topic: "JWT — Generazione e Validazione"
 parent: "[[BE-NOTES/Java/Spring/Security/Spring Security|Spring Security]]"
+nav_prev: "[[SecurityConfig e Filter Chain.md]]"
+nav_next: "[[OAuth2 con Google e GitHub.md]]"
 ---
 
-# JWT — Generazione e Validazione
 
 Il JWT (JSON Web Token) è il meccanismo di autenticazione stateless di [[TaskMngr]]. Il server firma un token che contiene l'identità dell'utente; il client lo invia a ogni richiesta. Il server verifica la firma e sa chi è l'utente — **nessuna sessione, nessun cookie**.
 
@@ -133,6 +134,17 @@ Flusso:
 3. Quando access token scade (HTTP 401) → client chiama `/api/auth/refresh` con refresh token
 4. Server verifica refresh token → emette nuovo access token
 5. Se anche refresh token è scaduto → login completo
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Chiave JWT hardcodata nel codice | Secret in VCS, leak in repo pubblico | La chiave è una stringa letterale in Java | Leggi da `application.properties` o variabile d'ambiente; mai hardcodare |
+| Dati sensibili nel payload JWT | Password, dati personali in chiaro nel token | Il payload JWT è solo Base64URL, non criptato | Mai mettere dati sensibili nel payload — solo identificatori non sensibili |
+| Token scaduto ma nessun refresh | Utente reindirizzato al login ogni 24h | Access token scade ma manca il meccanismo di refresh | Implementa refresh token; configura `expiration` ragionevole per l'uso (15-30 min per alta sicurezza, 24h per task app) |
+| `JwtException` non gestita | 500 Internal Server Error per token invalido | Il filtro non cattura `MalformedJwtException`, `ExpiredJwtException` | Avvolgi il parsing in try-catch `JwtException` → `SecurityContextHolder.clearContext()` + 401 |
+| Dimenticare il prefisso `Bearer ` | 401: header Authorization non parsato | Il filtro cerca "Bearer " ma l'header arriva come "token" diretto | Il client DEVE inviare `Authorization: Bearer <token>`; il filtro controlla il prefisso |
+| Secret troppo corto (< 256 bit per HS256) | `WeakKeyException` o warning di sicurezza | HMAC-SHA256 richiede chiave di almeno 256 bit (32 caratteri) | Usa una chiave di almeno 32 caratteri alfanumerici casuali |
 
 ## In TaskMngr
 

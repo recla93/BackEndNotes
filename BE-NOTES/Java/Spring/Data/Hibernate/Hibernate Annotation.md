@@ -1,3 +1,8 @@
+---
+topic: "Hibernate Annotation"
+nav_prev: "[[Hibernate e Session Factory.md]]"
+nav_next: "[[Relazioni e Mappature.md]]"
+---
 ### @Entity
 
 Marca una classe come **entità persistente** (mapperà a una tabella):
@@ -116,6 +121,16 @@ public class PersonaService {
     }
 }
 ```
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `@Column(name = "...")` dimenticato | Nome colonna automatico diverso dall'atteso | Hibernate usa il nome del campo Java | Sii esplicito con `@Column(name = "snake_case")` |
+| `@Enumerated(ORDINAL)` | Dati corrotti se l'ordine degli enum cambia | Salva la posizione numerica, non il valore logico | Usa sempre `@Enumerated(STRING)` |
+| `@Transient` dimenticato su campo non persistente | Hibernate tenta di salvare una colonna inesistente | Campo di servizio interpretato come colonna DB | Annota con `@Transient` tutti i campi che non devono persistere |
+| `GenerationType.AUTO` su MySQL | Usa `TABLE` invece di `IDENTITY` (performance peggiore) | `AUTO` sceglie la strategia in base al dialetto | Usa `IDENTITY` per MySQL/PostgreSQL, `SEQUENCE` per Oracle |
+| `@JoinColumn` su entrambi i lati della relazione | Doppia FK nella tabella | Il mapping crea due colonne per la stessa relazione | `@JoinColumn` va solo sul lato Many (possessore della FK) |
 
 ### @DiscriminatorColumn (Single Table Inheritance)
 

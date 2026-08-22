@@ -1,9 +1,9 @@
 ---
 topic: "JPA Best Practices — persistenza robusta e performante"
 parent: "[[BE-NOTES/Java/Spring/Data/Spring Data JPA|Spring Data JPA]]"
+nav_prev: "[[JPA Auditing.md]]"
 ---
 
-# JPA Best Practices
 
 Regole per modellare la persistenza con JPA/Hibernate in modo **sicuro, performante e manutenibile**. Basato sull'esperienza con [[TaskMngr]] e PostgreSQL.
 
@@ -364,13 +364,11 @@ spring:
 ### 8.1 Migrazioni versionate (Flyway)
 
 ```yaml
-# application-prod.yml
 spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
 
-# application-dev.yml
 spring:
   jpa:
     hibernate:
@@ -405,22 +403,22 @@ private LocalDateTime createdAt;
 
 ---
 
-## 9. Anti-pattern JPA
+## 9. Errori comuni
 
-| Anti-pattern | Problema | Soluzione |
-|---|---|---|
-| `ddl-auto=update` in prod | Perdita dati, nessuna storia | Flyway |
-| EAGER fetch | Carica sempre tutto | LAZY + JOIN FETCH |
-| N+1 in controller | Query infinite | JOIN FETCH, EntityGraph |
-| Entity esposta in API | Coupling API-DB, leak dati | DTO |
-| @Transactional su tutto | Lock tenuti troppo a lungo | readOnly=true per letture |
-| equals/hashCode basato su ID | Bug con oggetti transient | Business key |
-| OSIV=true (default) | Pool esaurito, maschera N+1 | OSIV=false |
-| CascadeType.ALL su ManyToMany | Cancellazioni a cascata inaspettate | Nessun cascade |
-| `@Data` di Lombok su entity | equals/hashCode problematici | `@Getter @Setter` manuali |
-| `@Column(columnDefinition)` | Accoppiamento al DB specifico | `@Column(length=...)`, `@Enumerated` |
-| fetch size 1 per default | N+1 per collection lazy | `default_batch_fetch_size` |
-| Transazioni giganti | Deadlock, lock contesi | Operazioni piccole e veloci |
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|---|
+| `ddl-auto=update` in prod | Tabella modificata, perdita dati | Hibernate altera lo schema live | Usa Flyway per migration versionate |
+| EAGER fetch | JOIN su ogni query, anche quando non serve | `FetchType.EAGER` su relazioni | Usa `LAZY` + `JOIN FETCH` esplicito |
+| N+1 in controller | Centinaia di query SQL loggate | Dimenticare `JOIN FETCH` o `@EntityGraph` | Verifica con logging SQL, usa `JOIN FETCH` |
+| Entity esposta in API | API restituisce campi interni, password leak | Usare l'entità direttamente come response | Usa DTO con MapStruct o record |
+| `@Transactional` su tutto | Pool connessione saturo, lock lunghi | Transazione aperta per operazioni lente | Usa `readOnly = true` per GET, transazioni brevi |
+| `equals/hashCode` basato su ID | Bug in `Set` con oggetti transient (ID = null) | ID generato non è stabile fino al `save()` | Usa business key immutabile (es. UUID) |
+| OSIV=true (default) | Connessione tenuta per tutta la request, maschera N+1 | Open Session In View è attivo di default | Imposta `spring.jpa.open-in-view=false` |
+| CascadeType.ALL su `@ManyToMany` | Tabella di join svuotata per errore | Cascade elimina i record dell'altra entità | Non usare cascade su `@ManyToMany` |
+| `@Data` di Lombok su entity | `equals/hashCode` con ID null o proxy rotti | `@Data` genera metodi su tutti i campi | Usa `@Getter @Setter` manuali sulle entity |
+| `@Column(columnDefinition)` | Migrazione a DB diverso fallisce | SQL specifico di un DB (es. TEXT vs CLOB) | Usa `@Column(length=...)` o `@Lob` |
+| fetch size 1 per default | N+1 per ogni collection lazy caricata | Hibernate carica 1 elemento per volta | Imposta `hibernate.default_batch_fetch_size=20` |
+| Transazioni giganti | Deadlock, lock contesi a lungo | Unica transazione per operazioni multiple | Spezza in transazioni piccole e veloci |
 
 ---
 

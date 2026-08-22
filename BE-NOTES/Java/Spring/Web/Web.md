@@ -1,4 +1,7 @@
-# Spring Web
+---
+topic: "Web"
+nav_next: "[[Servlet.md]]"
+---
 
 Spring Web (spring-boot-starter-web) è il modulo che gestisce la comunicazione **HTTP**: riceve richieste dai client e produce risposte.
 
@@ -154,3 +157,15 @@ Usato per:
 - **Session ID**: generare identificatori univoci
 
 Hash comuni in Java: SHA-256, bcrypt (per password), Argon2.
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `@Controller` restituisce JSON per errore | `404.jsp` o errore "circular view path" | Manca `@ResponseBody` o usi `@Controller` invece di `@RestController` | Usa `@RestController` per API REST; per `@Controller`, aggiungi `@ResponseBody` |
+| Path variable vs query param confusi | Endpoint non matcha o parametro vuoto | Mettere `/api/persone/{page}` invece di `/api/persone?page=1` | Path variable per risorsa (`/persone/{id}`), query param per filtro/paginazione |
+| Verbo HTTP sbagliato | `405 Method Not Allowed` | Usare GET per creare risorse o POST per cancellare | GET = lettura, POST = creazione, PUT/PATCH = modifica, DELETE = cancellazione |
+| `@RequestMapping` senza verbo | Matcha TUTTI i verbi sullo stesso endpoint | Dimenticare GET/POST/PUT/DELETE nello `@RequestMapping` | Usa `@GetMapping`, `@PostMapping` etc. invece di `@RequestMapping` generico |
+| Stato HTTP non gestito | `500 Internal Server Error` per errori prevedibili (es. risorsa non trovata) | `findById()` lancia eccezione non gestita | Usa `ResponseEntity` con status code appropriato (404, 400, 201) |
+| Session state non thread-safe | Race condition su attributi di sessione | Modificare attributi di sessione senza sincronizzazione | Usa oggetti immutabili o sincronizza l'accesso alla sessione |
+| Password in chiaro | Dati sensibili esposti in caso di breccia | Salvare password in chiaro invece dell'hash | Usa sempre bcrypt (o Argon2) per hashare le password |

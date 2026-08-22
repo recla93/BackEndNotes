@@ -1,9 +1,10 @@
 ---
 topic: "Authorities e RBAC"
 parent: "[[BE-NOTES/Java/Spring/Security/Spring Security|Spring Security]]"
+nav_prev: "[[OAuth2 con Google e GitHub.md]]"
+nav_next: "[[Token Blacklist.md]]"
 ---
 
-# Authorities e RBAC
 
 Spring Security usa il concetto di **GrantedAuthority** per rappresentare permessi e ruoli. In [[TaskMngr]] il modello autorizzativo è **RBAC semplice** (Role-Based Access Control) con due ruoli: `USER` e `ADMIN`.
 
@@ -95,6 +96,16 @@ TaskMngr ha scelto ruoli semplici (`USER`/`ADMIN`) invece di un sistema a permes
 - Il dominio non richiede gerarchie di permessi complesse
 - Meno overhead di progettazione e manutenzione
 - Se in futuro servissero permessi granulari, si può aggiungere una tabella `permissions` con `@ManyToMany` senza rompere l'esistente
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `hasRole("ROLE_ADMIN")` invece di `hasRole("ADMIN")` | 403 anche per ADMIN | `hasRole` aggiunge già il prefisso `ROLE_` → cerca `ROLE_ROLE_ADMIN` | Scrivi solo il nome del ruolo: `hasRole("ADMIN")`, non `hasRole("ROLE_ADMIN")` |
+| `hasAuthority("ADMIN")` invece di `hasAuthority("ROLE_ADMIN")` | 403 — il ruolo non matcha | `hasAuthority` NON aggiunge prefisso | Usa `hasAuthority("ROLE_ADMIN")` o `hasRole("ADMIN")` |
+| `@PreAuthorize` senza `@EnableMethodSecurity` | Le annotazioni sui metodi vengono ignorate | Spring non processa `@PreAuthorize` senza l'annotazione di abilitazione | Aggiungi `@EnableMethodSecurity` sulla configurazione |
+| SpEL con sintassi errata | `ExpressionEvaluationException` o 403 inaspettato | `@PreAuthorize("hasRole('ADMIN')")` — virgolette errate causano eval fallito | Usa apici singoli per le stringhe SpEL: `'ADMIN'` non `"ADMIN"` |
+| Ruolo non coerente tra JWT e DB | Utente ADMIN in DB ma JWT dice USER | Il claim `role` nel JWT non viene aggiornato dopo cambio ruolo | Il JWT riflette il ruolo al momento dell'emissione; per aggiornarlo serve re-login o refresh token |
 
 ## In TaskMngr
 

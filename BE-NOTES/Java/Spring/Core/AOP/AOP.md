@@ -1,4 +1,7 @@
-# Aspect Oriented Programming (AOP): Guida Completa  
+---
+topic: "AOP"
+nav_next: "[[PointCut.md]]"
+---
   
 ## Il Problema Reale  
   

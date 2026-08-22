@@ -1,9 +1,9 @@
 ---
 topic: "Spring Security — autenticazione e autorizzazione"
 parent: "[[BE-NOTES/Java/Spring/Boot/Spring Boot|Spring Boot]]"
+nav_next: "[[SecurityConfig e Filter Chain.md]]"
 ---
 
-# Spring Security
 
 Modulo di sicurezza Spring. In [[TaskMngr]] gestisce autenticazione tramite **JWT** e **OAuth2** (Google, GitHub), con un'architettura a catena di filtri personalizzata.
 

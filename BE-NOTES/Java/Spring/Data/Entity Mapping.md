@@ -1,9 +1,10 @@
 ---
 topic: "Entity Mapping — JPA"
 parent: "[[BE-NOTES/Java/Spring/Data/Spring Data JPA|Spring Data JPA]]"
+nav_prev: "[[Specifications Dinamiche.md]]"
+nav_next: "[[Hibernate/ORM.md]]"
 ---
 
-# Entity Mapping
 
 Le entità JPA in [[TaskMngr]] sono classi Java che mappano righe delle tabelle PostgreSQL. Ogni entità è un ponte tra il mondo relazionale (tabelle, colonne, FK) e quello object-oriented (oggetti, attributi, riferimenti).
 
@@ -88,6 +89,18 @@ Gli indici accelerano `WHERE`, `ORDER BY` e `JOIN`. Metti indici su:
 - Colonne di ordinamento frequenti (`created_at`, `status`)
 
 **Non mettere** indici su colonne con bassa selettività (es. booleani) — non vengono usati.
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| `@Data` di Lombok su entità | `LazyInitializationException` fuori transazione | `toString()`, `equals()`, `hashCode()` caricano relazioni lazy | Usa solo `@Getter`/`@Setter` sulle entità |
+| `FetchType.EAGER` su relazioni | N+1 query, performance imprevedibili | `@ManyToOne(fetch = EAGER)` è il default JPA | Cambia sempre in `LAZY`; carica esplicitamente con `JOIN FETCH` |
+| ID non generato automaticamente | Violazione PK o errore a runtime | Ogni entità deve avere un ID univoco | Usa `@GeneratedValue(strategy = IDENTITY)` e tipo `Long` |
+| Enum salvato come `ORDINAL` | Dati corrotti se riordini i valori enum | `@Enumerated(ORDINAL)` salva la posizione numerica | Usa sempre `@Enumerated(STRING)` |
+| Dimenticare `@Column(name = "...")` | Nome colonna camelCase in DB (es. `createdAt` invece di `created_at`) | Default Hibernate usa il nome del campo Java | Sii esplicito con `@Column(name = "snake_case")` |
+| Mappare una FK manualmente invece di usare relazione | JOIN manuali, nessuna navigazione oggettuale | "Tanto funziona" | Usa `@ManyToOne` + `@JoinColumn` per relazioni |
+| Costruttore vuoto assente | `PersistenceException` a runtime | JPA richiede costruttore vuoto (non serve se ci sono altri costruttori) | Aggiungi costruttore `protected` senza argomenti |
 
 ## Best practice
 

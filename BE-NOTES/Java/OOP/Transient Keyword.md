@@ -1,3 +1,7 @@
+﻿---
+topic: "Transient Keyword"
+nav_prev: "[[Reflection API.md]]"
+---
 
 #java/serialization #security  
   
@@ -86,7 +90,7 @@ class Main {
         TransientExample loadedUser = (TransientExample) in.readObject();  
         in.close();  
           
-        // La password sarà null dopo deserializzazione  
+        // La password sarÃ  null dopo deserializzazione  
     }  
 }  
 ```  
@@ -97,5 +101,16 @@ class Main {
 > - Risorse runtime (connessioni DB, stream)  
 > - Cache temporanee  
   
-***  
-  
+***
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Campo `transient` null dopo deserializzazione | Campo vale `null` dopo `readObject()` anche se aveva un valore | `transient` esclude il campo dalla serializzazione | Inizializza il campo in un metodo `readObject()` personalizzato |
+| `serialVersionUID` mancante | `InvalidClassException` dopo modifica della classe | La JVM calcola un UID automatico che cambia se la classe viene modificata | Dichiara sempre `private static final long serialVersionUID = 1L;` |
+| `NotSerializableException` a runtime | Classe non implementa `Serializable` | Java non serializza automaticamente oggetti non `Serializable` | Implementa `Serializable` nella classe |
+| Oggetti non serializzabili come campi | `NotSerializableException` durante serializzazione | Campi di tipo non `Serializable` referenziati nella classe | Rendi il campo `transient` o rendi serializzabile anche quella classe |
+| `transient` usato su campi static | Nessun effetto, campo statico non viene mai serializzato | `static` già esclude dalla serializzazione | Usa solo `transient` su campi di istanza |
+
+***

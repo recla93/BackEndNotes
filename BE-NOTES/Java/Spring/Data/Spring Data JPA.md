@@ -1,9 +1,9 @@
 ---
 topic: "Spring Data JPA — persistenza e database"
 parent: "[[BE-NOTES/Java/Spring/Boot/Spring Boot|Spring Boot]]"
+nav_next: "[[Repository Pattern.md]]"
 ---
 
-# Spring Data JPA
 
 Modulo Spring per l'accesso ai dati con Jakarta Persistence (JPA). Usato in [[TaskMngr]] per la gestione di utenti, task, team e linked accounts su **PostgreSQL**.
 

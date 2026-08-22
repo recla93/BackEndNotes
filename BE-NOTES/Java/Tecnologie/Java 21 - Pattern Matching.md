@@ -1,11 +1,10 @@
 ---
 topic: "Pattern Matching — Java 21"
 parent: "[[BE-NOTES/Java/Tecnologie/Core Concepts|Core Concepts]]"
-prev: "[[BE-NOTES/Java/Tecnologie/Java Records|Java Records]]"
-next: "[[BE-NOTES/Java/Tecnologie/Optional e Gestione Null]]"
+nav_prev: "[[Java Records.md]]"
+nav_next: "[[Optional e Gestione Null.md]]"
 ---
 
-# Pattern Matching
 
 Il pattern matching permette di **verificare la forma di un oggetto ed estrarne i dati in un unico passo**. In Java 21 è stato esteso da `instanceof` (Java 16) allo `switch` come feature finale (JEP 441).
 
@@ -72,6 +71,16 @@ if (obj instanceof Line(Point(var x1, var y1), Point(var x2, var y2))) {
 ```
 
 Un solo pattern match estrae le coordinate di entrambi i punti — senza chiamare `getStart()`, `getX()`, ecc.
+
+## Errori comuni
+
+| Errore | Sintomo | Causa | Soluzione |
+|---|---|---|---|
+| Ordine sbagliato dei case | Un case generico "mangia" quelli specifici | Java valuta i case in sequenza; il primo match vince | Metti i case più specifici (con guardie) PRIMA di quelli generici |
+| Guardia `when` sbagliata | Condizione logica errata: l'operatore sbagliato (es. `=` vs `==`) | `case Integer i when i = 0` è un assegnamento, non un confronto | Usa `==` nelle guardie, non `=` |
+| Pattern matching non copre tutti i tipi possibili | Errore di compilazione "non exhaustive switch" | Lo switch deve essere esaustivo; manca un `default` o un branch per ogni tipo dell'unione | Aggiungi `default` o copri esplicitamente tutti i casi |
+| Dimenticare `null` in switch | `NullPointerException` se il selettore è null | `null` non matcha nessun pattern, neanche `default` | Aggiungi `case null ->` esplicitamente (disponibile da Java 17+) |
+| Usare `instanceof` pattern su tipo erased | Errore di compilazione: pattern type non valido | `if (obj instanceof List<String>)` non compila — i generics sono erasi a runtime | Pattern match su raw type: `instanceof List list` e poi caste con cautela |
 
 ## In TaskMngr
 

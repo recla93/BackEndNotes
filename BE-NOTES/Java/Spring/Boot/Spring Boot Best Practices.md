@@ -1,9 +1,10 @@
 ---
 topic: "Spring Boot Best Practices — sicurezza, scalabilità, leggerezza"
 parent: "[[BE-NOTES/Java/Spring/Boot/Spring Boot|Spring Boot]]"
+nav_prev: "[[Dipendenze con Maven.md]]"
+nav_next: "[[TaskMngr Approfondimenti.md]]"
 ---
 
-# Spring Boot Best Practices
 
 Regole e convenzioni per scrivere applicativi Spring Boot **sicuri, scalabili e leggeri**. Ogni regola include il motivo ("perché") e quando eventualmente derogare.
 
@@ -65,7 +66,6 @@ Nessuna logica nell'entry point. Niente `@Enable*` a caso — Spring Boot auto-c
 ### 2.1 Externalizza tutto
 
 ```properties
-# application.yml — mai hardcodare
 app.jwt.secret=${JWT_SECRET}
 app.jwt.expiration-ms=${JWT_EXPIRATION_MS:86400000}
 spring.datasource.url=${DATABASE_URL:jdbc:postgresql://localhost:5432/taskmngr}
@@ -97,7 +97,6 @@ public class JwtProperties {
 ### 2.3 Profili ambientali minimi
 
 ```yaml
-# application.yml (default)
 spring:
   datasource:
     url: ${DATABASE_URL}
@@ -105,7 +104,6 @@ spring:
       maximum-pool-size: ${DB_POOL_SIZE:10}
 
 ---
-# application-dev.yml
 server:
   port: 8080
 spring:
@@ -114,7 +112,6 @@ spring:
       enabled: true
 
 ---
-# application-prod.yml
 server:
   port: 8080
 spring:
@@ -263,13 +260,11 @@ public Page<UserResponse> list(
 ### 5.1 ddl-auto: update solo in dev
 
 ```yaml
-# application-dev.yml
 spring:
   jpa:
     hibernate:
       ddl-auto: update
 
-# application-prod.yml
 spring:
   jpa:
     hibernate:
@@ -470,7 +465,6 @@ public class GlobalExceptionHandler {
 Per produzione, configura Logback con encoder JSON:
 
 ```yaml
-# Con logstash-logback-encoder
 logging:
   pattern:
     console:  # in dev, testo normale
